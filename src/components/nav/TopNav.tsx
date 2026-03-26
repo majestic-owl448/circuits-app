@@ -2,7 +2,7 @@ import { useAppState, useAppDispatch } from '../../state/app-context.tsx';
 import styles from './TopNav.module.css';
 
 export function TopNav() {
-  const { view } = useAppState();
+  const { view, theoryEntriesSeen } = useAppState();
   const dispatch = useAppDispatch();
 
   return (
@@ -20,6 +20,14 @@ export function TopNav() {
         >
           Lessons
         </button>
+        {theoryEntriesSeen.length > 0 && (
+          <button
+            className={`${styles.link} ${view === 'theory' ? styles.active : ''}`}
+            onClick={() => dispatch({ type: 'NAVIGATE_THEORY' })}
+          >
+            Theory
+          </button>
+        )}
         <button
           className={`${styles.link} ${view === 'sandbox' ? styles.active : ''}`}
           onClick={() => dispatch({ type: 'NAVIGATE', view: 'sandbox' })}

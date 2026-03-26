@@ -2,8 +2,9 @@ import { useState, useCallback } from 'react';
 import { useAppState } from '../../state/app-context.tsx';
 import { useCircuit } from '../../hooks/useCircuit.ts';
 import { CircuitWorkspace } from '../workspace/CircuitWorkspace.tsx';
+import { DragPalette } from '../workspace/DragPalette.tsx';
 import { describeCircuit } from '../../engine/description.ts';
-import type { CircuitComponent, CircuitNode } from '../../types/circuit.ts';
+import type { CircuitComponent, CircuitNode, ComponentType, Position } from '../../types/circuit.ts';
 import styles from './SandboxView.module.css';
 
 const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 'nodeA' | 'nodeB' | 'position'>> = {
@@ -21,10 +22,25 @@ function nextNodeId() {
 }
 
 export function SandboxView() {
-  const { unlockedComponents } = useAppState();
+  const { unlockedComponents, unlockedActions } = useAppState();
   const circuit = useCircuit();
   const [showOverlay, setShowOverlay] = useState(false);
   const [description, setDescription] = useState<string | null>(null);
+  const [selectedPlacementType, setSelectedPlacementType] = useState<ComponentType | null>(null);
+  const [deletionMode, setDeletionMode] = useState(false);
+
+  const canDelete = unlockedActions.includes('delete-component');
+  const canPlace = unlockedActions.includes('drag-to-place');
+
+  const handlePlace = useCallback((position: Position) => {
+    if (selectedPlacementType) {
+      circuit.placeComponent(selectedPlacementType, position);
+    }
+  }, [selectedPlacementType, circuit]);
+
+  const handleDeleteComponent = useCallback((componentId: string) => {
+    circuit.deleteComponent(componentId);
+  }, [circuit]);
 
   const handleAddComponent = useCallback((type: string) => {
     const defaults = COMPONENT_DEFAULTS[type];
@@ -98,12 +114,29 @@ export function SandboxView() {
           </button>
         </div>
       </div>
+      {canPlace && (
+        <div className={styles.placementArea}>
+          <DragPalette
+            availableTypes={unlockedComponents.filter((t): t is ComponentType => t !== 'wire')}
+            selectedType={selectedPlacementType}
+            onSelect={(t) => { setSelectedPlacementType(t); if (t) setDeletionMode(false); }}
+            deletionMode={deletionMode}
+            onToggleDelete={() => { setDeletionMode(d => !d); setSelectedPlacementType(null); }}
+            showDelete={canDelete}
+          />
+        </div>
+      )}
       <div className={styles.workspaceArea}>
         <CircuitWorkspace
           circuit={circuit}
           showCurrentOverlay={showOverlay}
           interactive
           wiringMode
+          placementMode={canPlace && !!selectedPlacementType}
+          placementType={selectedPlacementType}
+          onPlace={handlePlace}
+          deletionMode={deletionMode}
+          onDeleteComponent={handleDeleteComponent}
         />
       </div>
       {description && (
