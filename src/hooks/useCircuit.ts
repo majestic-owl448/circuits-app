@@ -126,6 +126,14 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     });
   }, []);
 
+  const renameComponent = useCallback((componentId: string, newName: string) => {
+    setComponents(prev =>
+      prev.map(c =>
+        c.id === componentId ? { ...c, name: newName } : c,
+      ),
+    );
+  }, []);
+
   const reset = useCallback((newNodes: CircuitNode[], newComponents: CircuitComponent[]) => {
     setNodes(newNodes);
     setComponents(newComponents);
@@ -141,6 +149,7 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     addWire,
     placeComponent,
     deleteComponent,
+    renameComponent,
     reset,
     setNodes,
   };

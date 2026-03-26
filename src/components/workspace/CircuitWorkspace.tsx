@@ -89,7 +89,7 @@ export function CircuitWorkspace({
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [focusedComponent, setFocusedComponent] = useState<string | null>(null);
 
-  const { nodes, components, simulation, toggleSwitch, addWire } = circuit;
+  const { nodes, components, simulation, toggleSwitch, addWire, renameComponent } = circuit;
 
   const wires = components.filter(c => c.type === 'wire');
   const nonWires = components.filter(c => c.type !== 'wire');
@@ -282,6 +282,7 @@ export function CircuitWorkspace({
               isDeletable={deletionMode}
               onClick={() => handleComponentClick(comp.id)}
               onFocus={() => setFocusedComponent(comp.id)}
+              onRename={renameComponent}
             />
           );
         })}

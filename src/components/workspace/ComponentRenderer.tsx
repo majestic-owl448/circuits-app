@@ -11,6 +11,7 @@ interface Props {
   isDeletable?: boolean;
   onClick: () => void;
   onFocus: () => void;
+  onRename?: (componentId: string, newName: string) => void;
 }
 
 export function ComponentRenderer({
@@ -23,6 +24,7 @@ export function ComponentRenderer({
   isDeletable = false,
   onClick,
   onFocus,
+  onRename,
 }: Props) {
   const { position, type, name, properties } = component;
 
@@ -36,6 +38,14 @@ export function ComponentRenderer({
       className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''}`}
       transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
       onClick={onClick}
+      onDoubleClick={() => {
+        if (onRename) {
+          const newName = window.prompt('Rename component:', name);
+          if (newName !== null && newName.trim() !== '') {
+            onRename(component.id, newName.trim());
+          }
+        }
+      }}
       onFocus={onFocus}
       tabIndex={0}
       role={isInteractive ? 'button' : 'img'}
