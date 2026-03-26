@@ -1,0 +1,21 @@
+.node {
+  cursor: pointer;
+}
+
+.circle {
+  transition: r 0.15s, fill 0.15s;
+}
+
+.node:hover .circle {
+  r: 10;
+  fill: var(--color-primary);
+}
+
+.node:focus-visible {
+  outline: none;
+}
+
+.node:focus-visible .circle {
+  stroke: var(--color-primary);
+  stroke-width: 3;
+}

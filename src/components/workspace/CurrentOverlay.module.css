@@ -1,0 +1,13 @@
+.overlay {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay circle animateMotion {
+    /* Animations disabled via global rule */
+  }
+
+  .overlay {
+    display: none;
+  }
+}
