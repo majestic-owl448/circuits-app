@@ -64,6 +64,32 @@ export function ComponentRenderer({
       >
         {name}
       </text>
+
+      {/* Numeric value display */}
+      {type === 'battery' && properties.voltage !== undefined && (
+        <text
+          y={58}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill="var(--color-emphasis)"
+          transform={`rotate(${-rotation})`}
+        >
+          {properties.voltage}V
+        </text>
+      )}
+      {(type === 'bulb' || type === 'resistor') && properties.resistance !== undefined && (
+        <text
+          y={58}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill="var(--color-emphasis)"
+          transform={`rotate(${-rotation})`}
+        >
+          {properties.resistance}Ω
+        </text>
+      )}
     </g>
   );
 }
