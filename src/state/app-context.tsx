@@ -1,22 +1,37 @@
 import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
 import { loadState, saveState, type PersistedState } from './persistence.ts';
 
-export type View = 'home' | 'lesson' | 'sandbox';
+export type View = 'home' | 'lesson' | 'sandbox' | 'theory' | 'quiz';
 
 export interface AppState extends PersistedState {
   view: View;
   activeLessonId: string | null;
   activeLessonStep: number;
+  activeQuizId: string | null;
 }
 
 export type AppAction =
   | { type: 'NAVIGATE'; view: View }
   | { type: 'START_LESSON'; lessonId: string }
   | { type: 'ADVANCE_STEP' }
-  | { type: 'COMPLETE_LESSON'; lessonId: string; unlocks: string[] }
+  | {
+      type: 'COMPLETE_LESSON';
+      lessonId: string;
+      unlocks: string[];
+      unlockedActions?: string[];
+      unlockedFeatures?: string[];
+      theoryEntries?: string[];
+      quizzesUnlocked?: string[];
+    }
   | { type: 'TOGGLE_CURRENT_OVERLAY' }
   | { type: 'TOGGLE_THEORY_PANEL' }
-  | { type: 'SET_REDUCED_MOTION'; enabled: boolean };
+  | { type: 'SET_REDUCED_MOTION'; enabled: boolean }
+  | { type: 'START_QUIZ'; quizId: string }
+  | { type: 'COMPLETE_QUIZ'; quizId: string; score: number }
+  | { type: 'NAVIGATE_THEORY' }
+  | { type: 'UNLOCK_FEATURE'; featureId: string }
+  | { type: 'UNLOCK_ACTION'; actionId: string }
+  | { type: 'ADD_THEORY_ENTRIES'; entryIds: string[] };
 
 function reducer(state: AppState, action: AppAction): AppState {
   switch (action.type) {
@@ -37,7 +52,11 @@ function reducer(state: AppState, action: AppAction): AppState {
         activeLessonStep: state.activeLessonStep + 1,
         currentStep: state.currentStep + 1,
       };
-    case 'COMPLETE_LESSON':
+    case 'COMPLETE_LESSON': {
+      const newTheoryEntries = action.theoryEntries ?? [];
+      const newQuizzes = action.quizzesUnlocked ?? [];
+      const newActions = action.unlockedActions ?? [];
+      const newFeatures = action.unlockedFeatures ?? [];
       return {
         ...state,
         completedLessons: state.completedLessons.includes(action.lessonId)
@@ -46,9 +65,21 @@ function reducer(state: AppState, action: AppAction): AppState {
         unlockedComponents: [
           ...new Set([...state.unlockedComponents, ...action.unlocks]),
         ],
+        unlockedActions: [
+          ...new Set([...state.unlockedActions, ...newActions]),
+        ],
+        unlockedFeatures: [
+          ...new Set([...state.unlockedFeatures, ...newFeatures]),
+        ],
+        theoryEntriesSeen: [
+          ...new Set([...state.theoryEntriesSeen, ...newTheoryEntries]),
+        ],
+        completedQuizzes: state.completedQuizzes,
+        quizBestScores: state.quizBestScores,
         currentLesson: null,
         currentStep: 0,
       };
+    }
     case 'TOGGLE_CURRENT_OVERLAY':
       return {
         ...state,
@@ -73,6 +104,49 @@ function reducer(state: AppState, action: AppAction): AppState {
           reducedMotion: action.enabled,
         },
       };
+    case 'START_QUIZ':
+      return {
+        ...state,
+        view: 'quiz',
+        activeQuizId: action.quizId,
+      };
+    case 'COMPLETE_QUIZ': {
+      const prevBest = state.quizBestScores[action.quizId] ?? 0;
+      const newBest = Math.max(prevBest, action.score);
+      return {
+        ...state,
+        completedQuizzes: state.completedQuizzes.includes(action.quizId)
+          ? state.completedQuizzes
+          : [...state.completedQuizzes, action.quizId],
+        quizBestScores: {
+          ...state.quizBestScores,
+          [action.quizId]: newBest,
+        },
+      };
+    }
+    case 'NAVIGATE_THEORY':
+      return { ...state, view: 'theory' };
+    case 'UNLOCK_FEATURE':
+      return {
+        ...state,
+        unlockedFeatures: state.unlockedFeatures.includes(action.featureId)
+          ? state.unlockedFeatures
+          : [...state.unlockedFeatures, action.featureId],
+      };
+    case 'UNLOCK_ACTION':
+      return {
+        ...state,
+        unlockedActions: state.unlockedActions.includes(action.actionId)
+          ? state.unlockedActions
+          : [...state.unlockedActions, action.actionId],
+      };
+    case 'ADD_THEORY_ENTRIES':
+      return {
+        ...state,
+        theoryEntriesSeen: [
+          ...new Set([...state.theoryEntriesSeen, ...action.entryIds]),
+        ],
+      };
     default:
       return state;
   }
@@ -88,6 +162,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     view: 'home',
     activeLessonId: null,
     activeLessonStep: 0,
+    activeQuizId: null,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -99,6 +174,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
       currentLesson: state.currentLesson,
       currentStep: state.currentStep,
       unlockedComponents: state.unlockedComponents,
+      unlockedActions: state.unlockedActions,
+      unlockedFeatures: state.unlockedFeatures,
+      completedQuizzes: state.completedQuizzes,
+      quizBestScores: state.quizBestScores,
+      theoryEntriesSeen: state.theoryEntriesSeen,
       preferences: state.preferences,
     });
   }, [
@@ -106,6 +186,11 @@ export function AppProvider({ children }: { children: ReactNode }) {
     state.currentLesson,
     state.currentStep,
     state.unlockedComponents,
+    state.unlockedActions,
+    state.unlockedFeatures,
+    state.completedQuizzes,
+    state.quizBestScores,
+    state.theoryEntriesSeen,
     state.preferences,
     state.version,
   ]);

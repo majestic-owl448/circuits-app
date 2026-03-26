@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'circuits-app-state';
-const CURRENT_VERSION = 1;
+const CURRENT_VERSION = 2;
 
 export interface PersistedState {
   version: number;
@@ -7,6 +7,11 @@ export interface PersistedState {
   currentLesson: string | null;
   currentStep: number;
   unlockedComponents: string[];
+  unlockedActions: string[];
+  unlockedFeatures: string[];
+  completedQuizzes: string[];
+  quizBestScores: Record<string, number>;
+  theoryEntriesSeen: string[];
   preferences: {
     showCurrentOverlay: boolean;
     theoryPanelPinned: boolean;
@@ -20,6 +25,11 @@ const DEFAULT_STATE: PersistedState = {
   currentLesson: null,
   currentStep: 0,
   unlockedComponents: [],
+  unlockedActions: [],
+  unlockedFeatures: [],
+  completedQuizzes: [],
+  quizBestScores: {},
+  theoryEntriesSeen: [],
   preferences: {
     showCurrentOverlay: false,
     theoryPanelPinned: false,
