@@ -113,6 +113,13 @@ function LessonViewInner({
     return true;
   }, [currentStep, circuit.components]);
 
+  // Auto-advance when required action is satisfied
+  useEffect(() => {
+    if (phase === 'steps' && currentStep?.requiredAction && isStepActionSatisfied()) {
+      handleStepAction();
+    }
+  }, [phase, currentStep, isStepActionSatisfied, handleStepAction]);
+
   const leftPanel = (
     <div className={styles.leftContent}>
       {phase === 'steps' && currentStep && (
