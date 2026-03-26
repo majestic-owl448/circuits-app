@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.progress {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.text {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.text strong {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+.text code {
+  padding: 1px 6px;
+  background: var(--color-bg);
+  border-radius: var(--radius-sm);
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+}
+
+.action {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.actionHint {
+  font-size: 0.8125rem;
+  color: var(--color-primary);
+  font-style: italic;
+}
+
+.nextButton {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--color-primary);
+  color: white;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background 0.15s;
+  align-self: flex-start;
+}
+
+.nextButton:hover {
+  background: var(--color-primary-hover);
+}

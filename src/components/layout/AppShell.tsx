@@ -1,6 +1,8 @@
 import { useAppState } from '../../state/app-context.tsx';
 import { TopNav } from '../nav/TopNav.tsx';
 import { HomePage } from './HomePage.tsx';
+import { LessonView } from '../lessons/LessonView.tsx';
+import { SandboxView } from '../sandbox/SandboxView.tsx';
 import styles from './AppShell.module.css';
 
 export function AppShell() {
@@ -11,8 +13,8 @@ export function AppShell() {
       <TopNav />
       <main className={styles.main}>
         {view === 'home' && <HomePage />}
-        {view === 'lesson' && <div>Lesson view (coming soon)</div>}
-        {view === 'sandbox' && <div>Sandbox view (coming soon)</div>}
+        {view === 'lesson' && <LessonView />}
+        {view === 'sandbox' && <SandboxView />}
       </main>
     </div>
   );
