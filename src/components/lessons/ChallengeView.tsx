@@ -14,6 +14,8 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
   const [hintIndex, setHintIndex] = useState(-1);
   const [feedback, setFeedback] = useState<{ passed: boolean; message: string } | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  const [calcInput, setCalcInput] = useState('');
+  const [showBreakdown, setShowBreakdown] = useState(false);
 
   const handleCheck = useCallback(() => {
     if (challenge.type === 'choose') {
@@ -23,9 +25,32 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
         return;
       }
       if (choice.isCorrect) {
-        setFeedback({ passed: true, message: 'Correct! Well done.' });
+        setFeedback({ passed: true, message: choice.explanation ?? 'Correct! Well done.' });
       } else {
-        setFeedback({ passed: false, message: 'Not quite. Try again!' });
+        setFeedback({ passed: false, message: choice.explanation ?? 'Not quite. Try again!' });
+        if (hintIndex < challenge.hints.length - 1) {
+          setHintIndex(prev => prev + 1);
+        }
+      }
+      return;
+    }
+
+    if (challenge.type === 'calculate' && challenge.calculationTarget) {
+      const target = challenge.calculationTarget;
+      const parsed = parseFloat(calcInput);
+      if (isNaN(parsed)) {
+        setFeedback({ passed: false, message: 'Please enter a numeric value.' });
+        return;
+      }
+      const diff = Math.abs(parsed - target.expectedValue);
+      if (diff <= target.tolerance) {
+        setFeedback({
+          passed: true,
+          message: `Correct! ${parsed} ${target.unit} is right.${target.formula ? ` Using ${target.formula}: the answer is ${target.expectedValue} ${target.unit}.` : ''}`,
+        });
+      } else {
+        const hint = target.formula ? ` Try using: ${target.formula}` : '';
+        setFeedback({ passed: false, message: `Not quite.${hint} Check your calculation and try again.` });
         if (hintIndex < challenge.hints.length - 1) {
           setHintIndex(prev => prev + 1);
         }
@@ -38,7 +63,7 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
     if (!result.passed && hintIndex < challenge.hints.length - 1) {
       setHintIndex(prev => prev + 1);
     }
-  }, [challenge, simulation, selectedChoice, hintIndex]);
+  }, [challenge, simulation, selectedChoice, calcInput, hintIndex]);
 
   return (
     <div className={styles.container}>
@@ -59,6 +84,21 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
               <span>{choice.label}</span>
             </label>
           ))}
+        </div>
+      )}
+
+      {challenge.type === 'calculate' && challenge.calculationTarget && (
+        <div className={styles.calcInputGroup}>
+          <input
+            type="number"
+            step="any"
+            className={styles.calcInput}
+            value={calcInput}
+            onChange={e => setCalcInput(e.target.value)}
+            placeholder="Your answer"
+            aria-label={`Enter value in ${challenge.calculationTarget.unit}`}
+          />
+          <span className={styles.calcUnit}>{challenge.calculationTarget.unit}</span>
         </div>
       )}
 
@@ -83,6 +123,20 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
         </div>
       )}
 
+      {/* Detailed breakdown */}
+      {challenge.detailedBreakdown && (feedback?.passed || showBreakdown) && (
+        <div className={styles.breakdown}>
+          <div className={styles.breakdownTitle}>Detailed Breakdown</div>
+          {challenge.detailedBreakdown.steps.map((step, i) => (
+            <div key={i} className={styles.breakdownStep}>
+              <span className={styles.breakdownLabel}>{step.label}</span>
+              <code className={styles.breakdownFormula}>{step.formula}</code>
+              <span className={styles.breakdownResult}>{step.result}</span>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className={styles.actions}>
         {(!feedback || !feedback.passed) && (
           <button className={styles.checkButton} onClick={handleCheck}>
@@ -100,6 +154,14 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
             onClick={() => setHintIndex(prev => prev + 1)}
           >
             Show Hint
+          </button>
+        )}
+        {challenge.detailedBreakdown && !feedback?.passed && !showBreakdown && (
+          <button
+            className={styles.hintButton}
+            onClick={() => setShowBreakdown(true)}
+          >
+            More Details
           </button>
         )}
       </div>

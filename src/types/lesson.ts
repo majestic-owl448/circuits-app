@@ -68,7 +68,7 @@ export type UserAction =
 export interface Challenge {
   id: string;
   prompt: string;
-  type: 'build' | 'fix' | 'predict' | 'choose' | 'drag-place';
+  type: 'build' | 'fix' | 'predict' | 'choose' | 'drag-place' | 'calculate';
   initialCircuit?: CircuitComponent[];
   initialNodes?: { id: string; position: { x: number; y: number } }[];
   evaluationCriteria: EvaluationCriteria;
@@ -77,6 +77,16 @@ export interface Challenge {
   componentToPlace?: ComponentType;
   targetSlotNodeA?: string;
   targetSlotNodeB?: string;
+  calculationTarget?: {
+    quantity: 'current' | 'voltage' | 'resistance' | 'power';
+    expectedValue: number;
+    tolerance: number;
+    unit: string;
+    formula?: string;
+  };
+  detailedBreakdown?: {
+    steps: { label: string; formula: string; result: string }[];
+  };
 }
 
 export interface ChallengeChoice {
