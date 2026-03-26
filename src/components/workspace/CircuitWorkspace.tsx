@@ -26,7 +26,7 @@ function terminalRadius(type: CircuitComponent['type']): number {
  * Compute the rotation angle (degrees) a component needs so that its
  * terminals (which default along the X axis) face toward its two nodes.
  */
-function computeRotation(comp: CircuitComponent, nodeAPos: Position, nodeBPos: Position): number {
+function computeRotation(_comp: CircuitComponent, nodeAPos: Position, nodeBPos: Position): number {
   // Direction from nodeA to nodeB through the component
   const dx = nodeBPos.x - nodeAPos.x;
   const dy = nodeBPos.y - nodeAPos.y;
