@@ -1,10 +1,64 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useMemo } from 'react';
 import type { UseCircuitReturn } from '../../hooks/useCircuit.ts';
+import type { Position, CircuitComponent } from '../../types/circuit.ts';
 import { ComponentRenderer } from './ComponentRenderer.tsx';
 import { WireRenderer } from './WireRenderer.tsx';
 import { CurrentOverlay } from './CurrentOverlay.tsx';
+import type { WireSegment } from './CurrentOverlay.tsx';
 import { NodeRenderer } from './NodeRenderer.tsx';
 import styles from './CircuitWorkspace.module.css';
+
+/**
+ * Default terminal offsets for each component type (unrotated).
+ * All component SVGs are drawn with terminals along the X axis.
+ */
+function terminalRadius(type: CircuitComponent['type']): number {
+  switch (type) {
+    case 'battery': return 8;
+    case 'bulb': return 18;
+    case 'switch': return 16;
+    case 'resistor': return 20;
+    default: return 0;
+  }
+}
+
+/**
+ * Compute the rotation angle (degrees) a component needs so that its
+ * terminals (which default along the X axis) face toward its two nodes.
+ */
+function computeRotation(comp: CircuitComponent, nodeAPos: Position, nodeBPos: Position): number {
+  // Direction from nodeA to nodeB through the component
+  const dx = nodeBPos.x - nodeAPos.x;
+  const dy = nodeBPos.y - nodeAPos.y;
+  return Math.atan2(dy, dx) * (180 / Math.PI);
+}
+
+/**
+ * Returns [terminalA, terminalB] as absolute positions, rotated to face the nodes.
+ */
+function getTerminals(
+  comp: CircuitComponent,
+  nodeAPos: Position,
+  nodeBPos: Position,
+): [Position, Position] {
+  const r = terminalRadius(comp.type);
+  const angleDeg = computeRotation(comp, nodeAPos, nodeBPos);
+  const angleRad = angleDeg * (Math.PI / 180);
+  const cos = Math.cos(angleRad);
+  const sin = Math.sin(angleRad);
+
+  // Terminal A faces nodeA (negative direction), terminal B faces nodeB (positive direction)
+  const termA: Position = {
+    x: comp.position.x - r * cos,
+    y: comp.position.y - r * sin,
+  };
+  const termB: Position = {
+    x: comp.position.x + r * cos,
+    y: comp.position.y + r * sin,
+  };
+
+  return [termA, termB];
+}
 
 interface Props {
   circuit: UseCircuitReturn;
@@ -29,6 +83,47 @@ export function CircuitWorkspace({
 
   const wires = components.filter(c => c.type === 'wire');
   const nonWires = components.filter(c => c.type !== 'wire');
+
+  // Build segments following loop order so current dots all flow the same direction
+  const currentSegments = useMemo<WireSegment[]>(() => {
+    const { loopNodes } = simulation;
+    if (loopNodes.length < 2) return [];
+    const segs: WireSegment[] = [];
+    const nodeMap = new Map(nodes.map(n => [n.id, n]));
+    const compMap = new Map(components.map(c => [c.id, c]));
+
+    // Walk consecutive node pairs in loop order
+    for (let i = 0; i < loopNodes.length - 1; i++) {
+      const fromId = loopNodes[i];
+      const toId = loopNodes[i + 1];
+      const fromNode = nodeMap.get(fromId);
+      const toNode = nodeMap.get(toId);
+      if (!fromNode || !toNode) continue;
+
+      // Find the component connecting these two nodes
+      const comp = [...compMap.values()].find(c =>
+        (c.nodeA === fromId && c.nodeB === toId) ||
+        (c.nodeA === toId && c.nodeB === fromId)
+      );
+      if (!comp) continue;
+
+      if (comp.type === 'wire') {
+        segs.push({ id: comp.id, from: fromNode.position, to: toNode.position });
+      } else {
+        // Compute terminals oriented for the component's actual node pair
+        const nA = nodeMap.get(comp.nodeA)!;
+        const nB = nodeMap.get(comp.nodeB)!;
+        const [termA, termB] = getTerminals(comp, nA.position, nB.position);
+        // Pick the correct direction: from → terminal near from, terminal near to → to
+        const isForward = comp.nodeA === fromId;
+        const termFrom = isForward ? termA : termB;
+        const termTo = isForward ? termB : termA;
+        segs.push({ id: `${comp.id}-a`, from: fromNode.position, to: termFrom });
+        segs.push({ id: `${comp.id}-b`, from: termTo, to: toNode.position });
+      }
+    }
+    return segs;
+  }, [simulation, nodes, components]);
 
   const handleNodeClick = useCallback((nodeId: string) => {
     if (!wiringMode) return;
@@ -102,23 +197,43 @@ export function CircuitWorkspace({
           );
         })}
 
+        {/* Connection lines from components to their nodes */}
+        {nonWires.map(comp => {
+          const nodeA = nodes.find(n => n.id === comp.nodeA);
+          const nodeB = nodes.find(n => n.id === comp.nodeB);
+          if (!nodeA || !nodeB) return null;
+          const isActive = simulation.isComplete && !simulation.isShortCircuit;
+          const [termA, termB] = getTerminals(comp, nodeA.position, nodeB.position);
+          return (
+            <g key={`${comp.id}-leads`}>
+              <WireRenderer from={nodeA.position} to={termA} isActive={isActive} />
+              <WireRenderer from={termB} to={nodeB.position} isActive={isActive} />
+            </g>
+          );
+        })}
+
         {/* Current overlay */}
         {showCurrentOverlay && simulation.isComplete && !simulation.isShortCircuit && (
           <CurrentOverlay
-            nodes={nodes}
-            components={components}
+            segments={currentSegments}
             current={simulation.totalCurrent}
           />
         )}
 
         {/* Components */}
         {nonWires.map(comp => {
+          const nodeA = nodes.find(n => n.id === comp.nodeA);
+          const nodeB = nodes.find(n => n.id === comp.nodeB);
+          const rotation = nodeA && nodeB
+            ? computeRotation(comp, nodeA.position, nodeB.position)
+            : 0;
           const result = simulation.componentResults.get(comp.id);
           return (
             <ComponentRenderer
               key={comp.id}
               component={comp}
               result={result}
+              rotation={rotation}
               isHighlighted={highlights.includes(comp.id)}
               isFocused={focusedComponent === comp.id}
               isCircuitComplete={simulation.isComplete && !simulation.isShortCircuit}

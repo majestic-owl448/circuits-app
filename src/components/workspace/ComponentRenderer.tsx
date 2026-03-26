@@ -4,6 +4,7 @@ import styles from './ComponentRenderer.module.css';
 interface Props {
   component: CircuitComponent;
   result?: ComponentResult;
+  rotation?: number;
   isHighlighted: boolean;
   isFocused: boolean;
   isCircuitComplete: boolean;
@@ -14,6 +15,7 @@ interface Props {
 export function ComponentRenderer({
   component,
   result,
+  rotation = 0,
   isHighlighted,
   isFocused,
   isCircuitComplete,
@@ -30,7 +32,7 @@ export function ComponentRenderer({
   return (
     <g
       className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''}`}
-      transform={`translate(${position.x}, ${position.y})`}
+      transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
       onClick={onClick}
       onFocus={onFocus}
       tabIndex={0}
@@ -44,18 +46,19 @@ export function ComponentRenderer({
       )}
 
       {/* Component body */}
-      {type === 'battery' && <BatterySVG />}
+      {type === 'battery' && <BatterySVG rotation={rotation} />}
       {type === 'bulb' && <BulbSVG brightness={bulbBrightness} />}
       {type === 'switch' && <SwitchSVG isClosed={properties.isClosed ?? false} />}
       {type === 'resistor' && <ResistorSVG />}
 
-      {/* Label */}
+      {/* Label — counter-rotate to stay upright */}
       <text
         y={45}
         textAnchor="middle"
         className={styles.label}
         fontSize="11"
         fill="var(--color-text-secondary)"
+        transform={`rotate(${-rotation})`}
       >
         {name}
       </text>
@@ -81,13 +84,13 @@ function getAriaLabel(comp: CircuitComponent, isActive: boolean, result?: Compon
   return label;
 }
 
-function BatterySVG() {
+function BatterySVG({ rotation }: { rotation: number }) {
   return (
     <g>
       <line x1="-8" y1="-20" x2="-8" y2="20" stroke="var(--color-text)" strokeWidth="3" />
       <line x1="8" y1="-12" x2="8" y2="12" stroke="var(--color-text)" strokeWidth="1.5" />
-      <text x="-14" y="-24" fontSize="9" fill="var(--color-text-secondary)">+</text>
-      <text x="4" y="-16" fontSize="9" fill="var(--color-text-secondary)">-</text>
+      <text x="-8" y="-32" fontSize="12" textAnchor="middle" dominantBaseline="middle" fill="var(--color-text-secondary)" transform={`rotate(${-rotation}, -8, -32)`}>+</text>
+      <text x="8" y="-32" fontSize="14" textAnchor="middle" dominantBaseline="middle" fontWeight="bold" fill="var(--color-text-secondary)" transform={`rotate(${-rotation}, 8, -32)`}>−</text>
     </g>
   );
 }
@@ -99,16 +102,19 @@ function BulbSVG({ brightness }: { brightness: number }) {
   return (
     <g>
       {brightness > 0 && (
-        <circle r="28" fill={`rgba(255, 220, 50, ${brightness * 0.3})`} />
+        <>
+          <circle r="40" fill={`rgba(255, 220, 50, ${brightness * 0.15})`} />
+          <circle r="30" fill={`rgba(255, 220, 50, ${brightness * 0.35})`} />
+        </>
       )}
       <circle
         r="18"
         fill={fillColor}
-        stroke="var(--color-text)"
+        stroke={brightness > 0 ? 'rgba(200, 170, 0, 0.8)' : 'var(--color-text)'}
         strokeWidth="1.5"
       />
-      <line x1="-8" y1="-8" x2="8" y2="8" stroke="var(--color-text)" strokeWidth="1" />
-      <line x1="8" y1="-8" x2="-8" y2="8" stroke="var(--color-text)" strokeWidth="1" />
+      <line x1="-8" y1="-8" x2="8" y2="8" stroke={brightness > 0 ? 'rgba(180, 150, 0, 0.6)' : 'var(--color-text)'} strokeWidth="1" />
+      <line x1="8" y1="-8" x2="-8" y2="8" stroke={brightness > 0 ? 'rgba(180, 150, 0, 0.6)' : 'var(--color-text)'} strokeWidth="1" />
     </g>
   );
 }
