@@ -17,6 +17,16 @@
   animation: pulse 1.5s ease-in-out infinite;
 }
 
+.deletable:hover circle,
+.deletable:hover line,
+.deletable:hover polyline {
+  filter: drop-shadow(0 0 4px var(--color-error));
+}
+
+.deletable:hover .label {
+  fill: var(--color-error);
+}
+
 .label {
   pointer-events: none;
   user-select: none;

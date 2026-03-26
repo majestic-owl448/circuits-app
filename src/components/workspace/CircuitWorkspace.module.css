@@ -21,3 +21,15 @@
 .svg:focus-visible {
   outline: none;
 }
+
+.placementCursor {
+  cursor: crosshair;
+}
+
+.clickArea {
+  cursor: crosshair;
+}
+
+.deletionMode {
+  /* visual hint that deletion mode is active */
+}

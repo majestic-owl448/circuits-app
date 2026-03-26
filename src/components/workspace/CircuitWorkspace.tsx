@@ -1,6 +1,6 @@
 import { useRef, useState, useCallback, useMemo } from 'react';
 import type { UseCircuitReturn } from '../../hooks/useCircuit.ts';
-import type { Position, CircuitComponent } from '../../types/circuit.ts';
+import type { Position, CircuitComponent, ComponentType } from '../../types/circuit.ts';
 import { ComponentRenderer } from './ComponentRenderer.tsx';
 import { WireRenderer } from './WireRenderer.tsx';
 import { CurrentOverlay } from './CurrentOverlay.tsx';
@@ -66,6 +66,11 @@ interface Props {
   highlights?: string[];
   interactive?: boolean;
   wiringMode?: boolean;
+  placementMode?: boolean;
+  placementType?: ComponentType | null;
+  onPlace?: (position: Position) => void;
+  deletionMode?: boolean;
+  onDeleteComponent?: (componentId: string) => void;
 }
 
 export function CircuitWorkspace({
@@ -74,6 +79,11 @@ export function CircuitWorkspace({
   highlights = [],
   interactive = true,
   wiringMode = false,
+  placementMode = false,
+  placementType = null,
+  onPlace,
+  deletionMode = false,
+  onDeleteComponent,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
@@ -139,11 +149,37 @@ export function CircuitWorkspace({
 
   const handleComponentClick = useCallback((componentId: string) => {
     if (!interactive) return;
+    if (deletionMode && onDeleteComponent) {
+      const comp = components.find(c => c.id === componentId);
+      if (comp && comp.type !== 'wire') {
+        onDeleteComponent(componentId);
+      }
+      return;
+    }
     const comp = components.find(c => c.id === componentId);
     if (comp?.type === 'switch') {
       toggleSwitch(componentId);
     }
-  }, [interactive, components, toggleSwitch]);
+  }, [interactive, components, toggleSwitch, deletionMode, onDeleteComponent]);
+
+  const handleSvgClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    if (!placementMode || !placementType || !onPlace) return;
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    // Only handle clicks directly on the SVG background, not on child elements
+    if (e.target !== svg && !(e.target as Element).classList.contains(styles.clickArea)) return;
+
+    const ctm = svg.getScreenCTM();
+    if (!ctm) return;
+
+    const point = svg.createSVGPoint();
+    point.x = e.clientX;
+    point.y = e.clientY;
+    const svgPoint = point.matrixTransform(ctm.inverse());
+
+    onPlace({ x: Math.round(svgPoint.x), y: Math.round(svgPoint.y) });
+  }, [placementMode, placementType, onPlace]);
 
   const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
     if (!focusedComponent) return;
@@ -176,12 +212,18 @@ export function CircuitWorkspace({
     >
       <svg
         ref={svgRef}
-        className={styles.svg}
+        className={`${styles.svg} ${placementMode && placementType ? styles.placementCursor : ''} ${deletionMode ? styles.deletionMode : ''}`}
         viewBox="0 0 700 500"
         onKeyDown={handleKeyDown}
+        onClick={handleSvgClick}
         tabIndex={0}
         aria-label="Interactive circuit diagram"
       >
+        {/* Transparent click area for placement */}
+        {placementMode && placementType && (
+          <rect className={styles.clickArea} x="0" y="0" width="700" height="500" fill="transparent" />
+        )}
+
         {/* Wires first (behind components) */}
         {wires.map(wire => {
           const nodeA = nodes.find(n => n.id === wire.nodeA);
@@ -237,6 +279,7 @@ export function CircuitWorkspace({
               isHighlighted={highlights.includes(comp.id)}
               isFocused={focusedComponent === comp.id}
               isCircuitComplete={simulation.isComplete && !simulation.isShortCircuit}
+              isDeletable={deletionMode}
               onClick={() => handleComponentClick(comp.id)}
               onFocus={() => setFocusedComponent(comp.id)}
             />

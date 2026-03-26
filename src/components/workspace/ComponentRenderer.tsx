@@ -8,6 +8,7 @@ interface Props {
   isHighlighted: boolean;
   isFocused: boolean;
   isCircuitComplete: boolean;
+  isDeletable?: boolean;
   onClick: () => void;
   onFocus: () => void;
 }
@@ -19,6 +20,7 @@ export function ComponentRenderer({
   isHighlighted,
   isFocused,
   isCircuitComplete,
+  isDeletable = false,
   onClick,
   onFocus,
 }: Props) {
@@ -31,14 +33,14 @@ export function ComponentRenderer({
 
   return (
     <g
-      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''}`}
+      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''}`}
       transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
       onClick={onClick}
       onFocus={onFocus}
       tabIndex={0}
       role={isInteractive ? 'button' : 'img'}
       aria-label={getAriaLabel(component, isCircuitComplete, result)}
-      style={{ cursor: isInteractive ? 'pointer' : 'default' }}
+      style={{ cursor: isDeletable ? 'pointer' : isInteractive ? 'pointer' : 'default' }}
     >
       {/* Highlight ring */}
       {isHighlighted && (

@@ -1,0 +1,67 @@
+.palette {
+  display: flex;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  align-items: center;
+}
+
+.paletteLabel {
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  margin-right: var(--spacing-xs);
+  white-space: nowrap;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  transition: border-color 0.15s, background 0.15s;
+  cursor: pointer;
+}
+
+.item:hover {
+  border-color: var(--color-primary);
+  background: var(--color-surface-2);
+}
+
+.itemSelected {
+  border-color: var(--color-cta);
+  background: var(--color-surface-2);
+  color: var(--color-cta);
+}
+
+.deleteToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.deleteToggle:hover {
+  border-color: var(--color-error);
+  color: var(--color-error);
+}
+
+.deleteActive {
+  border-color: var(--color-error);
+  color: var(--color-error);
+  background: var(--color-surface-2);
+}
