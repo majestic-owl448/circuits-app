@@ -33,6 +33,8 @@ export interface SimulationResult {
   totalResistance: number;
   totalCurrent: number;
   componentResults: Map<string, ComponentResult>;
+  /** Ordered node IDs forming the current loop (first node repeated at end). */
+  loopNodes: string[];
 }
 
 export interface ComponentResult {

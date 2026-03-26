@@ -39,25 +39,35 @@ export function buildGraph(
   return { nodes: nodeMap, components: compMap, adjacency };
 }
 
-export function findLoops(graph: CircuitGraph): string[][] {
+export interface LoopResult {
+  componentIds: string[];
+  nodeIds: string[];
+}
+
+export function findLoops(graph: CircuitGraph): LoopResult[] {
   const batteries = [...graph.components.values()].filter(c => c.type === 'battery');
-  const loops: string[][] = [];
+  const loops: LoopResult[] = [];
 
   for (const battery of batteries) {
     const startNode = battery.nodeA;
-    const visited = new Set<string>();
-    const path: string[] = [];
+    const visited = new Set<string>([startNode]);
+    const compPath: string[] = [];
+    const nodePath: string[] = [startNode];
 
     function dfs(currentNode: string, fromComponentId: string | null): boolean {
       if (visited.has(currentNode)) {
-        if (currentNode === startNode && path.length > 1) {
-          loops.push([...path]);
+        if (currentNode === startNode && compPath.length > 1) {
+          loops.push({
+            componentIds: [...compPath],
+            nodeIds: [...nodePath, startNode],
+          });
           return true;
         }
         return false;
       }
 
       visited.add(currentNode);
+      nodePath.push(currentNode);
 
       const neighbors = graph.adjacency.get(currentNode) ?? [];
       for (const { componentId, neighborNode } of neighbors) {
@@ -66,17 +76,18 @@ export function findLoops(graph: CircuitGraph): string[][] {
         const comp = graph.components.get(componentId)!;
         if (comp.type === 'switch' && !comp.properties.isClosed) continue;
 
-        path.push(componentId);
+        compPath.push(componentId);
         const found = dfs(neighborNode, componentId);
         if (found) return true;
-        path.pop();
+        compPath.pop();
       }
 
+      nodePath.pop();
       visited.delete(currentNode);
       return false;
     }
 
-    path.push(battery.id);
+    compPath.push(battery.id);
     dfs(battery.nodeB, battery.id);
   }
 

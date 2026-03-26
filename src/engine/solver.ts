@@ -11,6 +11,7 @@ export function solve(
     totalResistance: 0,
     totalCurrent: 0,
     componentResults: new Map(),
+    loopNodes: [],
   };
 
   if (components.length === 0) return emptyResult;
@@ -24,7 +25,7 @@ export function solve(
 
   // Use the first valid loop found
   const loop = loops[0];
-  const loopComponents = loop.map(id => graph.components.get(id)!);
+  const loopComponents = loop.componentIds.map(id => graph.components.get(id)!);
 
   // Calculate total voltage from sources
   let totalVoltage = 0;
@@ -50,6 +51,7 @@ export function solve(
       totalResistance: 0,
       totalCurrent: Infinity,
       componentResults: new Map(),
+      loopNodes: loop.nodeIds,
     };
   }
 
@@ -83,5 +85,6 @@ export function solve(
     totalResistance,
     totalCurrent,
     componentResults,
+    loopNodes: loop.nodeIds,
   };
 }
