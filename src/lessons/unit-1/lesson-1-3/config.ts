@@ -57,6 +57,7 @@ export const lesson1_3: LessonConfig = {
       id: 'challenge-1',
       prompt: 'Build a simple switch circuit: place all components so the bulb can be turned on and off with the switch. A reference diagram is shown.',
       type: 'build',
+      availableComponents: ['battery', 'bulb', 'switch', 'wire'],
       evaluationCriteria: { circuitMustBeClosed: true, customCheck: 'has-switch-and-bulb' },
       hints: [
         'You need a battery, a wire, a bulb, and a switch forming a complete loop.',
@@ -67,6 +68,7 @@ export const lesson1_3: LessonConfig = {
       id: 'challenge-2',
       prompt: 'Recreate the light-switch circuit again, this time without the reference diagram visible.',
       type: 'build',
+      availableComponents: ['battery', 'bulb', 'switch', 'wire'],
       evaluationCriteria: { circuitMustBeClosed: true, customCheck: 'has-switch-and-bulb' },
       hints: [
         'Remember: battery, wire, bulb, and switch in a loop.',

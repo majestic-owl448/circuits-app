@@ -75,12 +75,17 @@ function LessonViewInner({
       if (lesson.challenges.length > 0) {
         setPhase('challenges');
         setChallengeIndex(0);
-        // Load challenge circuit if provided
+        // Load challenge circuit if provided, or clear for build challenges
         const challenge = lesson.challenges[0];
         if (challenge.initialCircuit && challenge.initialNodes) {
           circuit.reset(
             challenge.initialNodes.map(n => ({ ...n })) as CircuitNode[],
             challenge.initialCircuit.map(c => ({ ...c })),
+          );
+        } else if (challenge.type === 'build') {
+          circuit.reset(
+            lesson.initialNodes.map(n => ({ ...n })) as CircuitNode[],
+            [],
           );
         }
       } else {
@@ -98,6 +103,11 @@ function LessonViewInner({
         circuit.reset(
           challenge.initialNodes.map(n => ({ ...n })) as CircuitNode[],
           challenge.initialCircuit.map(c => ({ ...c })),
+        );
+      } else if (challenge.type === 'build') {
+        circuit.reset(
+          lesson.initialNodes.map(n => ({ ...n })) as CircuitNode[],
+          [],
         );
       }
     } else {
@@ -226,9 +236,10 @@ function LessonViewInner({
             {isBuildChallenge && (
               <DragPalette
                 availableTypes={
-                  (lesson.sandboxUnlocks.length > 0
-                    ? lesson.sandboxUnlocks
-                    : ['battery', 'bulb', 'switch', 'resistor']
+                  (currentChallenge?.availableComponents
+                    ?? (lesson.sandboxUnlocks.length > 0
+                      ? lesson.sandboxUnlocks
+                      : ['battery', 'bulb', 'switch', 'resistor'])
                   ).filter((t): t is ComponentType => t !== 'wire')
                 }
                 selectedType={selectedPlacementType}
@@ -249,6 +260,7 @@ function LessonViewInner({
               onPlace={handlePlace}
               deletionMode={deletionMode}
               onDeleteComponent={handleDeleteComponent}
+              showValues={lesson.showFormulaPanel}
             />
           </>
         }

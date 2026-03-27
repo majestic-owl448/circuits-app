@@ -74,6 +74,7 @@ export interface Challenge {
   evaluationCriteria: EvaluationCriteria;
   hints: string[];
   choices?: ChallengeChoice[];
+  availableComponents?: ComponentType[];
   componentToPlace?: ComponentType;
   targetSlotNodeA?: string;
   targetSlotNodeB?: string;
