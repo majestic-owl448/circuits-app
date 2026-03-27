@@ -36,4 +36,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Prepare to transition from qualitative understanding to numerical analysis.',
     lessons: ['lesson-5-1', 'lesson-5-2'],
   },
+  // Chapter 2: First Numerical DC Analysis
+  {
+    id: 'ch2-unit-1',
+    title: 'First Numbers in a Circuit',
+    stageLabel: 'Beginner to Early Intermediate',
+    description: 'Understand that source and load have explicit numerical values that determine circuit behavior.',
+    lessons: ['lesson-ch2-1-1', 'lesson-ch2-1-2', 'lesson-ch2-1-3'],
+  },
+  {
+    id: 'ch2-unit-2',
+    title: 'First Manual Use of Ohm\'s Law',
+    stageLabel: 'Early Intermediate',
+    description: 'Begin actively using V = IR to calculate current, resistance, and voltage.',
+    lessons: ['lesson-ch2-2-1', 'lesson-ch2-2-2', 'lesson-ch2-2-3'],
+  },
+  {
+    id: 'ch2-unit-3',
+    title: 'Power Enters the Picture',
+    stageLabel: 'Early Intermediate',
+    description: 'Understand power as a quantitative description and begin calculating it in simple circuits.',
+    lessons: ['lesson-ch2-3-1', 'lesson-ch2-3-2', 'lesson-ch2-3-3'],
+  },
+  {
+    id: 'ch2-unit-4',
+    title: 'Numerical Challenge Structure',
+    stageLabel: 'Early Intermediate',
+    description: 'Apply numerical reasoning inside challenges and see transparent evaluation results.',
+    lessons: ['lesson-ch2-4-1', 'lesson-ch2-4-2', 'lesson-ch2-4-3'],
+  },
+  {
+    id: 'ch2-unit-5',
+    title: 'Source and Load Matching Begins',
+    stageLabel: 'Early Intermediate',
+    description: 'Start reasoning about whether a source and load fit together numerically.',
+    lessons: ['lesson-ch2-5-1', 'lesson-ch2-5-2'],
+  },
 ];
