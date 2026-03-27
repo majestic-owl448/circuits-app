@@ -31,8 +31,6 @@ function QuizViewInner({
   dispatch: ReturnType<typeof useAppDispatch>;
 }) {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [submitted, setSubmitted] = useState(false);
   const [answers, setAnswers] = useState<Record<string, boolean>>({});
   const [finished, setFinished] = useState(false);
 
@@ -42,18 +40,13 @@ function QuizViewInner({
 
   const correctCount = Object.values(answers).filter(Boolean).length;
 
-  function handleSubmit() {
-    if (!selectedId) return;
-    setSubmitted(true);
-    const choice = question.choices.find(c => c.id === selectedId);
-    setAnswers(prev => ({ ...prev, [question.id]: choice?.isCorrect ?? false }));
+  function handleAnswer(questionId: string, isCorrect: boolean) {
+    setAnswers(prev => ({ ...prev, [questionId]: isCorrect }));
   }
 
   function handleNext() {
     if (questionIndex < totalQuestions - 1) {
       setQuestionIndex(prev => prev + 1);
-      setSelectedId(null);
-      setSubmitted(false);
     } else {
       const finalCorrect = Object.values(answers).filter(Boolean).length;
       const score = Math.round((finalCorrect / totalQuestions) * 100);
@@ -64,8 +57,6 @@ function QuizViewInner({
 
   function handleRetry() {
     setQuestionIndex(0);
-    setSelectedId(null);
-    setSubmitted(false);
     setAnswers({});
     setFinished(false);
   }
@@ -104,8 +95,6 @@ function QuizViewInner({
     );
   }
 
-  const selectedChoice = question.choices.find(c => c.id === selectedId);
-
   return (
     <div className={styles.page}>
       <div className={styles.quizContainer}>
@@ -126,57 +115,91 @@ function QuizViewInner({
           Question {questionIndex + 1} of {totalQuestions}
         </p>
 
-        <div className={styles.questionCard}>
-          <p className={styles.questionText}>{question.prompt}</p>
+        <QuestionCard
+          key={question.id}
+          question={question}
+          isLast={questionIndex >= totalQuestions - 1}
+          onAnswer={handleAnswer}
+          onNext={handleNext}
+        />
+      </div>
+    </div>
+  );
+}
 
-          <div className={styles.choices} role="radiogroup" aria-label="Answer choices">
-            {question.choices.map(choice => (
-              <label
-                key={choice.id}
-                className={`${styles.choice} ${submitted && selectedId === choice.id ? (choice.isCorrect ? styles.correct : styles.incorrect) : ''} ${submitted && choice.isCorrect && selectedId !== choice.id ? styles.correctHint : ''}`}
-              >
-                <input
-                  type="radio"
-                  name={`quiz-q-${question.id}`}
-                  value={choice.id}
-                  checked={selectedId === choice.id}
-                  onChange={() => setSelectedId(choice.id)}
-                  disabled={submitted}
-                  className={styles.radio}
-                />
-                <span className={styles.choiceLabel}>{choice.label}</span>
-              </label>
-            ))}
-          </div>
+function QuestionCard({
+  question,
+  isLast,
+  onAnswer,
+  onNext,
+}: {
+  question: QuizQuestion;
+  isLast: boolean;
+  onAnswer: (questionId: string, isCorrect: boolean) => void;
+  onNext: () => void;
+}) {
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState(false);
 
-          {submitted && selectedChoice && (
-            <div className={`${styles.feedback} ${selectedChoice.isCorrect ? styles.feedbackCorrect : styles.feedbackWrong}`}>
-              <p className={styles.feedbackTitle}>
-                {selectedChoice.isCorrect ? 'Correct!' : 'Incorrect'}
-              </p>
-              {selectedChoice.explanation && (
-                <p className={styles.feedbackText}>{selectedChoice.explanation}</p>
-              )}
-            </div>
+  const selectedChoice = question.choices.find(c => c.id === selectedId);
+
+  function handleSubmit() {
+    if (!selectedId) return;
+    setSubmitted(true);
+    const choice = question.choices.find(c => c.id === selectedId);
+    onAnswer(question.id, choice?.isCorrect ?? false);
+  }
+
+  return (
+    <div className={styles.questionCard}>
+      <p className={styles.questionText}>{question.prompt}</p>
+
+      <div className={styles.choices} role="radiogroup" aria-label="Answer choices">
+        {question.choices.map(choice => (
+          <label
+            key={choice.id}
+            className={`${styles.choice} ${submitted && selectedId === choice.id ? (choice.isCorrect ? styles.correct : styles.incorrect) : ''} ${submitted && choice.isCorrect && selectedId !== choice.id ? styles.correctHint : ''}`}
+          >
+            <input
+              type="radio"
+              name={`quiz-q-${question.id}`}
+              value={choice.id}
+              checked={selectedId === choice.id}
+              onChange={() => setSelectedId(choice.id)}
+              disabled={submitted}
+              className={styles.radio}
+            />
+            <span className={styles.choiceLabel}>{choice.label}</span>
+          </label>
+        ))}
+      </div>
+
+      {submitted && selectedChoice && (
+        <div className={`${styles.feedback} ${selectedChoice.isCorrect ? styles.feedbackCorrect : styles.feedbackWrong}`}>
+          <p className={styles.feedbackTitle}>
+            {selectedChoice.isCorrect ? 'Correct!' : 'Incorrect'}
+          </p>
+          {selectedChoice.explanation && (
+            <p className={styles.feedbackText}>{selectedChoice.explanation}</p>
           )}
-
-          <div className={styles.actions}>
-            {!submitted && (
-              <button
-                className={styles.submitButton}
-                onClick={handleSubmit}
-                disabled={!selectedId}
-              >
-                Submit
-              </button>
-            )}
-            {submitted && (
-              <button className={styles.nextButton} onClick={handleNext}>
-                {questionIndex < totalQuestions - 1 ? 'Next Question' : 'See Results'}
-              </button>
-            )}
-          </div>
         </div>
+      )}
+
+      <div className={styles.actions}>
+        {!submitted && (
+          <button
+            className={styles.submitButton}
+            onClick={handleSubmit}
+            disabled={!selectedId}
+          >
+            Submit
+          </button>
+        )}
+        {submitted && (
+          <button className={styles.nextButton} onClick={onNext}>
+            {isLast ? 'See Results' : 'Next Question'}
+          </button>
+        )}
       </div>
     </div>
   );
