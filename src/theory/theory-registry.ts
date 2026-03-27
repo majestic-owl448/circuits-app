@@ -200,6 +200,144 @@ export const theoryRegistry: TheoryEntry[] = [
     sourceLesson: 'lesson-5-2',
     topic: 'Quantities and Measurement',
   },
+
+  // Chapter 2 — Numerical Circuit Analysis
+  {
+    id: 'voltage-measured-quantity',
+    title: 'Voltage as a Measured Quantity',
+    content:
+      'Voltage is not just a concept — it is a specific, measurable number that describes how much electrical push a source provides. In a real circuit you can measure voltage with a voltmeter placed across the source or across a component. The value you read tells you exactly how much energy per unit charge is available to drive current through the circuit. When you see a battery labeled "12 V," that number is its measured voltage.',
+    sourceLesson: 'lesson-ch2-1-1',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'units-for-voltage',
+    title: 'Units for Voltage',
+    content:
+      'Voltage is measured in volts, abbreviated V. One volt means one joule of energy is transferred for every coulomb of charge that passes through. Common battery voltages include 1.5 V for an AA cell, 9 V for a rectangular battery, and 12 V for a car battery. When writing voltage values, always include the unit — "12 V" is clear and complete, while just "12" is ambiguous.',
+    sourceLesson: 'lesson-ch2-1-1',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'resistance-measured-quantity',
+    title: 'Resistance as a Measured Quantity',
+    content:
+      'Resistance is a measurable property of every component in a circuit. It tells you how strongly that component opposes current flow. You can measure resistance with an ohmmeter when the component is disconnected from the circuit. A higher resistance value means the component allows less current to pass for any given voltage. Knowing the resistance value of each component is essential for predicting how a circuit will behave.',
+    sourceLesson: 'lesson-ch2-1-2',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'units-for-resistance',
+    title: 'Units for Resistance',
+    content:
+      'Resistance is measured in ohms, symbolized by the Greek letter omega (\u03A9). One ohm is the resistance that allows one ampere of current to flow when one volt is applied. Typical resistor values range from a few ohms to millions of ohms. For large values, prefixes are used: 1 k\u03A9 (kilohm) equals 1,000 \u03A9 and 1 M\u03A9 (megohm) equals 1,000,000 \u03A9. Always include the unit when writing resistance values.',
+    sourceLesson: 'lesson-ch2-1-2',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'known-unknown-quantities',
+    title: 'Known and Unknown Quantities',
+    content:
+      'In any circuit problem you will have some values that are given (known quantities) and others that you need to find (unknown quantities). A typical simple-circuit problem gives you two of the three values in Ohm\'s Law — voltage, current, or resistance — and asks you to calculate the third. Identifying which quantities are known and which are unknown is the critical first step before applying any formula.',
+    sourceLesson: 'lesson-ch2-1-3',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'reading-circuit-before-calculating',
+    title: 'Reading a Circuit Before Calculating',
+    content:
+      'Before you plug numbers into a formula, take a moment to read the circuit. Identify the source and note its voltage. Find the load and note its resistance. Determine whether the circuit is open or closed. This habit of reading before calculating helps you choose the right formula, avoid errors, and build an intuition for what the answer should be before you compute it.',
+    sourceLesson: 'lesson-ch2-1-3',
+    topic: 'Numerical Values',
+  },
+  {
+    id: 'ohms-law-find-current',
+    title: "Using Ohm's Law to Find Current",
+    content:
+      'When you know the voltage and resistance in a circuit, you can find the current using I = V / R. This rearrangement of Ohm\'s Law tells you how much current flows through the circuit. For example, a 12 V battery connected to a 60 \u03A9 bulb produces a current of 12 / 60 = 0.2 A. The higher the voltage or the lower the resistance, the more current will flow.',
+    sourceLesson: 'lesson-ch2-2-1',
+    topic: "Ohm's Law Calculations",
+  },
+  {
+    id: 'units-for-current',
+    title: 'Units for Current',
+    content:
+      'Current is measured in amperes, often shortened to amps and abbreviated A. One ampere means one coulomb of charge passes a given point each second. In simple bulb circuits, currents are often fractions of an ampere — values like 0.2 A or 0.5 A are common. For smaller currents, the milliampere (mA) is used: 1 A = 1,000 mA. Always include the unit when reporting a current value.',
+    sourceLesson: 'lesson-ch2-2-1',
+    topic: "Ohm's Law Calculations",
+  },
+  {
+    id: 'ohms-law-find-resistance',
+    title: "Using Ohm's Law to Find Resistance",
+    content:
+      'When you know the voltage and current, you can find resistance using R = V / I. This tells you how much opposition to current flow exists in the circuit. For example, if a 10 V source drives 0.5 A of current, the resistance is 10 / 0.5 = 20 \u03A9. This form of Ohm\'s Law is useful when you can measure voltage and current but cannot directly measure the resistance of a component.',
+    sourceLesson: 'lesson-ch2-2-2',
+    topic: "Ohm's Law Calculations",
+  },
+  {
+    id: 'ohms-law-find-voltage',
+    title: "Using Ohm's Law to Find Voltage",
+    content:
+      'When you know the current and resistance, you can find the voltage using V = I \u00D7 R — the original form of Ohm\'s Law. For example, if 0.3 A flows through a 40 \u03A9 resistor, the voltage across it is 0.3 \u00D7 40 = 12 V. This form is especially useful for finding the voltage drop across a specific component when you already know the current flowing through it and its resistance.',
+    sourceLesson: 'lesson-ch2-2-3',
+    topic: "Ohm's Law Calculations",
+  },
+  {
+    id: 'what-is-power-quantity',
+    title: 'What is Power?',
+    content:
+      'Power is the rate at which electrical energy is converted into another form such as light, heat, or motion. It answers the question: how much energy does this component use every second? A component with higher power converts energy faster and does more work per second. In a bulb, more power means a brighter glow because more electrical energy is being turned into light and heat each second.',
+    sourceLesson: 'lesson-ch2-3-1',
+    topic: 'Power Calculations',
+  },
+  {
+    id: 'units-for-power',
+    title: 'Units for Power',
+    content:
+      'Power is measured in watts, abbreviated W. One watt equals one joule of energy converted per second. A typical small flashlight bulb might use 1 to 5 watts, a household bulb 40 to 100 watts, and an electric heater 1,000 watts or more. For large values, the kilowatt (kW) is used: 1 kW = 1,000 W. Always attach the unit so your result is unambiguous.',
+    sourceLesson: 'lesson-ch2-3-1',
+    topic: 'Power Calculations',
+  },
+  {
+    id: 'calculating-power-vi',
+    title: 'Calculating Power from Voltage and Current',
+    content:
+      'The power delivered to a component is calculated with P = V \u00D7 I, where V is the voltage across it and I is the current through it. For example, if a bulb has 12 V across it and 0.2 A flowing through it, the power is 12 \u00D7 0.2 = 2.4 W. You can also combine this with Ohm\'s Law to get alternative forms: P = I\u00B2R or P = V\u00B2/R, but P = VI is the most direct version.',
+    sourceLesson: 'lesson-ch2-3-2',
+    topic: 'Power Calculations',
+  },
+  {
+    id: 'multi-step-calculation',
+    title: 'Multi-Step Calculation in a Simple Circuit',
+    content:
+      'Many circuit problems require more than one formula. A typical pattern is: use Ohm\'s Law first to find the current (I = V / R), then use the power formula to find the power (P = V \u00D7 I). For example, given a 9 V battery and a 30 \u03A9 bulb, first calculate I = 9 / 30 = 0.3 A, then P = 9 \u00D7 0.3 = 2.7 W. Breaking a problem into clear sequential steps reduces errors and builds confidence.',
+    sourceLesson: 'lesson-ch2-3-3',
+    topic: 'Power Calculations',
+  },
+  {
+    id: 'numerical-evaluation',
+    title: 'How Numerical Evaluation Works',
+    content:
+      'Numerical evaluation means substituting known values into a formula and computing the result step by step. Write the formula, replace each symbol with its number and unit, then perform the arithmetic. For example: I = V / R becomes I = 12 V / 60 \u03A9 = 0.2 A. Showing your work this way makes it easy to spot errors and demonstrates that you understand which values go where.',
+    sourceLesson: 'lesson-ch2-4-1',
+    topic: 'Evaluation and Interpretation',
+  },
+  {
+    id: 'reading-detailed-calculation',
+    title: 'How to Read a Detailed Circuit Calculation',
+    content:
+      'A detailed circuit calculation starts by listing the known quantities, identifies the unknowns, selects the appropriate formula, substitutes values, and arrives at a numerical answer with units. Reading such a calculation means following each step and confirming that it makes sense. Check that the correct formula was chosen, that the numbers were substituted in the right places, and that the final answer has reasonable units and magnitude.',
+    sourceLesson: 'lesson-ch2-4-2',
+    topic: 'Evaluation and Interpretation',
+  },
+  {
+    id: 'operating-range',
+    title: 'Operating Range in a Simulated Circuit',
+    content:
+      'An operating range defines the minimum and maximum values of a circuit quantity — such as voltage or resistance — within which the circuit functions correctly. In a simulation, going outside the operating range might cause unrealistic results like excessive current or negligible power. Understanding operating range helps you choose realistic component values and recognize when a calculation result signals a problem with the circuit design.',
+    sourceLesson: 'lesson-ch2-5-1',
+    topic: 'Evaluation and Interpretation',
+  },
 ];
 
 /** Get all entries for a given list of entry IDs. */
