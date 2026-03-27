@@ -71,6 +71,7 @@ interface Props {
   onPlace?: (position: Position) => void;
   deletionMode?: boolean;
   onDeleteComponent?: (componentId: string) => void;
+  showValues?: boolean;
 }
 
 export function CircuitWorkspace({
@@ -84,6 +85,7 @@ export function CircuitWorkspace({
   onPlace,
   deletionMode = false,
   onDeleteComponent,
+  showValues = true,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
@@ -282,6 +284,7 @@ export function CircuitWorkspace({
               isDeletable={deletionMode}
               onClick={() => handleComponentClick(comp.id)}
               onFocus={() => setFocusedComponent(comp.id)}
+              showValues={showValues}
               onRename={renameComponent}
             />
           );

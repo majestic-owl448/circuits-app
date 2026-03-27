@@ -9,6 +9,7 @@ interface Props {
   isFocused: boolean;
   isCircuitComplete: boolean;
   isDeletable?: boolean;
+  showValues?: boolean;
   onClick: () => void;
   onFocus: () => void;
   onRename?: (componentId: string, newName: string) => void;
@@ -22,6 +23,7 @@ export function ComponentRenderer({
   isFocused,
   isCircuitComplete,
   isDeletable = false,
+  showValues = true,
   onClick,
   onFocus,
   onRename,
@@ -76,7 +78,7 @@ export function ComponentRenderer({
       </text>
 
       {/* Numeric value display */}
-      {type === 'battery' && properties.voltage !== undefined && (
+      {showValues && type === 'battery' && properties.voltage !== undefined && (
         <text
           y={58}
           textAnchor="middle"
@@ -88,7 +90,7 @@ export function ComponentRenderer({
           {properties.voltage}V
         </text>
       )}
-      {(type === 'bulb' || type === 'resistor') && properties.resistance !== undefined && (
+      {showValues && (type === 'bulb' || type === 'resistor') && properties.resistance !== undefined && (
         <text
           y={58}
           textAnchor="middle"
