@@ -30,7 +30,7 @@ export interface LessonConfig {
   quizzesUnlocked: string[];
 }
 
-export type LessonAction = 'toggle-switch' | 'drag-to-place' | 'connect-wire' | 'delete-component';
+export type LessonAction = 'toggle-switch' | 'drag-to-place' | 'connect-wire' | 'delete-component' | 'rename-component';
 
 export interface FormulaRef {
   formula: string;

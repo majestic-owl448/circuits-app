@@ -54,7 +54,6 @@ function reducer(state: AppState, action: AppAction): AppState {
       };
     case 'COMPLETE_LESSON': {
       const newTheoryEntries = action.theoryEntries ?? [];
-      const newQuizzes = action.quizzesUnlocked ?? [];
       const newActions = action.unlockedActions ?? [];
       const newFeatures = action.unlockedFeatures ?? [];
       return {
