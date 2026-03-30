@@ -72,4 +72,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Start reasoning about whether a source and load fit together numerically.',
     lessons: ['lesson-ch2-5-1', 'lesson-ch2-5-2'],
   },
+  // Chapter 3: Series and Parallel Foundations
+  {
+    id: 'ch3-unit-1',
+    title: 'Two Bulbs in Series',
+    stageLabel: 'Early Intermediate',
+    description: 'Understand that a series circuit has one path and that identical bulbs in series behave differently from a single-bulb circuit.',
+    lessons: ['lesson-ch3-1-1', 'lesson-ch3-1-2', 'lesson-ch3-1-3'],
+  },
+  {
+    id: 'ch3-unit-2',
+    title: 'Series Calculations',
+    stageLabel: 'Early Intermediate',
+    description: 'Calculate simple ideal series-circuit quantities using two identical loads first.',
+    lessons: ['lesson-ch3-2-1', 'lesson-ch3-2-2', 'lesson-ch3-2-3', 'lesson-ch3-2-4'],
+  },
+  {
+    id: 'ch3-unit-3',
+    title: 'First Parallel Circuit',
+    stageLabel: 'Early Intermediate',
+    description: 'See and replicate a parallel structure before reasoning deeply about its behavior.',
+    lessons: ['lesson-ch3-3-1', 'lesson-ch3-3-2', 'lesson-ch3-3-3', 'lesson-ch3-3-4'],
+  },
+  {
+    id: 'ch3-unit-4',
+    title: 'Parallel Calculations',
+    stageLabel: 'Early Intermediate',
+    description: 'Manually calculate simple ideal parallel-circuit quantities using two identical loads first, then selected unequal-load cases.',
+    lessons: ['lesson-ch3-4-1', 'lesson-ch3-4-2', 'lesson-ch3-4-3', 'lesson-ch3-4-4'],
+  },
+  {
+    id: 'ch3-unit-5',
+    title: 'Unequal Loads and Flexible Solutions',
+    stageLabel: 'Early Intermediate',
+    description: 'Reason about circuits where loads are not identical and where more than one correct design can satisfy the challenge goal.',
+    lessons: ['lesson-ch3-5-1', 'lesson-ch3-5-2', 'lesson-ch3-5-3'],
+  },
 ];
