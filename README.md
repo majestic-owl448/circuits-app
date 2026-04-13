@@ -37,3 +37,4 @@ npm run dev
 ## Docs
 
 - Core planning and product documents live in `docs/`.
+- Future implementation gates and risk rubric: `docs/future-chapters-implementation-readiness.md`.
