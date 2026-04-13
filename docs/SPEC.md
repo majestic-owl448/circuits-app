@@ -1,7 +1,7 @@
 # Implementation Specification
 ## Interactive Electrical Circuits Learning App
 
-Based on: `electrical_circuits_interactive_app_prd.md`
+Based on: `docs/electrical_circuits_interactive_app_prd.md`
 
 ---
 

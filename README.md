@@ -4,7 +4,7 @@ An interactive educational web app that teaches electrical circuits through hand
 
 ## Features
 
-- **30 structured lessons** across 2 chapters, progressing from basic circuit concepts to numerical DC analysis (Ohm's Law, power, source-load matching)
+- **47 structured lessons** across 3 chapters, progressing from basic circuit concepts to numerical DC analysis and series/parallel reasoning
 - **Interactive circuit editor** — drag-and-drop components (batteries, bulbs, resistors, switches, wires), draw connections, and simulate in real time
 - **Circuit simulation engine** — calculates current, voltage, resistance, and power with visual current-flow overlay
 - **Sandbox mode** — free-form circuit building unlocked as you progress through lessons
@@ -33,3 +33,7 @@ npm run dev
 | `npm run build` | Type-check and build for production |
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Preview the production build locally |
+
+## Docs
+
+- Core planning and product documents live in `docs/`.

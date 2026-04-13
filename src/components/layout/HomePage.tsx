@@ -1,4 +1,4 @@
-import { useAppState, useAppDispatch } from '../../state/app-context.tsx';
+import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { lessonRegistry } from '../../lessons/lesson-registry.ts';
 import { unitRegistry } from '../../lessons/units.ts';
 import { quizRegistry } from '../../quizzes/quiz-registry.ts';

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { useAppState, useAppDispatch } from '../../state/app-context.tsx';
+import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { useCircuit } from '../../hooks/useCircuit.ts';
 import { lessonRegistry } from '../../lessons/lesson-registry.ts';
 import { LessonLayout } from '../layout/LessonLayout.tsx';
@@ -41,7 +41,7 @@ function LessonViewInner({
   const [showTheory, setShowTheory] = useState(preferences.theoryPanelPinned);
   const [showOverlay, setShowOverlay] = useState(preferences.showCurrentOverlay);
   const [showFormulas, setShowFormulas] = useState(false);
-  const [theoryCheckPassed, setTheoryCheckPassed] = useState(false);
+  const [passedTheoryCheckStepId, setPassedTheoryCheckStepId] = useState<string | null>(null);
   const [selectedPlacementType, setSelectedPlacementType] = useState<ComponentType | null>(null);
   const [deletionMode, setDeletionMode] = useState(false);
 
@@ -53,17 +53,18 @@ function LessonViewInner({
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;
 
-  // Auto-enable overlay when step requests it
-  useEffect(() => {
-    if (currentStep?.showCurrentOverlay) {
-      setShowOverlay(true);
-    }
-  }, [currentStep]);
-
-  // Reset theory check state when step changes
-  useEffect(() => {
-    setTheoryCheckPassed(false);
-  }, [stepIndex]);
+  const handleLessonComplete = useCallback(() => {
+    dispatch({
+      type: 'COMPLETE_LESSON',
+      lessonId: lesson.id,
+      unlocks: lesson.sandboxUnlocks,
+      unlockedActions: lesson.availableActions,
+      unlockedFeatures: lesson.showFormulaPanel ? ['formula-panel'] : [],
+      theoryEntries: lesson.theoryPageAdditions.map(t => t.id),
+      quizzesUnlocked: lesson.quizzesUnlocked,
+    });
+    dispatch({ type: 'NAVIGATE', view: 'home' });
+  }, [dispatch, lesson]);
 
   const handleStepAction = useCallback(() => {
     if (phase !== 'steps') return;
@@ -92,7 +93,7 @@ function LessonViewInner({
         handleLessonComplete();
       }
     }
-  }, [phase, stepIndex, lesson, circuit]);
+  }, [phase, stepIndex, lesson, circuit, handleLessonComplete]);
 
   const handleChallengeComplete = useCallback(() => {
     if (challengeIndex < lesson.challenges.length - 1) {
@@ -113,20 +114,7 @@ function LessonViewInner({
     } else {
       handleLessonComplete();
     }
-  }, [challengeIndex, lesson, circuit]);
-
-  function handleLessonComplete() {
-    dispatch({
-      type: 'COMPLETE_LESSON',
-      lessonId: lesson.id,
-      unlocks: lesson.sandboxUnlocks,
-      unlockedActions: lesson.availableActions,
-      unlockedFeatures: lesson.showFormulaPanel ? ['formula-panel'] : [],
-      theoryEntries: lesson.theoryPageAdditions.map(t => t.id),
-      quizzesUnlocked: lesson.quizzesUnlocked,
-    });
-    dispatch({ type: 'NAVIGATE', view: 'home' });
-  }
+  }, [challengeIndex, lesson, circuit, handleLessonComplete]);
 
   // Check if current step's required action is satisfied
   const isStepActionSatisfied = useCallback(() => {
@@ -142,12 +130,17 @@ function LessonViewInner({
   // Auto-advance when required action is satisfied
   useEffect(() => {
     if (phase === 'steps' && currentStep?.requiredAction && isStepActionSatisfied()) {
-      handleStepAction();
+      const timer = window.setTimeout(() => {
+        handleStepAction();
+      }, 0);
+
+      return () => window.clearTimeout(timer);
     }
   }, [phase, currentStep, isStepActionSatisfied, handleStepAction]);
 
   // Determine if advancing is allowed: must pass theory check if present
-  const canAdvanceStep = isStepActionSatisfied() && (!currentStep?.theoryCheck || theoryCheckPassed);
+  const canAdvanceStep = isStepActionSatisfied() && (!currentStep?.theoryCheck || passedTheoryCheckStepId === currentStep.id);
+  const effectiveShowOverlay = showOverlay || !!currentStep?.showCurrentOverlay;
 
   const isDragPlaceChallenge = phase === 'challenges' && currentChallenge?.type === 'drag-place';
   const isBuildChallenge = phase === 'challenges' && currentChallenge?.type === 'build';
@@ -175,11 +168,11 @@ function LessonViewInner({
             onAdvance={handleStepAction}
           />
           {currentStep.theoryCheck && (
-            <InlineTheoryCheck
-              check={currentStep.theoryCheck}
-              onPass={() => setTheoryCheckPassed(true)}
-            />
-          )}
+              <InlineTheoryCheck
+                check={currentStep.theoryCheck}
+                onPass={() => setPassedTheoryCheckStepId(currentStep.id)}
+              />
+            )}
         </>
       )}
       {phase === 'challenges' && currentChallenge && (
@@ -251,7 +244,7 @@ function LessonViewInner({
             )}
             <CircuitWorkspace
               circuit={circuit}
-              showCurrentOverlay={showOverlay}
+              showCurrentOverlay={effectiveShowOverlay}
               highlights={currentStep?.highlights}
               interactive={true}
               wiringMode={phase === 'challenges' && (currentChallenge?.type === 'fix' || currentChallenge?.type === 'build')}

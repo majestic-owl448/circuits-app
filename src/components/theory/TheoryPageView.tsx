@@ -1,4 +1,4 @@
-import { useAppState, useAppDispatch } from '../../state/app-context.tsx';
+import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { getTheoryEntries, getTopicsInOrder } from '../../theory/theory-registry.ts';
 import styles from './TheoryPageView.module.css';
 

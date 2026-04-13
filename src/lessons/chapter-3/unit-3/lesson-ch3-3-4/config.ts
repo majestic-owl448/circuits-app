@@ -6,10 +6,6 @@ const parallelSwitchClosed: CircuitComponent[] = PARALLEL_TWO_BULBS.map(c =>
   c.id === 'switch-1' ? { ...c, properties: { isClosed: true } } : c
 );
 
-const parallelOneBranchBroken: CircuitComponent[] = parallelSwitchClosed.filter(
-  c => c.id !== 'bulb-2'
-);
-
 export const lessonCh3_3_4: LessonConfig = {
   id: 'lesson-ch3-3-4',
   unitId: 'ch3-unit-3',

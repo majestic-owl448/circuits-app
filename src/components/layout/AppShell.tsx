@@ -1,4 +1,4 @@
-import { useAppState } from '../../state/app-context.tsx';
+import { useAppState } from '../../state/app-hooks.ts';
 import { TopNav } from '../nav/TopNav.tsx';
 import { HomePage } from './HomePage.tsx';
 import { LessonView } from '../lessons/LessonView.tsx';

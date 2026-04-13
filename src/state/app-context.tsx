@@ -1,5 +1,6 @@
-import { createContext, useContext, useReducer, useEffect, type ReactNode } from 'react';
+import { useReducer, useEffect, type ReactNode } from 'react';
 import { loadState, saveState, type PersistedState } from './persistence.ts';
+import { AppContext, AppDispatchContext } from './app-contexts.ts';
 
 export type View = 'home' | 'lesson' | 'sandbox' | 'theory' | 'quiz';
 
@@ -151,9 +152,6 @@ function reducer(state: AppState, action: AppAction): AppState {
   }
 }
 
-const AppContext = createContext<AppState | null>(null);
-const AppDispatchContext = createContext<React.Dispatch<AppAction> | null>(null);
-
 export function AppProvider({ children }: { children: ReactNode }) {
   const persisted = loadState();
   const initialState: AppState = {
@@ -201,16 +199,4 @@ export function AppProvider({ children }: { children: ReactNode }) {
       </AppDispatchContext.Provider>
     </AppContext.Provider>
   );
-}
-
-export function useAppState(): AppState {
-  const ctx = useContext(AppContext);
-  if (!ctx) throw new Error('useAppState must be used within AppProvider');
-  return ctx;
-}
-
-export function useAppDispatch(): React.Dispatch<AppAction> {
-  const ctx = useContext(AppDispatchContext);
-  if (!ctx) throw new Error('useAppDispatch must be used within AppProvider');
-  return ctx;
 }

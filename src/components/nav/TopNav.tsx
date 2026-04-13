@@ -1,4 +1,4 @@
-import { useAppState, useAppDispatch } from '../../state/app-context.tsx';
+import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import styles from './TopNav.module.css';
 
 export function TopNav() {

@@ -2,6 +2,13 @@
 
 Interactive educational app for learning electrical circuits. Structured as progressive lessons across chapters, with quizzes, a theory reference, and a sandbox mode.
 
+## Current Status
+
+- Chapters 1-3 are implemented and wired into registries.
+- Lesson count: 47 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18).
+- Quiz count: 44 total (Chapter 1-3 coverage).
+- Build and lint pass.
+
 ## Tech Stack
 
 - TypeScript 5.9, React 19, Vite 8
@@ -23,7 +30,7 @@ No test suite configured.
 ## Project Structure
 
 - `src/components/` — Feature-organized: `lessons/`, `quiz/`, `sandbox/`, `workspace/`, `theory/`, `layout/`, `nav/`, `shared/`
-- `src/state/` — React Context + useReducer (`app-context.tsx`), localStorage persistence (`persistence.ts`)
+- `src/state/` — React Context + useReducer (`app-context.tsx`), context instances (`app-contexts.ts`), hooks (`app-hooks.ts`), localStorage persistence (`persistence.ts`)
 - `src/engine/` — Circuit simulation logic
 - `src/hooks/` — Custom hooks (e.g., `useCircuit`)
 - `src/lessons/` — Lesson configs organized by chapter/unit:
@@ -33,10 +40,11 @@ No test suite configured.
   - `chapter-2/`, `chapter-3/` — Each has `unit-N/lesson-chX-N-N/config.ts`
 - `src/quizzes/quiz-registry.ts` — All quiz definitions in one file
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
+- `docs/` — PRD, spec, and chapter lesson-plan documents
 
 ## Key Patterns
 
-- **State**: `useAppState()` and `useAppDispatch()` hooks. Actions: `NAVIGATE`, `START_LESSON`, `COMPLETE_LESSON`, `COMPLETE_QUIZ`, etc.
+- **State**: `useAppState()` and `useAppDispatch()` hooks from `src/state/app-hooks.ts`. Actions: `NAVIGATE`, `START_LESSON`, `COMPLETE_LESSON`, `COMPLETE_QUIZ`, etc.
 - **Lesson configs**: Each exports a `LessonConfig` with steps, challenges, theory content, formulas, and quiz unlocks. Follow existing patterns exactly when adding new lessons.
 - **Lesson IDs**: `lesson-chX-Y-Z` (chapter X, unit Y, lesson Z). Export names: `lessonChX_Y_Z`.
 - **Quiz IDs**: `quiz-chX-topic-name`. Each quiz has `unlockedBy` pointing to a lesson ID. Must match the lesson's `quizzesUnlocked` array.

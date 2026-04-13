@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useAppState } from '../../state/app-context.tsx';
+import { useAppState } from '../../state/app-hooks.ts';
 import { useCircuit } from '../../hooks/useCircuit.ts';
 import { CircuitWorkspace } from '../workspace/CircuitWorkspace.tsx';
 import { DragPalette } from '../workspace/DragPalette.tsx';

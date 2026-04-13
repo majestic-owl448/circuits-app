@@ -6,8 +6,6 @@ const workingCircuit: CircuitComponent[] = SERIES_TWO_BULBS.map(c =>
   c.id === 'switch-1' ? { ...c, properties: { isClosed: true } } : c,
 );
 
-const brokenCircuit: CircuitComponent[] = workingCircuit.filter(c => c.id !== 'bulb-2');
-
 export const lessonCh3_2_4: LessonConfig = {
   id: 'lesson-ch3-2-4',
   unitId: 'ch3-unit-2',
