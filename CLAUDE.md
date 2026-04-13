@@ -41,6 +41,7 @@ No test suite configured.
 - `src/quizzes/quiz-registry.ts` — All quiz definitions in one file
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
 - `docs/` — PRD, spec, and chapter lesson-plan documents
+- `docs/curriculum-progression-qa-checklist.md` — Implementation QA checklist for topic progression, redundancy prevention, and prerequisite clarity across Chapters 4-10
 
 ## Key Patterns
 

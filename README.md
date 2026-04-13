@@ -38,3 +38,4 @@ npm run dev
 
 - Core planning and product documents live in `docs/`.
 - Future implementation gates and risk rubric: `docs/future-chapters-implementation-readiness.md`.
+- Curriculum progression QA checklist for Chapters 4-10: `docs/curriculum-progression-qa-checklist.md`.
