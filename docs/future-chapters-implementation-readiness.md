@@ -7,6 +7,7 @@ This addendum strengthens the Chapter 4-10 lesson plans with implementation-read
 - Lesson IDs must follow `lesson-chX-Y-Z` and map directly to chapter/unit/lesson numbering used in lesson-plan documents.
 - Standalone quiz IDs must follow `quiz-chX-topic-name` with stable, kebab-case topic slugs defined in chapter implementation notes.
 - Before implementation of each chapter starts, add a short lesson/quiz ID mapping table to that chapter's implementation checklist.
+- Current implementation-planning mapping artifact: `docs/ch4-10-id-mapping-tables.md`.
 
 ## Documentation Boundary and Dedupe Rules
 

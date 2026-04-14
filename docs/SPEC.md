@@ -1,6 +1,9 @@
 # Implementation Specification
 ## Interactive Electrical Circuits Learning App
 
+> Historical note: this document captures the original MVP baseline (early Chapters 1-3 scope) and initial architecture framing.
+> For current implementation status and active Chapter 4-10 readiness tracking, use `CLAUDE.md`, `docs/ch4-10-implementation-checklist.md`, and `docs/future-chapters-implementation-readiness.md`.
+
 Based on: `docs/electrical_circuits_interactive_app_prd.md`
 
 ---

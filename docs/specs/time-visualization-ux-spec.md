@@ -5,7 +5,27 @@ This specification defines the interaction model for time-dependent circuit visu
 ## Scope and readiness
 
 - Applies to Chapter 6 time-dependent lessons and Chapter 7 AC waveform extension behavior.
-- This specification must be finalized before Chapter 6 implementation begins (see implementation readiness doc, Gate B).
+- Gate status: Phase 6 foundation implementation is complete and this spec is now the validation reference for Gate B readiness tracking.
+
+## Implementation status (as of 2026-04-14)
+
+Implemented in current app foundations:
+
+- Time scrubber model with conceptual position labels and checkpoint snapping helpers (`t0`, `t_mid`, `t_final`).
+- Playback controls surface with play/pause, speed modes (normal/slow), and reset.
+- Time checkpoints and deterministic checkpoint-targeted evaluation flow.
+- Compact timeline panel with marker and non-color-only differentiation support.
+- Keyboard-accessible controls and persisted time-visualization preferences.
+- Reduced-motion behavior for time interactions: step-through checkpoint movement instead of animated playback.
+- Textual time-position summaries integrated into circuit description context.
+
+Pending for chapter-content implementation/expansion:
+
+- Chapter 7 AC-specific waveform extension behaviors defined in "Scope boundaries" (cycle-window defaults and looped AC playback semantics) are specified but not yet tied to chapter content implementation.
+
+Gate B tracking note:
+
+- Chapter 6 Gate B (UI readiness) is considered green for foundation work, with chapter-level content validation still required when Chapter 6 lessons are authored.
 
 ## Core components
 

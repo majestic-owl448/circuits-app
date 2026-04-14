@@ -318,9 +318,15 @@ Implementation checklist for foundational work needed before and during Chapters
   - [x] Review doc and this checklist remain aligned
 
 ### `docs/specs/time-visualization-ux-spec.md`
-- [ ] Mark implemented versus pending spec behaviors during Phase 6+
+- [x] Mark implemented versus pending spec behaviors during Phase 6+
 - Acceptance criteria:
-  - [ ] Gate B readiness for Chapter 6 can be validated from spec status
+  - [x] Gate B readiness for Chapter 6 can be validated from spec status
+
+### `docs/ch4-10-id-mapping-tables.md`
+- [x] Add explicit per-chapter lesson/quiz ID mapping tables for Chapters 4-10
+- Acceptance criteria:
+  - [x] Every planned Chapter 4-10 lesson has a mapped lesson ID and planned standalone quiz ID
+  - [x] Mapping format follows `lesson-chX-Y-Z` and `quiz-chX-topic-name` naming conventions
 
 ## Recommended Execution Order
 
