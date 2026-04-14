@@ -37,50 +37,63 @@ Use these anchors to avoid backsliding when writing future chapters.
 
 - [ ] Measurement is framed as verification/inspection/debugging, not as replacement for manual reasoning.
 - [ ] Mixed-circuit reduction is introduced before formal KCL/KVL naming.
+- [ ] Manual mixed-circuit calculation (Lesson 3.3) comes before meter-based verification (Lesson 3.4), ensuring learners produce expected values before verifying with tools.
 - [ ] KCL/KVL lessons clearly state they formalize patterns already seen in Chapter 3.
-- [ ] Source-load matching is positioned as deeper application than Chapter 2's introductory matching.
+- [ ] Source-load matching is positioned as deeper application than Chapter 2's introductory matching, with explicit differentiation note in unit metadata.
 
 ### Chapter 5: Non-Ideal Behavior and Limits
 
 - [ ] Unit 1 clearly signals a model shift (ideal -> non-ideal) rather than a restart.
+- [ ] Terminology is explicitly differentiated: operating range vs operating limit vs tolerance (defined in Lesson 1.2 metadata).
 - [ ] Range/tolerance evaluation is explained as necessary for non-ideal contexts.
 - [ ] Internal resistance, wire losses, and heating are introduced as distinct causes with distinct evidence.
+- [ ] Diagnostic meter lesson (Lesson 2.3) teaches using meters to detect non-ideal effects before the design lesson (Lesson 2.4) asks learners to design around them.
 - [ ] Challenges require diagnosis of non-ideal effects, not only recalculation of ideal formulas.
 
 ### Chapter 6: Capacitors, Inductors, Time Behavior
 
 - [ ] Early lessons distinguish transient vs steady-state before adding component details.
 - [ ] Capacitor and inductor behavior are each introduced independently before comparison lessons.
+- [ ] Inductor energy release (Lesson 3.4) mirrors capacitor discharge (Lesson 2.4) — both components have explicit charge/store and release/discharge lessons.
 - [ ] Time-based checkpoints are explicit in challenge instructions (initial, middle, final as relevant).
+- [ ] Time-Visualization UX Specification is finalized before implementation begins (see Chapter 6 lesson plan).
+- [ ] Frequency/period forward note prepares learners for Chapter 7's AC content without introducing formal terminology.
 - [ ] Learners are asked to reason about behavior over time, not just a single final value.
 
 ### Chapter 7: AC Fundamentals and DC/AC Conversion
 
 - [ ] Chapter start explicitly contrasts repeating AC behavior with Chapter 6 transients.
+- [ ] Lesson 1.2 includes a required side-by-side visual comparison of transient vs AC behavior using the timeline panel.
 - [ ] AC concepts stay conceptual first (waveform literacy before heavy math).
+- [ ] Lesson 2.3 (reactive preview) establishes the intuition that AC repetition speed affects C/L behavior, without formal frequency terminology.
 - [ ] Conversion lessons preserve causal story (why convert, then how, then compare outcomes).
 - [ ] Mixed-system examples integrate prior reasoning instead of introducing unrelated scenarios.
 
 ### Chapter 8: Diodes, Transistors, Rectification, Switching
 
 - [ ] Diode orientation dependence is mastered before rectification challenges.
+- [ ] Lesson 2.1 explicitly connects to Chapter 7's abstract conversion blocks, explaining that diode-based rectification is what those blocks implement.
 - [ ] Rectification is framed as an application of AC + diode directionality from Chapters 7 and 8 Unit 1.
 - [ ] Transistor lessons build from switch/control semantics before adding larger-path effects.
 - [ ] Unit 4 explicitly prepares the learner for logic abstraction in Chapter 9.
 
 ### Chapter 9: Logic Gates and Digital-Style Behavior
 
-- [ ] Unit 1 explicitly bridges physical switching language to state/input/output language.
+- [ ] Unit 1 explicitly bridges physical switching language to state/input/output language, with a concrete Chapter 8 transistor-switch example relabeled using state language.
 - [ ] NOT/AND/OR are introduced before NAND/NOR/XOR.
-- [ ] Truth-table work is introduced as a representation tool, not a separate disconnected topic.
+- [ ] Truth tables are introduced in Unit 2 (Lesson 2.4) as a learning tool alongside basic gates, not deferred to Unit 3 as a review afterthought.
+- [ ] Gate comparison lesson (2.5) uses truth tables as the comparison structure.
+- [ ] XOR lesson includes concrete motivation showing why AND and OR cannot express the "inputs differ" rule.
 - [ ] Small design lessons require gate selection reasoning, not just memorization.
 
 ### Chapter 10: Mastery Review and Capstones
 
+- [ ] Domain classification is explicitly taught as a skill (Lesson 1.2) before it is required as part of challenges (Unit 4).
 - [ ] Unit 1 and Unit 2 diagnose reasoning-strategy choice before long builds.
 - [ ] Domain capstones each map cleanly to prior chapter outcomes.
 - [ ] Cross-domain challenges require selecting the right domain first, then solving.
-- [ ] Final mastery criteria measure explanation quality as well as structural and numeric correctness.
+- [ ] Final mastery challenge (Lesson 5.1) has explicit rubric with five dimensions: structure, values, constraints, domain reasoning, efficiency. Dimensions 1-3 are hard gates.
+- [ ] Optional mastery quiz (Lesson 5.2) is clearly positioned as a conceptual breadth check distinct from the hands-on mastery challenge.
 
 ## Redundancy watchlist
 

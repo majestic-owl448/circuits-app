@@ -453,6 +453,55 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 
 ---
 
+### Lesson 3.4: Inductor Energy Release
+
+- Stage label: Late Intermediate
+- Prerequisites:
+  - Lesson 3.3
+- Main goal: Learner understands that an inductor can release stored energy when the circuit changes, mirroring the capacitor discharge behavior from Lesson 2.4.
+- Why this lesson exists:
+  - Lesson 2.4 explicitly teaches capacitor discharge as a time-dependent release of stored energy. Without a corresponding inductor lesson, learners miss the parallel: inductors also store energy (in the simplified model) and release it when the driving condition changes.
+  - This symmetry is important for the comparison in Unit 4 and for understanding energy flow in time-dependent circuits.
+- Concepts introduced:
+  - inductor energy release in the simplified model
+  - what happens when the current source or path changes in an inductor circuit
+  - comparison to capacitor discharge: both components can release stored energy, but in different ways
+- Formulas shown:
+  - conceptual focus
+  - no heavy math required
+- Components used:
+  - source
+  - switch
+  - resistor
+  - inductor
+  - ammeter and voltmeter where useful
+- Prebuilt amount:
+  - guided, with switching arrangement that produces energy-release behavior
+- Learner actions available:
+  - toggle switch states
+  - observe changing behavior over time
+  - compare to earlier inductor charging behavior
+  - compare to capacitor discharge behavior from Lesson 2.4
+- Current-flow overlay:
+  - available
+- Hint style:
+  - guided comparison with explicit parallel to capacitor discharge
+- Completion condition:
+  - learner correctly identifies an inductor energy-release event and can distinguish it from the charging phase
+- Challenge examples:
+  1. identify what is happening to the inductor after the switch changes
+  2. compare inductor energy release to capacitor discharge at a qualitative level
+- Sandbox unlocks after lesson:
+  - simple inductor energy-release examples available in sandbox
+- Theory page additions:
+  - Inductor energy release in the simplified model
+- In-lesson theory check:
+  - energy-release identification and comparison to capacitor discharge
+- Standalone quiz topics unlocked:
+  - inductor energy-release basics
+
+---
+
 ## Unit 4: Capacitors Versus Inductors
 
 ### Unit metadata
@@ -469,7 +518,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 
 - Stage label: Late Intermediate
 - Prerequisites:
-  - Lesson 3.3
+  - Lesson 3.4
 - Main goal: Learner compares capacitors and inductors across similar switching scenarios.
 - Concepts introduced:
   - capacitors and inductors behave differently over time
@@ -707,6 +756,7 @@ By the end of this chapter, the theory reference should include topic-group entr
 - What is an inductor?
 - Inductor current behavior in the simplified model
 - Steady-state behavior of a simple inductor circuit
+- Inductor energy release in the simplified model
 - Capacitors versus inductors
 - Choosing between capacitor and inductor behavior
 - Designing for initial response
@@ -726,11 +776,12 @@ Suggested quizzes unlocked by the end of the chapter:
 7. Inductor basics
 8. Inductor current basics
 9. Inductor steady-state basics
-10. Capacitor versus inductor comparison basics
-11. Time-dependent component choice basics
-12. Initial-response design basics
-13. Later-response design basics
-14. Chapter 6 review quiz
+10. Inductor energy-release basics
+11. Capacitor versus inductor comparison basics
+12. Time-dependent component choice basics
+13. Initial-response design basics
+14. Later-response design basics
+15. Chapter 6 review quiz
 
 These are optional and replayable.
 
@@ -744,6 +795,64 @@ By the end of Chapter 6, sandbox should support, in supported time-dependent mod
 - meter-assisted comparison of initial and later states
 - target-based challenges centered on early versus later behavior
 
+## Forward note: frequency and period as prerequisites for Chapter 7
+
+Chapter 7 (AC Fundamentals) will rely on learners understanding that capacitors and inductors can respond differently depending on how quickly conditions change. While this chapter focuses on single-event transients (switch on, observe, reach steady state), the concept of "how fast" a change happens is relevant.
+
+To prepare for this transition:
+- Lessons in this chapter should use language like "how quickly the circuit responds" and "faster or slower settling" when describing RC and RL behavior, even though formal frequency/period terminology is not introduced here.
+- The handoff to Chapter 7 should note that AC introduces the idea of continuous, repeating changes rather than one-time events, and that the speed of repetition (frequency) will matter for how capacitors and inductors behave under AC.
+- Chapter 7, Lesson 2.3 (AC reactive preview) builds directly on this foundation.
+
+## Time-Visualization UX Specification
+
+This section defines the interaction model for time-dependent circuit visualization used throughout Chapter 6 and referenced in later chapters. This specification must be finalized before Chapter 6 implementation begins (see implementation readiness doc, Gate B).
+
+### Core components
+
+1. **Time scrubber**
+   - A horizontal slider control below the circuit workspace, representing the full simulation time window for the current lesson scenario.
+   - The scrubber has labeled anchor points: `t₀` (initial state, immediately after switch), optional `t_mid` (midpoint checkpoint), and `t_final` (steady state or end of observation window).
+   - Dragging the scrubber updates the circuit visualization to show component states (voltage, current, visual indicators) at the selected time.
+   - The scrubber position is displayed as a relative label (e.g., "Early," "Middle," "Late") rather than raw seconds, to keep the focus conceptual.
+
+2. **Playback controls**
+   - Play/pause button: animates the circuit from `t₀` through `t_final` at a pedagogically appropriate speed (not real-time; compressed to ~5-8 seconds for a full cycle).
+   - Speed control: two speeds — normal and slow (half speed). No fast-forward.
+   - Reset button: returns to `t₀`.
+   - All controls are keyboard-accessible (Space for play/pause, Left/Right arrow for scrubber step, R for reset).
+
+3. **Timeline panel (compact plot)**
+   - A small panel (collapsible, default open in time-dependent lessons) showing one or two quantities plotted over the simulation time window.
+   - Default quantities: voltage across the target component and current through the target component. Lessons can configure which quantities are shown.
+   - The current scrubber position is shown as a vertical marker on the plot.
+   - The plot uses two clearly distinguishable line styles (solid vs dashed, not color-only) for accessibility.
+   - Axis labels use the same learner-friendly terms used elsewhere in the product (e.g., "Voltage across capacitor" not "V_C(t)").
+
+4. **Checkpoint markers**
+   - Lessons can define checkpoint windows (e.g., `t₀`, `t_mid`, `t_final`) where the learner must inspect or answer about the circuit state.
+   - Checkpoints appear as labeled dots on the time scrubber and as highlighted regions on the timeline plot.
+   - When a lesson challenge requires a checkpoint answer, the scrubber snaps to that checkpoint and the relevant values are highlighted.
+
+### Accessibility requirements
+
+- All time-dependent visualizations must be operable via keyboard alone (no mouse-only interactions).
+- The timeline plot must not rely on color alone to distinguish lines — use line style (solid, dashed, dotted) and shape markers.
+- A text summary of the current state at the scrubber position must be available via the existing "Describe circuit" action, including approximate values and whether the circuit is still changing or has settled.
+- Reduced-motion mode: when the user's system prefers reduced motion, playback is replaced by step-through (scrubber moves in discrete jumps with no animation). The circuit visualization updates instantly rather than animating.
+
+### Interaction with existing tools
+
+- Meters (voltmeter, ammeter) show the value at the current scrubber position, not just the steady-state value.
+- Current-flow overlay animates at the scrubber position's rate and direction.
+- The "Check solution" action evaluates at the checkpoint(s) specified by the lesson, not at an arbitrary scrubber position.
+
+### Scope boundaries
+
+- This specification covers Chapters 6-7 (time-dependent and AC visualization). Chapter 7's AC waveform view extends this model by adding repeating cycles rather than single transient windows.
+- The time scrubber does not support sub-millisecond precision. All time-domain simulations use educationally simplified time scales.
+- No oscilloscope-style triggering or multi-channel comparison is required. The timeline panel shows at most two quantities simultaneously.
+
 ## Handoff to Chapter 7
 
 Chapter 7 should begin introducing alternating current and circuits that convert between DC and AC in a conceptual and simulation-first way.
@@ -755,3 +864,4 @@ That chapter should include:
 - loads under AC versus DC where instructionally useful
 - conceptual conversion stages between DC and AC
 - modern examples such as a DC source feeding an AC load through a conversion stage
+- explicit connection between Chapter 6's time-dependent reasoning (single-event transients) and AC's repeating time-dependent behavior

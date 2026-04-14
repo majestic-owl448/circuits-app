@@ -48,11 +48,15 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Prerequisites:
   - Chapter 8 complete
 - Main goal: Learner understands that a circuit can be described in terms of simple states such as active versus inactive, or high versus low, in the instructional model.
+- Bridge from Chapter 8:
+  - In Chapter 8, the learner used transistors as switches: a control input turns a load path on or off. This lesson reframes that same idea: instead of thinking about "the load is powered" or "the load is not powered," the learner now thinks about "the output is high" or "the output is low."
+  - The lesson should show a familiar transistor-switch circuit from Chapter 8 and relabel its behavior using the new state language. This makes the transition concrete rather than introducing state language as a wholly new concept.
 - Concepts introduced:
   - input state
   - output state
   - a circuit can represent a condition, not only raw energy transfer
   - simplified high/low language in the product
+  - explicit mapping: Chapter 8's "control on → load active" becomes "input high → output high" (or inverted, depending on the circuit)
 - Formulas shown:
   - conceptual focus only
 - Components used:
@@ -268,16 +272,63 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 
 ---
 
-### Lesson 2.4: Compare NOT, AND, and OR
+### Lesson 2.4: Truth Tables as a Tool for Understanding Gates
 
 - Stage label: Early Digital Logic
 - Prerequisites:
   - Lesson 2.3
-- Main goal: Learner compares the first three basic gates directly and understands that each applies a different logic rule.
+- Main goal: Learner is introduced to truth tables as a compact way to describe and understand gate behavior, before using them to compare gates.
+- Why truth tables appear here (not later):
+  - Truth tables are most useful as a learning tool when introduced alongside the gates they describe. By placing them after the three basic gates but before the comparison lesson, learners can use truth tables to structure their understanding of each gate and to make the comparison in Lesson 2.5 more systematic.
+  - In the original plan, truth tables appeared in Unit 3 as a review tool. Moving them here makes them a reasoning tool rather than an afterthought.
 - Concepts introduced:
-  - gate comparison
+  - truth table
+  - input combinations and output result table
+  - a structured summary of gate behavior
+  - truth tables as a way to understand gates, not just review them
+- Formulas shown:
+  - conceptual focus
+- Components used:
+  - NOT, AND, and OR gate examples already introduced
+  - truth-table displays in lesson UI
+- Prebuilt amount:
+  - prebuilt
+- Learner actions available:
+  - inspect
+  - fill in missing entries
+  - verify entries by toggling gate inputs and checking output
+- Current-flow overlay:
+  - not central
+- Hint style:
+  - structured and table-based
+- Completion condition:
+  - learner correctly reads and completes simple truth-table entries for all three basic gates
+- Challenge examples:
+  1. fill in the missing output entries for an AND gate truth table
+  2. identify which truth table corresponds to a shown gate
+  3. build a truth table by toggling inputs and recording outputs
+- Sandbox unlocks after lesson:
+  - truth-table reference support available in sandbox gate review mode if supported
+- Theory page additions:
+  - What is a truth table?
+- In-lesson theory check:
+  - truth-table reading and construction basics
+- Standalone quiz topics unlocked:
+  - truth-table basics
+
+---
+
+### Lesson 2.5: Compare NOT, AND, and OR Using Truth Tables
+
+- Stage label: Early Digital Logic
+- Prerequisites:
+  - Lesson 2.4
+- Main goal: Learner compares the first three basic gates directly using truth tables and understands that each applies a different logic rule.
+- Concepts introduced:
+  - gate comparison using truth tables as the comparison structure
   - same inputs can produce different outputs depending on the gate
   - gate choice is part of design
+  - truth tables make comparison systematic rather than ad hoc
 - Formulas shown:
   - conceptual focus
 - Components used:
@@ -296,14 +347,14 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Completion condition:
   - learner distinguishes the three gate types and completes challenge set
 - Challenge examples:
-  1. identify which gate matches a shown output rule
-  2. match each gate to its behavior
+  1. identify which gate matches a shown truth table
+  2. given three truth tables, match each to its gate type
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
-  - Comparing basic gates
+  - Comparing basic gates using truth tables
 - In-lesson theory check:
-  - gate identification and comparison
+  - gate identification and comparison via truth tables
 - Standalone quiz topics unlocked:
   - basic gate comparison
 
@@ -325,7 +376,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 
 - Stage label: Early Digital Logic
 - Prerequisites:
-  - Lesson 2.4
+  - Lesson 2.5
 - Main goal: Learner is introduced to NAND and NOR as inverted versions of earlier gates.
 - Concepts introduced:
   - NAND
@@ -372,6 +423,9 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
   - XOR
   - same versus different input states
   - some gate behaviors are about comparison, not just counting active inputs
+- Motivation for XOR:
+  - XOR is useful when a circuit needs to detect whether two conditions are different — for example, detecting a change (one input was on before, now it's off, or vice versa), or checking whether two signals disagree. The lesson should present a concrete scenario where AND and OR both fail to express the required rule, and XOR succeeds.
+  - This motivates why XOR exists as a separate gate type rather than being a curiosity.
 - Formulas shown:
   - conceptual focus
 - Components used:
@@ -403,47 +457,6 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 
 ---
 
-### Lesson 3.3: Gate Truth Tables as a Review Tool
-
-- Stage label: Early Digital Logic
-- Prerequisites:
-  - Lesson 3.2
-- Main goal: Learner is introduced to truth tables as a compact way to summarize gate behavior.
-- Concepts introduced:
-  - truth table
-  - input combinations and output result table
-  - a structured summary of gate behavior
-- Formulas shown:
-  - conceptual focus
-- Components used:
-  - gate examples already introduced
-  - truth-table displays in lesson UI
-- Prebuilt amount:
-  - prebuilt
-- Learner actions available:
-  - inspect
-  - fill in missing entries
-  - compare gate behavior
-- Current-flow overlay:
-  - not central
-- Hint style:
-  - structured and table-based
-- Completion condition:
-  - learner correctly reads and completes simple truth-table entries
-- Challenge examples:
-  1. fill in missing output entries for a gate
-  2. identify which truth table corresponds to a shown gate
-- Sandbox unlocks after lesson:
-  - truth-table reference support available in sandbox gate review mode if supported
-- Theory page additions:
-  - What is a truth table?
-- In-lesson theory check:
-  - truth-table reading basics
-- Standalone quiz topics unlocked:
-  - truth-table basics
-
----
-
 ## Unit 4: Small Logic Designs
 
 ### Unit metadata
@@ -460,7 +473,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 
 - Stage label: Early Digital Logic
 - Prerequisites:
-  - Lesson 3.3
+  - Lesson 3.2
 - Main goal: Learner chooses a gate based on the desired output rule.
 - Concepts introduced:
   - output rule drives gate selection
@@ -690,10 +703,10 @@ By the end of this chapter, the theory reference should include topic-group entr
 - What is a NOT gate?
 - What is an AND gate?
 - What is an OR gate?
-- Comparing basic gates
+- What is a truth table?
+- Comparing basic gates using truth tables
 - What are NAND and NOR?
 - What is XOR?
-- What is a truth table?
 - Choosing the right gate for a rule
 - Combining gates into larger logic behavior
 - Reasoning about a small logic system
@@ -709,10 +722,10 @@ Suggested quizzes unlocked by the end of the chapter:
 3. NOT gate basics
 4. AND gate basics
 5. OR gate basics
-6. Basic gate comparison
-7. NAND and NOR basics
-8. XOR basics
-9. Truth-table basics
+6. Truth-table basics
+7. Basic gate comparison
+8. NAND and NOR basics
+9. XOR basics
 10. Gate choice basics
 11. Multi-gate basics
 12. Small logic-system basics

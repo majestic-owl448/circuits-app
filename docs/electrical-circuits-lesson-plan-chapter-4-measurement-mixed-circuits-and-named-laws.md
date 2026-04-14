@@ -397,11 +397,56 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 
 ---
 
-### Lesson 3.3: Use Meters to Check a Mixed Circuit
+### Lesson 3.3: Calculate the Full Mixed Circuit
 
 - Stage label: Intermediate
 - Prerequisites:
   - Lesson 3.2
+- Main goal: Learner manually calculates all key values in a mixed circuit before any meter is used, bridging the numerical reasoning of Chapters 2-3 with the more complex mixed structures introduced in this unit.
+- Why this lesson exists:
+  - Chapters 2-3 build numerical skills on simple series or parallel circuits, and Lesson 3.2 teaches structural reduction, but no prior lesson asks the learner to compute full voltage, current, and power values across a mixed circuit using reduction plus Ohm's Law together
+  - this explicit calculation step prevents a gap where learners jump from structural reduction to meter verification without ever producing their own expected values for a mixed circuit
+- Concepts introduced:
+  - applying reduction results to compute branch voltages, currents, and power in a mixed circuit
+  - producing expected values before measurement
+  - building a complete numerical picture of a more complex circuit
+- Formulas shown:
+  - series and parallel equivalent-resistance formulas
+  - `V = IR`
+  - `P = VI` and related power formulas as needed
+- Components used:
+  - ideal mixed circuits with manageable complexity (2-3 reduction steps)
+- Prebuilt amount:
+  - partially prebuilt with structure already visible
+- Learner actions available:
+  - inspect
+  - calculate step by step
+  - check intermediate and final values
+- Current-flow overlay:
+  - available
+- Hint style:
+  - human-style derivation by steps, building on the reduction approach from Lesson 3.2
+- Completion condition:
+  - learner correctly calculates at least two key values (e.g., branch current and load voltage) in a mixed circuit
+- Challenge examples:
+  1. reduce the circuit, then calculate the voltage across a specific load
+  2. calculate the current through each branch of a mixed circuit
+- Sandbox unlocks after lesson:
+  - no new components
+- Theory page additions:
+  - Calculating values in a mixed circuit
+- In-lesson theory check:
+  - identify which formula to apply after a reduction step
+- Standalone quiz topics unlocked:
+  - mixed-circuit calculation basics
+
+---
+
+### Lesson 3.4: Use Meters to Check a Mixed Circuit
+
+- Stage label: Intermediate
+- Prerequisites:
+  - Lesson 3.3
 - Main goal: Learner combines manual reasoning and meter use in a mixed circuit.
 - Concepts introduced:
   - calculation and measurement support each other
@@ -447,6 +492,10 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Unit title: Source and Load Matching Becomes Stronger
 - Stage label: Intermediate
 - Unit goal: Learner works more deliberately with challenges where the circuit must keep a target component inside a required operating range.
+- Progression note (source-load matching across chapters):
+  - Chapter 2 introduced source-load matching in simple ideal circuits with basic voltage/resistance reasoning. The learner could identify whether a single load receives the right conditions.
+  - This unit extends matching to mixed circuits with multiple loads, where the learner must reason about how series and parallel structure distributes voltage and current. The new capability is analyzing compatibility in circuits with more than one path or stage.
+  - Chapter 5 will further extend matching by introducing non-ideal constraints (internal resistance, wire losses, operating limits) where the source itself becomes part of the design problem.
 - Explicit prerequisites:
   - Unit 3 complete
 
@@ -456,7 +505,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 
 - Stage label: Intermediate
 - Prerequisites:
-  - Lesson 3.3
+  - Lesson 3.4
 - Main goal: Learner reasons more explicitly about whether a source and target load are compatible in the simulation.
 - Concepts introduced:
   - source-and-load matching as a recurring design problem
@@ -692,6 +741,7 @@ By the end of this chapter, the theory reference should include topic-group entr
 - What is a mixed circuit?
 - Breaking a circuit into simpler parts
 - Step-by-step mixed-circuit reduction
+- Calculating values in a mixed circuit
 - Investigating a mixed circuit
 - Source and load matching in ideal circuit design
 - Debugging by measured evidence
@@ -711,12 +761,13 @@ Suggested quizzes unlocked by the end of the chapter:
 6. Ohmmeter basics
 7. Mixed-circuit structure basics
 8. Mixed-circuit reduction basics
-9. Mixed-circuit inspection basics
-10. Source-load matching basics
-11. Debugging strategy basics
-12. KCL basics
-13. KVL basics
-14. Chapter 4 review quiz
+9. Mixed-circuit calculation basics
+10. Mixed-circuit inspection basics
+11. Source-load matching basics
+12. Debugging strategy basics
+13. KCL basics
+14. KVL basics
+15. Chapter 4 review quiz
 
 These are optional and replayable.
 

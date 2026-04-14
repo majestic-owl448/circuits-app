@@ -91,12 +91,54 @@ This chapter also acts as the strongest bridge between course completion and any
 
 ---
 
-### Lesson 1.2: Choose the Right Reasoning First
+### Lesson 1.2: Classify the Problem Domain
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
   - Lesson 1.1
-- Main goal: Learner practices identifying the right first analytical move in a complex scenario.
+- Main goal: Learner explicitly practices classifying circuit problems by domain before attempting to solve them.
+- Why this lesson exists:
+  - Unit 4, Lesson 4.1 will ask learners to "choose the right domain, then solve." But domain classification has never been taught as an explicit skill — in prior chapters, the domain was always implicit (the learner was in a DC chapter, so the problem was DC). This lesson makes domain classification a conscious, practiced skill before it becomes part of larger challenges.
+- Concepts introduced:
+  - domain classification as a problem-solving skill
+  - the major domains: ideal DC structure, numerical DC analysis, non-ideal constraints, time-dependent behavior, AC/DC conversion, active components (diodes/transistors), digital logic
+  - identifying domain by symptoms: "values are wrong" → numerical or non-ideal; "timing matters" → time-dependent; "direction matters" → diode or AC; "conditions control output" → transistor or logic
+- Formulas shown:
+  - only as needed in the examples
+- Components used:
+  - mixed examples from multiple domains, each designed to exercise one primary domain
+- Prebuilt amount:
+  - prebuilt scenarios for classification practice
+- Learner actions available:
+  - inspect
+  - classify domain
+  - explain reasoning
+- Current-flow overlay:
+  - available where useful
+- Hint style:
+  - symptom-based classification guidance
+- Completion condition:
+  - learner correctly classifies at least 4 of 5 presented scenarios by domain
+- Challenge examples:
+  1. classify a failing circuit: is the problem structural, numerical, non-ideal, time-dependent, or logic-related?
+  2. given a description of symptoms, choose the most likely domain before inspecting the circuit
+- Sandbox unlocks after lesson:
+  - no new unlock
+- Theory page additions:
+  - Domain classification for circuit problem-solving
+- In-lesson theory check:
+  - symptom-to-domain matching
+- Standalone quiz topics unlocked:
+  - domain classification basics
+
+---
+
+### Lesson 1.3: Choose the Right Reasoning First
+
+- Stage label: Capstone / Mastery
+- Prerequisites:
+  - Lesson 1.2
+- Main goal: Learner practices identifying the right first analytical move in a complex scenario, building on the domain classification skill from Lesson 1.2.
 - Concepts reviewed:
   - structural analysis first when topology is the main issue
   - value analysis first when the structure is already clear
@@ -148,7 +190,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 1.2
+  - Lesson 1.3
 - Main goal: Learner identifies the first blocking issue in a multi-factor circuit problem.
 - Concepts reviewed:
   - progressive debugging
@@ -542,6 +584,14 @@ This chapter also acts as the strongest bridge between course completion and any
 - Prerequisites:
   - Lesson 4.2
 - Main goal: Learner completes the largest whole-curriculum challenge in the lesson plan.
+- Evaluation rubric:
+  - The final mastery challenge uses a multi-criteria evaluator. The learner's solution is assessed on all applicable dimensions, with criterion-by-criterion pass/fail shown in a rubric panel (see implementation readiness doc).
+  - **Dimension 1 — Correct structure**: Circuit topology is valid. Components are connected in a way that forms a complete, functional path. No open circuits, short circuits, or disconnected segments unless intentional.
+  - **Dimension 2 — Correct values**: All measurable quantities (voltage, current, resistance, power) at target components fall within the specified tolerance for the scenario. Both ideal-context and non-ideal-context tolerances apply where relevant.
+  - **Dimension 3 — Constraint satisfaction**: All operating limits, source-load compatibility requirements, and conversion-stage requirements are met. No component is in a failure state. Time-dependent targets (if applicable) are met at all specified checkpoints.
+  - **Dimension 4 — Domain-appropriate reasoning**: The learner's approach matches the problem domain. Evidence of domain classification (from Lesson 1.2) is demonstrated through component choice, analysis order, and tool usage.
+  - **Dimension 5 — Efficient design**: The solution does not include unnecessary components or redundant stages. This is a soft criterion — a correct but slightly over-engineered solution still passes, but feedback notes where simplification is possible.
+  - Pass threshold: Dimensions 1-3 must all pass. Dimension 4 is assessed but advisory. Dimension 5 is feedback-only.
 - Concepts reviewed:
   - all major curriculum branches as needed by the chosen scenario
 - Formulas shown:
@@ -585,6 +635,9 @@ This chapter also acts as the strongest bridge between course completion and any
 - Prerequisites:
   - Lesson 5.1
 - Main goal: Learner optionally reviews the full course through a broad mixed quiz set.
+- Why this exists after the mastery challenge:
+  - The mastery challenge (Lesson 5.1) tests applied, hands-on ability. This quiz tests conceptual breadth and terminology recall across the entire curriculum. A learner may pass the mastery challenge by being strong in a few domains while having gaps in others. This quiz surfaces those gaps and links back to the relevant theory sections for self-directed review.
+  - This quiz is optional because the mastery challenge is the primary completion gate. The quiz serves learners who want to verify their conceptual coverage or identify areas for further study.
 - Concepts reviewed:
   - all major theory branches
 - Formulas shown:
@@ -623,6 +676,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 By the end of this chapter, the theory reference should include topic-group entries for:
 - Whole-curriculum concept map
+- Domain classification for circuit problem-solving
 - Choosing the right first step in analysis
 - First-issue troubleshooting strategy
 - Stepwise troubleshooting workflow
@@ -640,16 +694,17 @@ Each entry should link back to the lesson or lessons where it was introduced.
 
 Suggested quizzes unlocked by the end of the chapter:
 1. Whole-curriculum concept map review
-2. Analysis-strategy basics
-3. Mixed-domain troubleshooting basics
-4. Iterative debugging basics
-5. DC capstone review basics
-6. Time-dependent capstone review basics
-7. AC/DC capstone review basics
-8. Active-components capstone review basics
-9. Cross-domain analysis basics
-10. Multi-stage system basics
-11. Final mastery review quiz
+2. Domain classification basics
+3. Analysis-strategy basics
+4. Mixed-domain troubleshooting basics
+5. Iterative debugging basics
+6. DC capstone review basics
+7. Time-dependent capstone review basics
+8. AC/DC capstone review basics
+9. Active-components capstone review basics
+10. Cross-domain analysis basics
+11. Multi-stage system basics
+12. Final mastery review quiz
 
 These are optional and replayable.
 

@@ -98,17 +98,22 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - repeating alternating pattern
   - AC variation over time
   - difference between transient behavior and repeating AC behavior
+  - the precise distinction: a transient is a one-time response to a change (switch on → settle to steady state). AC is a continuous, repeating pattern that does not settle to a single value.
+- Side-by-side comparison requirement:
+  - This lesson must include an explicit visual comparison showing the same load connected first to a DC source with a switch (producing a Chapter 6-style transient), and then to an AC source (producing repeating behavior). Both should use the timeline panel introduced in Chapter 6 so learners can directly compare the two time-domain plots.
+  - The comparison should make clear: the transient curve approaches a flat line (steady state), while the AC curve keeps repeating without flattening.
 - Formulas shown:
   - no heavy waveform math yet
 - Components used:
   - AC source
   - simple load
-  - comparison to a transient DC example if useful
+  - DC source with switch for transient comparison (required, not optional)
 - Prebuilt amount:
   - prebuilt
 - Learner actions available:
   - inspect
   - observe behavior over time
+  - use timeline panel to compare transient and AC plots
 - Current-flow overlay:
   - available
 - Hint style:
@@ -116,7 +121,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Completion condition:
   - learner identifies the repeating nature of AC and completes challenge set
 - Challenge examples:
-  1. identify which changing behavior is transient and which is AC
+  1. identify which changing behavior is transient and which is AC using the timeline panel
   2. identify whether a shown source alternates repeatedly or only changes once after switching
 - Sandbox unlocks after lesson:
   - no new component type
@@ -271,7 +276,9 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Main goal: Learner sees that capacitors and inductors can interact with AC in ways that differ from the earlier DC-only time-dependent lessons.
 - Concepts introduced:
   - AC can interact with capacitor and inductor behavior differently than simple DC switching scenarios
+  - the speed of repetition matters: how quickly AC alternates can affect how much a capacitor or inductor "responds" in the simplified model
   - this is an introductory preview, not a full advanced treatment
+- Forward note: The idea that AC repetition speed affects component behavior is the conceptual seed for impedance and frequency-dependent analysis in more advanced curricula. This lesson does not use formal frequency, period, or impedance terminology, but establishes the intuition that "faster changes and slower changes produce different results with these components."
 - Formulas shown:
   - conceptual focus only
 - Components used:

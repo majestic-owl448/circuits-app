@@ -88,6 +88,11 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Prerequisites:
   - Lesson 1.1
 - Main goal: Learner understands why challenge success in non-ideal contexts should be based on ranges rather than exact-value expectations.
+- Terminology clarification (used throughout this chapter):
+  - **Operating range**: the span of values within which a component functions correctly in a given lesson or challenge. Used for evaluation of whether the learner's design succeeds.
+  - **Operating limit**: the boundary beyond which a component fails or is damaged (introduced in Unit 4). A limit is the edge of the safe operating range.
+  - **Tolerance**: the manufacturing variation in a component's actual value compared to its nominal label (introduced in Unit 5). Tolerance causes the component itself to differ slightly from spec, which can shift results within or outside the operating range.
+  - These three concepts are related but distinct. Operating range is about the design goal, operating limit is about the failure boundary, and tolerance is about component variability.
 - Concepts introduced:
   - operating range versus exact target
   - non-ideal behavior can shift values slightly or materially
@@ -220,11 +225,60 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 
 ---
 
-### Lesson 2.3: Matching the Source to the Load With Internal Resistance
+### Lesson 2.3: Diagnose Source Behavior With Meters
 
 - Stage label: Intermediate
 - Prerequisites:
   - Lesson 2.2
+- Main goal: Learner uses meters to diagnose whether a source has significant internal resistance, bridging Chapter 4's measurement skills with Chapter 5's non-ideal concepts.
+- Why this lesson exists:
+  - Chapter 4 taught meter use for verification of known ideal circuits, and Lessons 2.1-2.2 introduced internal resistance conceptually. But no lesson yet teaches the diagnostic technique of using meters to detect and quantify non-ideal source behavior.
+  - Without this lesson, learners move directly from observing voltage drop to designing around it, skipping the critical skill of identifying internal resistance through measurement evidence.
+- Concepts introduced:
+  - comparing no-load and loaded voltage readings to detect internal resistance
+  - using ammeter readings to correlate current draw with voltage drop
+  - measurement as a diagnostic tool for non-ideal effects, not just verification of ideal predictions
+- Formulas shown:
+  - `V = IR` applied to source internal resistance context
+  - voltage-drop relationship under load
+- Components used:
+  - source with internal resistance
+  - resistive load (swappable between light and heavy loads)
+  - voltmeter
+  - ammeter
+- Prebuilt amount:
+  - mostly prebuilt with guided meter placement
+- Learner actions available:
+  - place meters
+  - run circuit with no load and with load
+  - compare readings across conditions
+  - identify evidence of internal resistance
+- Current-flow overlay:
+  - available
+- Hint style:
+  - measurement-guided explanation
+  - first asks learner to predict what readings would look like if there were no internal resistance
+- Completion condition:
+  - learner correctly identifies internal resistance as the cause of observed voltage difference and uses meter readings as evidence
+- Challenge examples:
+  1. compare voltmeter readings at no load and under load, then explain the difference
+  2. identify which of two sources has greater internal resistance based on meter evidence
+- Sandbox unlocks after lesson:
+  - no new component type
+- Theory page additions:
+  - Diagnosing source behavior with meters
+- In-lesson theory check:
+  - interpret meter readings to distinguish ideal from non-ideal source behavior
+- Standalone quiz topics unlocked:
+  - meter-based source diagnosis
+
+---
+
+### Lesson 2.4: Matching the Source to the Load With Internal Resistance
+
+- Stage label: Intermediate
+- Prerequisites:
+  - Lesson 2.3
 - Main goal: Learner applies source internal resistance to a target-based design problem.
 - Concepts introduced:
   - source suitability now depends on more than nominal voltage
@@ -279,7 +333,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 
 - Stage label: Intermediate
 - Prerequisites:
-  - Lesson 2.3
+  - Lesson 2.4
 - Main goal: Learner is introduced to wire resistance conceptually.
 - Concepts introduced:
   - wires can have resistance
@@ -649,6 +703,7 @@ By the end of this chapter, the theory reference should include topic-group entr
 - Operating ranges in non-ideal simulation
 - Internal resistance of the source
 - Voltage drop under load
+- Diagnosing source behavior with meters
 - Source-load matching with internal resistance
 - Wire resistance
 - Voltage drop in non-ideal wires
@@ -667,15 +722,16 @@ Suggested quizzes unlocked by the end of the chapter:
 2. Target-range reasoning in non-ideal contexts
 3. Internal resistance basics
 4. Source-drop basics
-5. Source internal resistance and design reasoning
-6. Wire-resistance basics
-7. Voltage drop along wires
-8. Wire-loss design reasoning
-9. Heating basics
-10. Burnout and limits basics
-11. Operating-limit design reasoning
-12. Tolerance basics
-13. Chapter 5 review quiz
+5. Meter-based source diagnosis
+6. Source internal resistance and design reasoning
+7. Wire-resistance basics
+8. Voltage drop along wires
+9. Wire-loss design reasoning
+10. Heating basics
+11. Burnout and limits basics
+12. Operating-limit design reasoning
+13. Tolerance basics
+14. Chapter 5 review quiz
 
 These are optional and replayable.
 

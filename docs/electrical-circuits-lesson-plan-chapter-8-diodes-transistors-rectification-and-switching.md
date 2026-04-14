@@ -187,10 +187,15 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Prerequisites:
   - Lesson 1.3
 - Main goal: Learner sees that diode directionality becomes especially meaningful in an AC context.
+- Connection to Chapter 7:
+  - In Chapter 7, Unit 3, the learner worked with abstract conversion blocks that turned AC into DC-like behavior (and vice versa). Those blocks were treated as black boxes to keep the focus on system-level reasoning.
+  - This lesson begins to show what is inside one of those conversion blocks: a diode. By the end of Unit 2, the learner will understand that the abstract "AC-to-DC conversion" from Chapter 7 can be concretely realized through diode-based rectification.
+  - This callback should be made explicit in the lesson introduction so the learner connects the two ideas.
 - Concepts introduced:
   - AC alternates
   - diode directionality can shape alternating behavior
   - this creates the foundation for rectification
+  - connection: the abstract AC-to-DC conversion block from Chapter 7 is realized by diode-based circuits
 - Formulas shown:
   - conceptual focus
 - Components used:

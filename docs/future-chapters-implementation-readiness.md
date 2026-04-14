@@ -27,9 +27,11 @@ This addendum strengthens the Chapter 4-10 lesson plans with implementation-read
   - Time-step simulation loop for simple RC/RL behavior.
   - Initial-state and steady-state snapshots exposed to lesson evaluator.
   - Controlled numerical stability settings for educational determinism.
+  - Inductor energy-release model (demagnetization behavior when driving condition changes).
 - **UI/tooling requirements**
   - Time scrubber/playback controls.
   - Plot or compact timeline panel for voltage/current over time.
+  - **CRITICAL: Full Time-Visualization UX Specification is defined in the Chapter 6 lesson plan document.** That specification covers: time scrubber interaction model, playback controls (play/pause/speed/reset), timeline panel (compact plot with quantity selection), checkpoint markers, accessibility requirements (keyboard, reduced-motion, text summaries), and meter integration. This specification must be finalized and implemented as Gate B before Chapter 6 content work begins.
 
 ### Chapter 7 - AC Fundamentals and DC/AC Conversion
 - **Engine requirements**
@@ -63,9 +65,11 @@ This addendum strengthens the Chapter 4-10 lesson plans with implementation-read
   - Cross-domain scenario support (DC, non-ideal, time, AC, active, logic).
   - Multi-criteria evaluator (structure + values + constraints + explanation).
   - Scenario seed/version locking for repeatable grading.
+  - Domain classification evaluator for Lesson 1.2 (assess whether learner's domain choice matches expected domain).
 - **UI/tooling requirements**
   - Capstone rubric panel with criterion-by-criterion pass/fail.
   - Save/restore checkpoints per capstone challenge.
+  - **Rubric dimensions for Final Mastery Challenge (Lesson 5.1):** The multi-criteria evaluator must assess five dimensions defined in the Chapter 10 lesson plan: (1) correct structure, (2) correct values within tolerance, (3) constraint satisfaction (operating limits, compatibility, time-dependent checkpoints), (4) domain-appropriate reasoning (advisory), (5) efficient design (feedback-only). Dimensions 1-3 are hard-pass gates; 4-5 are advisory feedback.
 
 ## 2) Acceptance Criteria Standard (All Future Chapters)
 
@@ -77,6 +81,8 @@ Use the same evaluation contract for each challenge type:
 - **`fix`**: identified fault removed; post-fix metrics valid.
 - **`drag-place`**: required component placement and orientation validated.
 - **`calculate`**: numeric answer within tolerance + unit check.
+- **`classify`**: learner assigns correct domain/category label; explanation shown for each option.
+- **`diagnose`**: learner identifies root cause from measurement evidence; accepted causes listed in lesson config.
 
 Tolerance defaults:
 
