@@ -68,7 +68,7 @@ export type UserAction =
 export interface Challenge {
   id: string;
   prompt: string;
-  type: 'build' | 'fix' | 'predict' | 'choose' | 'drag-place' | 'calculate';
+  type: 'build' | 'fix' | 'predict' | 'choose' | 'drag-place' | 'calculate' | 'classify' | 'diagnose';
   initialCircuit?: CircuitComponent[];
   initialNodes?: { id: string; position: { x: number; y: number } }[];
   evaluationCriteria: EvaluationCriteria;
@@ -88,6 +88,16 @@ export interface Challenge {
   detailedBreakdown?: {
     steps: { label: string; formula: string; result: string }[];
   };
+  classifyConfig?: {
+    categories: string[];
+    correctCategory: string;
+    requiredEvidenceSignals?: string[];
+  };
+  diagnoseConfig?: {
+    acceptedCauses: string[];
+    evidenceItems: string[];
+    minEvidenceMatches?: number;
+  };
 }
 
 export interface ChallengeChoice {
@@ -104,6 +114,26 @@ export interface EvaluationCriteria {
   expectedRange?: { min: number; max: number };
   customCheck?: string;
   correctChoiceId?: string;
+  expectedRanges?: Array<{
+    componentId: string;
+    property: 'power' | 'current' | 'voltage';
+    min: number;
+    max: number;
+  }>;
+  hardPassChecks?: string[];
+  advisoryChecks?: string[];
+}
+
+export interface EvaluationCriterionOutcome {
+  id: string;
+  passed: boolean;
+  message: string;
+  severity: 'hard-pass' | 'advisory';
+}
+
+export interface MultiCriteriaEvaluationResult {
+  passed: boolean;
+  outcomes: EvaluationCriterionOutcome[];
 }
 
 export interface TheoryItem {

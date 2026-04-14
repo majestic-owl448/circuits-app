@@ -34,6 +34,7 @@ export function ComponentRenderer({
   const bulbBrightness = type === 'bulb' && isCircuitComplete && result
     ? Math.min(1, result.power / 1.8)
     : 0;
+  const isFailed = properties.isFailed ?? false;
 
   return (
     <g
@@ -101,6 +102,21 @@ export function ComponentRenderer({
         >
           {properties.resistance}Ω
         </text>
+      )}
+      {isFailed && (
+        <g>
+          <line x1="-22" y1="-22" x2="22" y2="22" stroke="var(--color-error)" strokeWidth="2" />
+          <line x1="22" y1="-22" x2="-22" y2="22" stroke="var(--color-error)" strokeWidth="2" />
+          <text
+            y={-30}
+            textAnchor="middle"
+            fontSize="10"
+            fill="var(--color-error)"
+            transform={`rotate(${-rotation})`}
+          >
+            FAILED
+          </text>
+        </g>
       )}
     </g>
   );

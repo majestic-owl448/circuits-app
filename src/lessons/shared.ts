@@ -1,5 +1,16 @@
 import type { CircuitComponent } from '../types/circuit.ts';
 
+export const TOLERANCE_DEFAULTS = {
+  idealNumericPercent: 0.01,
+  nonIdealNumericPercent: 0.05,
+};
+
+export const OPERATING_LIMIT_PRESETS = {
+  beginnerBulb: { type: 'power', max: 2.5 },
+  standardBulb: { type: 'power', max: 5 },
+  introResistor: { type: 'power', max: 1 },
+} as const;
+
 export const STANDARD_NODES = [
   { id: 'n1', position: { x: 200, y: 100 } },
   { id: 'n2', position: { x: 400, y: 100 } },

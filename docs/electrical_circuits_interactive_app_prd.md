@@ -7,7 +7,7 @@ This product is an interactive, gamified app for learning electrical circuits. I
 
 The product exists because traditional learning materials such as videos and textbooks are passive. They can explain concepts, but by themselves often do not provide enough engagement, practice, or motivation for learners to persist. This product aims to teach circuit theory through interaction, immediate feedback, experimentation, and progressive challenge.
 
-This version of the PRD covers the product’s learning model, interaction design, progression rules, simulation scope, accessibility requirements, and platform constraints. Detailed curriculum planning and lesson authoring workflow are out of scope for this iteration.
+This version of the PRD covers the product’s learning model, interaction design, progression rules, simulation scope, accessibility requirements, and platform constraints. Detailed curriculum planning is now maintained in dedicated chapter plan documents (Chapters 1-10), while lesson authoring workflow remains out of scope for this PRD iteration.
 
 ## 2. Target User
 
@@ -45,12 +45,11 @@ Included in scope:
 - theory review through a reference page and optional quizzes
 
 Out of scope for this PRD iteration:
-- detailed lesson plan and unit structure
+- detailed lesson authoring workflow and process
 - physical circuit building
 - breadboards and hardware assembly
 - electrician training
 - household wiring and mains work
-- lesson authoring workflow
 - analytics and privacy specification
 - donation strategy
 

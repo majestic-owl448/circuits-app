@@ -8,6 +8,14 @@ This addendum strengthens the Chapter 4-10 lesson plans with implementation-read
 - Standalone quiz IDs must follow `quiz-chX-topic-name` with stable, kebab-case topic slugs defined in chapter implementation notes.
 - Before implementation of each chapter starts, add a short lesson/quiz ID mapping table to that chapter's implementation checklist.
 
+## Documentation Boundary and Dedupe Rules
+
+- Keep stable defaults at chapter or unit metadata level (for example: overlay availability, hint style baseline, formula visibility baseline, default learner actions).
+- In lesson metadata, document only exceptions or deltas from chapter or unit defaults when possible.
+- For recurring curriculum threads (for example source-load matching progression), keep one canonical reference per unit metadata block; avoid repeating the same canonical-pointer line in each lesson unless a lesson adds new nuance.
+- Keep cross-chapter UX behavior canonical in `docs/specs/*.md` (time visualization, sandbox progressive unlock, capstone rubric panel).
+- Chapter lesson plans should point to spec documents for shared UX behavior and avoid re-expanding full UX interaction details back into chapter files.
+
 ## 1) Cross-Chapter Engine and UI Requirements
 
 ### Chapter 4 - Measurement, Mixed Circuits, Named Laws
@@ -136,6 +144,12 @@ Schema note for implementation:
 - Backward compatibility:
   - existing challenge types remain unchanged.
   - clients that do not yet support these new types must fail gracefully with a clear unsupported-type message in authoring validation, not at learner runtime.
+
+Cardinality rule:
+
+- A lesson may contain multiple challenge items.
+- Each challenge item must declare exactly one `type`.
+- Lesson-level `Challenge type` text in planning docs is a coverage summary only, not a schema object.
 
 Tolerance defaults:
 

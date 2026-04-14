@@ -1,8 +1,10 @@
 import type { CircuitComponent, SimulationResult } from '../types/circuit.ts';
+import { describeTimePosition } from './time/simulator.ts';
 
 export function describeCircuit(
   components: CircuitComponent[],
   simulation: SimulationResult,
+  timeSliderValue?: number,
 ): string {
   if (components.length === 0) {
     return 'The workspace is empty. No components have been placed.';
@@ -46,6 +48,12 @@ export function describeCircuit(
     lines.push('Status: Circuit is open. No current is flowing.');
   }
 
+  if (timeSliderValue !== undefined) {
+    lines.push('');
+    lines.push(`Time position: ${describeTimePosition(timeSliderValue)} (${Math.round(timeSliderValue)}%)`);
+    lines.push(simulation.isComplete ? 'State trend: circuit appears settled at this checkpoint.' : 'State trend: circuit is incomplete/open at this checkpoint.');
+  }
+
   // Per-component results
   if (simulation.isComplete && !simulation.isShortCircuit) {
     const loads = components.filter(c => c.type === 'bulb' || c.type === 'resistor');
@@ -59,6 +67,11 @@ export function describeCircuit(
         }
       }
     }
+  }
+
+  if (simulation.diagnostics && simulation.diagnostics.length > 0) {
+    lines.push('');
+    lines.push(`Diagnostics: ${simulation.diagnostics.join(', ')}`);
   }
 
   return lines.join('\n');

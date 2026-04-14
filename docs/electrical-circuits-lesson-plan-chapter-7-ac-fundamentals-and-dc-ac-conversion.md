@@ -311,10 +311,11 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   - AC can interact with capacitor and inductor behavior differently than simple DC switching scenarios
   - the speed of repetition matters: how quickly AC alternates can affect how much a capacitor or inductor "responds" in the simplified model
   - this is an introductory preview, not a full advanced treatment
-- Forward note: The idea that AC repetition speed affects component behavior is the conceptual seed for impedance and frequency-dependent analysis in more advanced curricula (outside current product scope). This lesson does not use formal frequency, period, or impedance terminology, but establishes the intuition that "faster changes and slower changes produce different results with these components."
-- Terminology transition requirement:
-  - This lesson is where formal naming begins: introduce **frequency** and **period** by name at an introductory level after the intuition is established.
-  - Keep the treatment light: define terms, relate them to faster/slower repetition, and avoid advanced impedance math.
+- Forward note: The idea that AC repetition speed affects component behavior is the conceptual seed for impedance and frequency-dependent analysis in more advanced curricula (outside current product scope).
+- Terminology rule:
+  - This lesson introduces **frequency** and **period** by name at an introductory level after intuition is established.
+- Scope guard:
+  - Keep treatment qualitative and light (faster/slower repetition), and do not introduce impedance math or advanced waveform analysis.
 - Formulas shown:
   - conceptual focus only
 - Components used:
@@ -375,7 +376,6 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   - source type and load type may not match directly
   - conversion stages solve compatibility problems
   - modern systems often include both DC and AC segments
-  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
   - progression framing: this extends Chapter 2 and Chapter 4 source-load matching from ideal DC-only contexts into mixed AC/DC compatibility contexts
 - Formulas shown:
   - conceptual focus
@@ -404,7 +404,6 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   - abstract DC/AC conversion block available in sandbox
 - Theory page additions:
   - Why convert between DC and AC?
-  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
   - Extending source-load matching from Chapters 2 and 4 into AC/DC systems
 - In-lesson theory check:
   - source-load mismatch reasoning
@@ -606,6 +605,9 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 - Unit title: AC and Conversion Review
 - Stage label: Late Intermediate
 - Unit goal: Learner integrates AC basics, AC/DC comparison, and conversion-stage reasoning.
+- Unit 5 differentiation rule:
+  - Lesson 5.1 is guided consolidation of chapter distinctions.
+  - Lesson 5.2 is a lower-scaffold transfer challenge with stricter learner autonomy.
 - Explicit prerequisites:
   - Unit 4 complete
 

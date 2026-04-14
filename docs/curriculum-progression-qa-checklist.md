@@ -12,7 +12,13 @@ Use this checklist while implementing new chapters to keep topic progression cle
 - Run this checklist at unit-design time and again before merging a chapter.
 - Mark each item pass/fail and add a short note when failing.
 - If an item fails, fix the lesson metadata or challenge framing before adding more content.
-- Wording standard: prefer "when instructionally relevant" over ambiguous phrases such as "where useful" or "where supported" unless a feature-gating mode is named explicitly.
+- Keep stable defaults (overlay availability, hint style, formula visibility, baseline actions) at chapter/unit metadata level; document only lesson-level exceptions when behavior differs.
+- Keep cross-chapter UX behavior canonical in `docs/specs/*.md`; chapter lesson plans should point to the spec instead of re-expanding full interaction details.
+- Feature-gating wording standard:
+  - Use "when instructionally relevant" for pedagogical optionality.
+  - Use "when enabled in <named mode>" for UI toggles or mode-specific behavior.
+  - Use "where available" only for legacy or backward-compatibility contexts; avoid it in new chapter plans.
+  - Avoid "where supported" in chapter plans unless tied to a specific engine capability gate.
 
 ## Global progression checks (all chapters)
 
@@ -29,6 +35,28 @@ Use this checklist while implementing new chapters to keep topic progression cle
 - [ ] Theory-to-lesson mapping is valid: each theory entry links to an introducing lesson.
 - [ ] Sandbox unlock monotonicity holds: previously unlocked tool families remain available.
 - [ ] Handoff assumptions are validated against the next chapter's Unit 1 prerequisites.
+
+## Stage-label glossary and usage (Chapters 8-10)
+
+- Purpose: stage labels indicate learner progression level first; optional domain/theme qualifiers are secondary.
+- Allowed progression labels:
+  - `Late Intermediate`
+  - `Advanced Beginner Electronics`
+  - `Early Digital Logic`
+  - `Introductory System Design`
+  - `Capstone / Mastery`
+- Allowed transition labels (use only when a lesson spans two adjacent progression levels):
+  - `Early Intermediate to Intermediate`
+  - `Intermediate to Late Intermediate`
+  - `Advanced Beginner Electronics to Early Digital Logic`
+  - `Early Digital Logic to Introductory System Design`
+- Optional qualifier format:
+  - `Base Label - Qualifier` (ASCII hyphen with spaces)
+  - Example: `Late Intermediate - Active Components`
+- Usage rules:
+  - Prefer base labels with no qualifier unless the qualifier materially improves instructional clarity.
+  - Do not use slash-separated labels for theme categories in stage labels (except the canonical `Capstone / Mastery`).
+  - Keep stage labels consistent within a unit unless a transition label is intentionally used.
 
 ## Baseline anchors from implemented chapters (1-3)
 

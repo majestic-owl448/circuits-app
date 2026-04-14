@@ -1,8 +1,9 @@
 import { useState, useCallback } from 'react';
-import { useAppState } from '../../state/app-hooks.ts';
+import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { useCircuit } from '../../hooks/useCircuit.ts';
 import { CircuitWorkspace } from '../workspace/CircuitWorkspace.tsx';
 import { DragPalette } from '../workspace/DragPalette.tsx';
+import { SandboxDomainsPanel } from './SandboxDomainsPanel.tsx';
 import { describeCircuit } from '../../engine/description.ts';
 import type { CircuitComponent, CircuitNode, ComponentType, Position } from '../../types/circuit.ts';
 import styles from './SandboxView.module.css';
@@ -22,12 +23,15 @@ function nextNodeId() {
 }
 
 export function SandboxView() {
-  const { unlockedComponents, unlockedActions } = useAppState();
+  const { unlockedComponents, unlockedActions, preferences } = useAppState();
+  const dispatch = useAppDispatch();
   const circuit = useCircuit();
   const [showOverlay, setShowOverlay] = useState(false);
   const [description, setDescription] = useState<string | null>(null);
   const [selectedPlacementType, setSelectedPlacementType] = useState<ComponentType | null>(null);
   const [deletionMode, setDeletionMode] = useState(false);
+  const [selectedMeter, setSelectedMeter] = useState<'voltmeter' | 'ammeter' | 'ohmmeter' | null>(null);
+  const showAllTools = preferences.sandboxAllToolsView;
 
   const canDelete = unlockedActions.includes('delete-component');
   const canPlace = unlockedActions.includes('drag-to-place');
@@ -75,6 +79,44 @@ export function SandboxView() {
     setDescription(desc);
   }, [circuit.components, circuit.simulation]);
 
+  const groupedDomains = [
+    {
+      id: 'basics',
+      title: 'Basics',
+      items: unlockedComponents.filter(type => ['battery', 'bulb', 'switch', 'resistor', 'wire'].includes(type)),
+    },
+    {
+      id: 'measurement',
+      title: 'Measurement',
+      items: showAllTools ? ['voltmeter', 'ammeter', 'ohmmeter'] : [],
+    },
+    {
+      id: 'non-ideal',
+      title: 'Non-Ideal',
+      items: showAllTools ? ['source resistance', 'wire resistance'] : [],
+    },
+    {
+      id: 'time',
+      title: 'Time',
+      items: showAllTools ? ['timeline', 'checkpoint'] : [],
+    },
+    {
+      id: 'ac',
+      title: 'AC/Conversion',
+      items: showAllTools ? ['ac source', 'rectifier'] : [],
+    },
+    {
+      id: 'active',
+      title: 'Active',
+      items: showAllTools ? ['diode', 'transistor'] : [],
+    },
+    {
+      id: 'logic',
+      title: 'Logic',
+      items: showAllTools ? ['input toggle', 'truth table'] : [],
+    },
+  ];
+
   return (
     <div className={styles.sandbox}>
       <div className={styles.toolbar}>
@@ -112,8 +154,30 @@ export function SandboxView() {
           >
             Clear All
           </button>
+          <button
+            className={styles.actionButton}
+            aria-pressed={showAllTools}
+            onClick={() => dispatch({ type: 'TOGGLE_SANDBOX_VIEW_MODE' })}
+          >
+            {showAllTools ? 'Beginner View' : 'All Tools'}
+          </button>
         </div>
       </div>
+      <SandboxDomainsPanel
+        groups={groupedDomains}
+        onSelect={(item) => {
+          if (item === 'voltmeter' || item === 'ammeter' || item === 'ohmmeter') {
+            setSelectedMeter(item);
+            circuit.startMeasurement(item);
+            circuit.measureSelected(item);
+            return;
+          }
+
+          if (unlockedComponents.includes(item)) {
+            handleAddComponent(item);
+          }
+        }}
+      />
       {canPlace && (
         <div className={styles.placementArea}>
           <DragPalette
@@ -123,6 +187,13 @@ export function SandboxView() {
             deletionMode={deletionMode}
             onToggleDelete={() => { setDeletionMode(d => !d); setSelectedPlacementType(null); }}
             showDelete={canDelete}
+            showMeters={showAllTools}
+            selectedMeter={selectedMeter}
+            onSelectMeter={(meter) => {
+              setSelectedMeter(meter);
+              circuit.startMeasurement(meter);
+              circuit.measureSelected(meter);
+            }}
           />
         </div>
       )}

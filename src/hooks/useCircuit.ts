@@ -1,6 +1,8 @@
 import { useState, useCallback, useMemo } from 'react';
 import type { CircuitComponent, CircuitNode, ComponentType, Position, SimulationResult } from '../types/circuit.ts';
 import { solve } from '../engine/solver.ts';
+import { estimateNodePair, measureCurrent, measureResistance, measureVoltage, type MeasurementResult } from '../engine/measurements.ts';
+import { applyFailureStates } from '../engine/failure.ts';
 
 const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 'nodeA' | 'nodeB' | 'position'>> = {
   battery: { type: 'battery', properties: { voltage: 9 }, rotation: 0 },
@@ -26,13 +28,30 @@ export interface CircuitState {
   components: CircuitComponent[];
 }
 
+export type MeterMode = 'voltmeter' | 'ammeter' | 'ohmmeter';
+
+export interface MeterState {
+  mode: MeterMode;
+  targetNodeAId?: string;
+  targetNodeBId?: string;
+  targetComponentId?: string;
+  pendingNodeId?: string;
+  result: MeasurementResult | null;
+}
+
 export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: CircuitComponent[] }) {
   const [nodes, setNodes] = useState<CircuitNode[]>(initial?.nodes ?? []);
   const [components, setComponents] = useState<CircuitComponent[]>(initial?.components ?? []);
+  const [meterState, setMeterState] = useState<MeterState | null>(null);
 
   const simulation = useMemo(
     () => solve(nodes, components),
     [nodes, components],
+  );
+
+  const failedAwareComponents = useMemo(
+    () => applyFailureStates(components, simulation),
+    [components, simulation],
   );
 
   const toggleSwitch = useCallback((componentId: string) => {
@@ -137,11 +156,79 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
   const reset = useCallback((newNodes: CircuitNode[], newComponents: CircuitComponent[]) => {
     setNodes(newNodes);
     setComponents(newComponents);
+    setMeterState(null);
   }, []);
+
+  const startMeasurement = useCallback((mode: MeterMode) => {
+    setMeterState({ mode, result: null });
+  }, []);
+
+  const selectMeasurementNode = useCallback((nodeId: string) => {
+    setMeterState(prev => {
+      if (!prev || prev.mode !== 'voltmeter') return prev;
+
+      if (!prev.pendingNodeId) {
+        return {
+          ...prev,
+          pendingNodeId: nodeId,
+          targetNodeAId: nodeId,
+          targetNodeBId: undefined,
+          result: null,
+        };
+      }
+
+      const targetNodeAId = prev.pendingNodeId;
+      const targetNodeBId = nodeId;
+      const result = measureVoltage(targetNodeAId, targetNodeBId, simulation);
+
+      return {
+        ...prev,
+        pendingNodeId: undefined,
+        targetNodeAId,
+        targetNodeBId,
+        result,
+      };
+    });
+  }, [simulation]);
+
+  const clearMeasurement = useCallback(() => {
+    setMeterState(null);
+  }, []);
+
+  const measureSelected = useCallback((mode: MeterMode, targetComponentId?: string) => {
+    if (mode === 'voltmeter') {
+      const pair = estimateNodePair(nodes);
+      if (!pair) {
+        setMeterState({ mode, result: { value: null, unit: 'V', valid: false, message: 'Add at least two nodes to measure voltage.' } });
+        return;
+      }
+      const result = measureVoltage(pair.nodeAId, pair.nodeBId, simulation);
+      setMeterState({ mode, targetNodeAId: pair.nodeAId, targetNodeBId: pair.nodeBId, result });
+      return;
+    }
+
+    const selectedId = targetComponentId
+      ?? components.find(component => component.type === 'bulb' || component.type === 'resistor' || component.type === 'wire')?.id;
+
+    if (!selectedId) {
+      const unit = mode === 'ammeter' ? 'A' : 'ohm';
+      setMeterState({ mode, result: { value: null, unit, valid: false, message: 'No measurable component is available.' } });
+      return;
+    }
+
+    if (mode === 'ammeter') {
+      const result = measureCurrent(selectedId, simulation);
+      setMeterState({ mode, targetComponentId: selectedId, result });
+      return;
+    }
+
+    const result = measureResistance(selectedId, components, simulation);
+    setMeterState({ mode, targetComponentId: selectedId, result });
+  }, [components, nodes, simulation]);
 
   return {
     nodes,
-    components,
+    components: failedAwareComponents,
     simulation,
     toggleSwitch,
     addComponent,
@@ -152,6 +239,11 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     renameComponent,
     reset,
     setNodes,
+    meterState,
+    startMeasurement,
+    measureSelected,
+    clearMeasurement,
+    selectMeasurementNode,
   };
 }
 

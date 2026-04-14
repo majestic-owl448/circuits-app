@@ -612,6 +612,9 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 - Unit title: Final Mastery Challenge
 - Stage label: Capstone / Mastery
 - Unit goal: Learner demonstrates integrated understanding of the curriculum at the intended product endpoint.
+- Unit 5 differentiation rule:
+  - Lesson 5.1 is the required low-scaffold mastery transfer challenge.
+  - Lesson 5.2 is optional broad review reinforcement and does not replace Lesson 5.1.
 - Explicit prerequisites:
   - Unit 4 complete
 
@@ -634,6 +637,22 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
       - first major action category (`analyze-structure`, `measure`, `classify-source-load`, `test-input-combinations`, or other configured action)
       - first tool family used (meter, timeline/time-view, waveform/conversion view, logic table)
       - stage ordering for multi-stage scenarios (if applicable)
+    - Deterministic capture rules:
+      - `primaryDomain` capture:
+        - if learner explicitly selects a domain, use that value
+        - if not selected, set `primaryDomain = unselected` and do not infer from later actions
+      - first major action:
+        - record the first qualifying learner event after challenge load from this ordered list: `analyze-structure`, `measure`, `classify-source-load`, `test-input-combinations`, `build`, `fix`, `other`
+        - if multiple qualifying events share the same timestamp, use the list order as tie-break priority
+      - first tool family:
+        - record the first tool-opening event from: `meter`, `timeline/time-view`, `waveform/conversion view`, `logic table`
+        - if no tool is used before first check, set `firstToolFamily = none`
+      - stage ordering signal:
+        - for multi-stage scenarios, compare observed stage execution or connection order to configured expected order
+        - for single-stage scenarios, mark this signal as `not-applicable`
+      - missing-signal behavior:
+        - missing signals count as non-matching
+        - `not-applicable` signals are excluded from the match denominator
     - Scoring rule:
       - `aligned`: at least 3 of the configured expected signals match
       - `partially-aligned`: exactly 2 signals match

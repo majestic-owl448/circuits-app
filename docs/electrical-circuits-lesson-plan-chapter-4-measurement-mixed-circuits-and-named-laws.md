@@ -435,7 +435,7 @@ These rules are normative for Chapter 4 lessons and evaluators.
   2. identify the correct intermediate equivalent resistance
 - Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - mixed-circuit reduction supported in detailed evaluations where available
+  - mixed-circuit reduction supported in detailed evaluations when instructionally relevant
 - Theory page additions:
   - Step-by-step mixed-circuit reduction
 - In-lesson theory check:
@@ -547,11 +547,6 @@ These rules are normative for Chapter 4 lessons and evaluators.
   - Ch4 extension: mixed-circuit matching with measurement verification
   - Ch5 extension: non-ideal constraints and operating limits
   - canonical reference: `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
-- Progression note (source-load matching across chapters):
-  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)".
-  - Chapter 2 introduced source-load matching in simple ideal circuits with basic voltage/resistance reasoning. The learner could identify whether a single load receives the right conditions.
-  - This unit extends matching to mixed circuits with multiple loads, where the learner must reason about how series and parallel structure distributes voltage and current. The new capability is analyzing compatibility in circuits with more than one path or stage.
-  - Chapter 5 will further extend matching by introducing non-ideal constraints (internal resistance, wire losses, operating limits) where the source itself becomes part of the design problem.
 - Explicit prerequisites:
   - Unit 3 complete
 

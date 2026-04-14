@@ -7,13 +7,16 @@ import styles from './ChallengeView.module.css';
 interface Props {
   challenge: Challenge;
   simulation: SimulationResult;
+  components: import('../../types/circuit.ts').CircuitComponent[];
   onComplete: () => void;
 }
 
-export function ChallengeView({ challenge, simulation, onComplete }: Props) {
+export function ChallengeView({ challenge, simulation, components, onComplete }: Props) {
   const [hintIndex, setHintIndex] = useState(-1);
   const [feedback, setFeedback] = useState<{ passed: boolean; message: string } | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
+  const [selectedClassifyCategory, setSelectedClassifyCategory] = useState<string | null>(null);
+  const [selectedDiagnoseCause, setSelectedDiagnoseCause] = useState<string | null>(null);
   const [calcInput, setCalcInput] = useState('');
   const [showBreakdown, setShowBreakdown] = useState(false);
 
@@ -28,6 +31,53 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
         setFeedback({ passed: true, message: choice.explanation ?? 'Correct! Well done.' });
       } else {
         setFeedback({ passed: false, message: choice.explanation ?? 'Not quite. Try again!' });
+        if (hintIndex < challenge.hints.length - 1) {
+          setHintIndex(prev => prev + 1);
+        }
+      }
+      return;
+    }
+
+    if (challenge.type === 'classify' && challenge.classifyConfig) {
+      if (!selectedClassifyCategory) {
+        setFeedback({ passed: false, message: 'Please select a category.' });
+        return;
+      }
+
+      if (selectedClassifyCategory === challenge.classifyConfig.correctCategory) {
+        setFeedback({
+          passed: true,
+          message: `Correct. This belongs to "${challenge.classifyConfig.correctCategory}".`,
+        });
+      } else {
+        setFeedback({
+          passed: false,
+          message: `Not quite. Review the evidence and try again.`,
+        });
+        if (hintIndex < challenge.hints.length - 1) {
+          setHintIndex(prev => prev + 1);
+        }
+      }
+      return;
+    }
+
+    if (challenge.type === 'diagnose' && challenge.diagnoseConfig) {
+      if (!selectedDiagnoseCause) {
+        setFeedback({ passed: false, message: 'Please select a likely cause.' });
+        return;
+      }
+
+      const passed = challenge.diagnoseConfig.acceptedCauses.includes(selectedDiagnoseCause);
+      if (passed) {
+        setFeedback({
+          passed: true,
+          message: 'Correct diagnosis. Well done connecting the evidence to the root cause.',
+        });
+      } else {
+        setFeedback({
+          passed: false,
+          message: 'That cause does not match the evidence pattern. Try again.',
+        });
         if (hintIndex < challenge.hints.length - 1) {
           setHintIndex(prev => prev + 1);
         }
@@ -58,12 +108,21 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
       return;
     }
 
-    const result = evaluate(challenge.evaluationCriteria, simulation);
+    const result = evaluate(challenge.evaluationCriteria, simulation, components);
     setFeedback(result);
     if (!result.passed && hintIndex < challenge.hints.length - 1) {
       setHintIndex(prev => prev + 1);
     }
-  }, [challenge, simulation, selectedChoice, calcInput, hintIndex]);
+  }, [
+    challenge,
+    simulation,
+    components,
+    selectedChoice,
+    selectedClassifyCategory,
+    selectedDiagnoseCause,
+    calcInput,
+    hintIndex,
+  ]);
 
   return (
     <div className={styles.container}>
@@ -99,6 +158,47 @@ export function ChallengeView({ challenge, simulation, onComplete }: Props) {
             aria-label={`Enter value in ${challenge.calculationTarget.unit}`}
           />
           <span className={styles.calcUnit}>{challenge.calculationTarget.unit}</span>
+        </div>
+      )}
+
+      {challenge.type === 'classify' && challenge.classifyConfig && (
+        <div className={styles.choices} role="radiogroup" aria-label="Classification categories">
+          {challenge.classifyConfig.categories.map(category => (
+            <label key={category} className={styles.choice}>
+              <input
+                type="radio"
+                name={`classify-${challenge.id}`}
+                value={category}
+                checked={selectedClassifyCategory === category}
+                onChange={() => setSelectedClassifyCategory(category)}
+              />
+              <span>{category}</span>
+            </label>
+          ))}
+        </div>
+      )}
+
+      {challenge.type === 'diagnose' && challenge.diagnoseConfig && (
+        <div className={styles.choices} role="radiogroup" aria-label="Diagnosis causes">
+          {challenge.diagnoseConfig.acceptedCauses.map(cause => (
+            <label key={cause} className={styles.choice}>
+              <input
+                type="radio"
+                name={`diagnose-${challenge.id}`}
+                value={cause}
+                checked={selectedDiagnoseCause === cause}
+                onChange={() => setSelectedDiagnoseCause(cause)}
+              />
+              <span>{cause}</span>
+            </label>
+          ))}
+          {challenge.diagnoseConfig.evidenceItems.length > 0 && (
+            <div className={styles.hints} aria-label="Evidence items">
+              {challenge.diagnoseConfig.evidenceItems.map((item, i) => (
+                <p key={i} className={styles.hint}>{item}</p>
+              ))}
+            </div>
+          )}
         </div>
       )}
 

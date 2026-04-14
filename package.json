@@ -7,7 +7,11 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "verify:engine": "node --experimental-strip-types src/engine/__fixtures__/run-fixtures.ts",
+    "verify:engine:mna": "node --experimental-strip-types src/engine/__fixtures__/run-mna-fixtures.ts",
+    "verify:engine:compare": "CIRCUITS_SOLVER_BACKEND=compare node --experimental-strip-types src/engine/__fixtures__/run-fixtures.ts",
+    "verify:evaluator": "node --experimental-strip-types src/engine/__fixtures__/run-evaluator-fixtures.ts"
   },
   "dependencies": {
     "react": "^19.2.4",

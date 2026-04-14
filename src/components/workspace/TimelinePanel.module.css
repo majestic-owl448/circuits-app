@@ -1,0 +1,59 @@
+.panel {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-surface);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.legend {
+  display: flex;
+  gap: var(--spacing-sm);
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}
+
+.lineSolid::before,
+.lineDashed::before {
+  content: '';
+  display: inline-block;
+  width: 16px;
+  margin-right: 4px;
+  border-top: 2px solid var(--color-text-secondary);
+  vertical-align: middle;
+}
+
+.lineDashed::before {
+  border-top-style: dashed;
+}
+
+.plot {
+  height: 56px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  position: relative;
+  background: repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 24px,
+    rgba(255, 255, 255, 0.04) 24px,
+    rgba(255, 255, 255, 0.04) 25px
+  );
+}
+
+.marker {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--color-primary);
+}
+
+.labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+}

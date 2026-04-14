@@ -340,7 +340,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   3. build a truth table by toggling inputs and recording outputs
 - Challenge type: `build`, `choose`
 - Sandbox unlocks after lesson:
-  - truth-table reference support available in sandbox gate review mode when enabled
+  - truth-table reference support available when enabled in sandbox gate review mode
 - Theory page additions:
   - What is a truth table?
 - In-lesson theory check:
@@ -641,6 +641,9 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 - Unit title: Logic and Digital-Style Review
 - Stage label: Introductory System Design
 - Unit goal: Learner integrates the chapter’s gate and logic-design ideas.
+- Unit 5 differentiation rule:
+  - Lesson 5.1 is guided consolidation of gate selection and small-system checks.
+  - Lesson 5.2 is a lower-scaffold transfer challenge with stricter learner autonomy.
 - Explicit prerequisites:
   - Unit 4 complete
 
@@ -666,7 +669,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   - choose gates
   - connect them
   - test combinations
-  - inspect truth-table summaries where available
+  - inspect truth-table summaries when enabled in sandbox gate review mode
   - check solution
 - Current-flow overlay:
   - optional
@@ -780,7 +783,7 @@ These are optional and replayable.
 By the end of Chapter 9, sandbox should support in required digital-style mode:
 - simplified high/low input and output representation
 - NOT, AND, OR, NAND, NOR, and XOR gates
-- truth-table reference support where available
+- truth-table reference support when enabled in sandbox gate review mode
 - multi-gate design experiments
 - gate-selection and debugging practice
 - small digital-style control-system experiments

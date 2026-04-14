@@ -16,6 +16,9 @@ interface Props {
   deletionMode?: boolean;
   onToggleDelete?: () => void;
   showDelete?: boolean;
+  showMeters?: boolean;
+  selectedMeter?: 'voltmeter' | 'ammeter' | 'ohmmeter' | null;
+  onSelectMeter?: (meter: 'voltmeter' | 'ammeter' | 'ohmmeter') => void;
 }
 
 export function DragPalette({
@@ -25,6 +28,9 @@ export function DragPalette({
   deletionMode = false,
   onToggleDelete,
   showDelete = false,
+  showMeters = false,
+  selectedMeter = null,
+  onSelectMeter,
 }: Props) {
   return (
     <div className={styles.palette}>
@@ -39,6 +45,31 @@ export function DragPalette({
           {COMPONENT_LABELS[type]}
         </button>
       ))}
+      {showMeters && onSelectMeter && (
+        <>
+          <button
+            className={`${styles.meterButton} ${selectedMeter === 'voltmeter' ? styles.itemSelected : ''}`}
+            onClick={() => onSelectMeter('voltmeter')}
+            aria-pressed={selectedMeter === 'voltmeter'}
+          >
+            Voltmeter
+          </button>
+          <button
+            className={`${styles.meterButton} ${selectedMeter === 'ammeter' ? styles.itemSelected : ''}`}
+            onClick={() => onSelectMeter('ammeter')}
+            aria-pressed={selectedMeter === 'ammeter'}
+          >
+            Ammeter
+          </button>
+          <button
+            className={`${styles.meterButton} ${selectedMeter === 'ohmmeter' ? styles.itemSelected : ''}`}
+            onClick={() => onSelectMeter('ohmmeter')}
+            aria-pressed={selectedMeter === 'ohmmeter'}
+          >
+            Ohmmeter
+          </button>
+        </>
+      )}
       {showDelete && onToggleDelete && (
         <button
           className={`${styles.deleteToggle} ${deletionMode ? styles.deleteActive : ''}`}

@@ -27,6 +27,9 @@ export type AppAction =
   | { type: 'TOGGLE_CURRENT_OVERLAY' }
   | { type: 'TOGGLE_THEORY_PANEL' }
   | { type: 'SET_REDUCED_MOTION'; enabled: boolean }
+  | { type: 'TOGGLE_SANDBOX_VIEW_MODE' }
+  | { type: 'TOGGLE_TIME_PANEL_COLLAPSED' }
+  | { type: 'SET_TIME_PLAYBACK_SPEED'; speed: 'normal' | 'slow' }
   | { type: 'START_QUIZ'; quizId: string }
   | { type: 'COMPLETE_QUIZ'; quizId: string; score: number }
   | { type: 'NAVIGATE_THEORY' }
@@ -102,6 +105,30 @@ function reducer(state: AppState, action: AppAction): AppState {
         preferences: {
           ...state.preferences,
           reducedMotion: action.enabled,
+        },
+      };
+    case 'TOGGLE_SANDBOX_VIEW_MODE':
+      return {
+        ...state,
+        preferences: {
+          ...state.preferences,
+          sandboxAllToolsView: !state.preferences.sandboxAllToolsView,
+        },
+      };
+    case 'TOGGLE_TIME_PANEL_COLLAPSED':
+      return {
+        ...state,
+        preferences: {
+          ...state.preferences,
+          timePanelCollapsed: !state.preferences.timePanelCollapsed,
+        },
+      };
+    case 'SET_TIME_PLAYBACK_SPEED':
+      return {
+        ...state,
+        preferences: {
+          ...state.preferences,
+          timePlaybackSpeed: action.speed,
         },
       };
     case 'START_QUIZ':

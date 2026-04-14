@@ -1,90 +1,58 @@
-import type { CircuitComponent, CircuitNode, SimulationResult, ComponentResult } from '../types/circuit.ts';
-import { buildGraph, findLoops } from './circuit-graph.ts';
+import type { CircuitComponent, CircuitNode, SimulationResult } from '../types/circuit.ts';
+import { solveLegacy } from './legacy-solver.ts';
+import { solveMna } from './mna/solver.ts';
+import { applyNonIdealProperties } from './nonideal.ts';
+
+type SolverBackend = 'legacy' | 'mna' | 'compare';
+
+function getConfiguredBackend(): SolverBackend {
+  const runtimeEnv = (globalThis as { process?: { env?: Record<string, string | undefined> } }).process?.env;
+  const runtimeValue = runtimeEnv?.CIRCUITS_SOLVER_BACKEND;
+  const viteValue = (import.meta as { env?: Record<string, string | undefined> }).env?.VITE_SOLVER_BACKEND;
+  const raw = (runtimeValue ?? viteValue ?? 'legacy').toLowerCase();
+
+  if (raw === 'mna' || raw === 'compare') {
+    return raw;
+  }
+
+  return 'legacy';
+}
+
+function withDiagnostic(result: SimulationResult, diagnostic: string): SimulationResult {
+  return {
+    ...result,
+    diagnostics: [...(result.diagnostics ?? []), diagnostic],
+  };
+}
+
+function differs(lhs: SimulationResult, rhs: SimulationResult): boolean {
+  if (lhs.isComplete !== rhs.isComplete) return true;
+  if (lhs.isShortCircuit !== rhs.isShortCircuit) return true;
+  if (Math.abs(lhs.totalCurrent - rhs.totalCurrent) > 1e-3) return true;
+  if (Math.abs(lhs.totalResistance - rhs.totalResistance) > 1e-3) return true;
+  return false;
+}
 
 export function solve(
   nodes: CircuitNode[],
   components: CircuitComponent[],
 ): SimulationResult {
-  const emptyResult: SimulationResult = {
-    isComplete: false,
-    isShortCircuit: false,
-    totalResistance: 0,
-    totalCurrent: 0,
-    componentResults: new Map(),
-    loopNodes: [],
-  };
+  const preparedComponents = applyNonIdealProperties(components);
+  const backend = getConfiguredBackend();
 
-  if (components.length === 0) return emptyResult;
-
-  const graph = buildGraph(nodes, components);
-  const loops = findLoops(graph);
-
-  if (loops.length === 0) {
-    return emptyResult;
+  if (backend === 'mna') {
+    return withDiagnostic(solveMna(nodes, preparedComponents), 'solver-backend:mna');
   }
 
-  // Use the first valid loop found
-  const loop = loops[0];
-  const loopComponents = loop.componentIds.map(id => graph.components.get(id)!);
-
-  // Calculate total voltage from sources
-  let totalVoltage = 0;
-  for (const comp of loopComponents) {
-    if (comp.type === 'battery') {
-      totalVoltage += comp.properties.voltage ?? 0;
+  if (backend === 'compare') {
+    const legacyResult = solveLegacy(nodes, preparedComponents);
+    const mnaResult = solveMna(nodes, preparedComponents);
+    if (differs(legacyResult, mnaResult)) {
+      return withDiagnostic(legacyResult, 'solver-compare:mismatch');
     }
+
+    return withDiagnostic(legacyResult, 'solver-compare:match');
   }
 
-  // Calculate total resistance from loads
-  let totalResistance = 0;
-  for (const comp of loopComponents) {
-    if (comp.type === 'bulb' || comp.type === 'resistor') {
-      totalResistance += comp.properties.resistance ?? 0;
-    }
-  }
-
-  // Short circuit detection: voltage source with no resistance
-  if (totalResistance === 0 && totalVoltage > 0) {
-    return {
-      isComplete: true,
-      isShortCircuit: true,
-      totalResistance: 0,
-      totalCurrent: Infinity,
-      componentResults: new Map(),
-      loopNodes: loop.nodeIds,
-    };
-  }
-
-  if (totalVoltage === 0) {
-    return emptyResult;
-  }
-
-  // I = V / R
-  const totalCurrent = totalVoltage / totalResistance;
-
-  // Calculate per-component results
-  const componentResults = new Map<string, ComponentResult>();
-  for (const comp of loopComponents) {
-    const resistance = (comp.type === 'bulb' || comp.type === 'resistor')
-      ? (comp.properties.resistance ?? 0)
-      : 0;
-    const voltage = totalCurrent * resistance;
-    const power = voltage * totalCurrent;
-
-    componentResults.set(comp.id, {
-      componentId: comp.id,
-      voltage,
-      current: totalCurrent,
-      power,
-    });
-  }
-
-  return {
-    isComplete: true,
-    isShortCircuit: false,
-    totalResistance,
-    totalCurrent,
-    componentResults,
-    loopNodes: loop.nodeIds,
-  };
+  return withDiagnostic(solveLegacy(nodes, preparedComponents), 'solver-backend:legacy');
 }

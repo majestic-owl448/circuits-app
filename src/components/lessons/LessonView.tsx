@@ -7,11 +7,14 @@ import { TheoryPanel } from '../layout/TheoryPanel.tsx';
 import { FormulaPanel } from '../layout/FormulaPanel.tsx';
 import { CircuitWorkspace } from '../workspace/CircuitWorkspace.tsx';
 import { DragPalette } from '../workspace/DragPalette.tsx';
+import { TimeControls } from '../workspace/TimeControls.tsx';
+import { TimelinePanel } from '../workspace/TimelinePanel.tsx';
 import { LessonText } from './LessonText.tsx';
 import { ChallengeView } from './ChallengeView.tsx';
 import { InlineTheoryCheck } from './InlineTheoryCheck.tsx';
 import type { LessonConfig } from '../../types/lesson.ts';
 import type { CircuitNode, ComponentType, Position } from '../../types/circuit.ts';
+import { advanceTimeSlider, checkpointForSlider, createInitialTimeState, describeTimePosition, snapSliderToCheckpoint } from '../../engine/time/simulator.ts';
 import styles from './LessonView.module.css';
 
 export function LessonView() {
@@ -33,7 +36,13 @@ function LessonViewInner({
 }: {
   lesson: LessonConfig;
   dispatch: ReturnType<typeof useAppDispatch>;
-  preferences: { showCurrentOverlay: boolean; theoryPanelPinned: boolean };
+  preferences: {
+    showCurrentOverlay: boolean;
+    theoryPanelPinned: boolean;
+    reducedMotion: boolean;
+    timePanelCollapsed: boolean;
+    timePlaybackSpeed: 'normal' | 'slow';
+  };
 }) {
   const [stepIndex, setStepIndex] = useState(0);
   const [phase, setPhase] = useState<'steps' | 'challenges'>('steps');
@@ -49,6 +58,8 @@ function LessonViewInner({
     nodes: lesson.initialNodes.map(n => ({ ...n })) as CircuitNode[],
     components: lesson.initialCircuit.map(c => ({ ...c })),
   });
+
+  const [timeState, setTimeState] = useState(() => createInitialTimeState(circuit.simulation));
 
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;
@@ -179,6 +190,7 @@ function LessonViewInner({
         <ChallengeView
           challenge={currentChallenge}
           simulation={circuit.simulation}
+          components={circuit.components}
           onComplete={handleChallengeComplete}
         />
       )}
@@ -207,6 +219,45 @@ function LessonViewInner({
           </button>
         )}
       </div>
+      {lesson.id.startsWith('lesson-ch6') && (
+        <>
+          <TimeControls
+            sliderValue={timeState.sliderValue}
+            isPlaying={timeState.isPlaying}
+            speed={timeState.speed}
+            onSliderChange={(value) => setTimeState(prev => ({
+              ...prev,
+              sliderValue: preferences.reducedMotion ? snapSliderToCheckpoint(value) : value,
+            }))}
+            onTogglePlay={() => {
+              if (preferences.reducedMotion) {
+                setTimeState(prev => ({
+                  ...prev,
+                  isPlaying: false,
+                  sliderValue: advanceTimeSlider(prev.sliderValue, prev.speed, true),
+                }));
+                return;
+              }
+              setTimeState(prev => ({ ...prev, isPlaying: !prev.isPlaying }));
+            }}
+            onToggleSpeed={() => setTimeState(prev => ({ ...prev, speed: prev.speed === 'normal' ? 'slow' : 'normal' }))}
+            onReset={() => setTimeState(prev => ({ ...prev, sliderValue: 0, isPlaying: false }))}
+          />
+          {!preferences.timePanelCollapsed && (
+            <TimelinePanel sliderValue={timeState.sliderValue} />
+          )}
+          <div className={styles.controls}>
+            <button
+              className={styles.theoryToggle}
+              onClick={() => dispatch({ type: 'TOGGLE_TIME_PANEL_COLLAPSED' })}
+            >
+              {preferences.timePanelCollapsed ? 'Show Timeline' : 'Hide Timeline'}
+            </button>
+            <p className={styles.error}>Time position: {describeTimePosition(timeState.sliderValue)}</p>
+            <p className={styles.error}>Checkpoint: {checkpointForSlider(timeState.sliderValue)}</p>
+          </div>
+        </>
+      )}
     </div>
   );
 

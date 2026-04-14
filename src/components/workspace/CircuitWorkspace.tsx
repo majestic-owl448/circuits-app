@@ -6,6 +6,7 @@ import { WireRenderer } from './WireRenderer.tsx';
 import { CurrentOverlay } from './CurrentOverlay.tsx';
 import type { WireSegment } from './CurrentOverlay.tsx';
 import { NodeRenderer } from './NodeRenderer.tsx';
+import { MeterOverlay } from './MeterOverlay.tsx';
 import styles from './CircuitWorkspace.module.css';
 
 /**
@@ -159,10 +160,14 @@ export function CircuitWorkspace({
       return;
     }
     const comp = components.find(c => c.id === componentId);
+    if (circuit.meterState?.mode === 'ammeter' || circuit.meterState?.mode === 'ohmmeter') {
+      circuit.measureSelected(circuit.meterState.mode, componentId);
+      return;
+    }
     if (comp?.type === 'switch') {
       toggleSwitch(componentId);
     }
-  }, [interactive, components, toggleSwitch, deletionMode, onDeleteComponent]);
+  }, [interactive, components, toggleSwitch, deletionMode, onDeleteComponent, circuit]);
 
   const handleSvgClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     if (!placementMode || !placementType || !onPlace) return;
@@ -299,7 +304,19 @@ export function CircuitWorkspace({
             onClick={() => handleNodeClick(node.id)}
           />
         ))}
+
+        {circuit.meterState?.mode === 'voltmeter' && nodes.map(node => (
+          <circle
+            key={`meter-node-${node.id}`}
+            cx={node.position.x}
+            cy={node.position.y}
+            r="10"
+            className={styles.meterNodeTarget}
+            onClick={() => circuit.selectMeasurementNode(node.id)}
+          />
+        ))}
       </svg>
+      <MeterOverlay meterState={circuit.meterState} onClose={circuit.clearMeasurement} />
     </div>
   );
 }

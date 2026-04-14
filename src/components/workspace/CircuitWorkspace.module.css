@@ -33,3 +33,14 @@
 .deletionMode {
   /* visual hint that deletion mode is active */
 }
+
+.meterNodeTarget {
+  fill: rgba(91, 145, 255, 0.2);
+  stroke: var(--color-primary);
+  stroke-width: 1;
+  cursor: pointer;
+}
+
+.meterNodeTarget:hover {
+  fill: rgba(91, 145, 255, 0.35);
+}

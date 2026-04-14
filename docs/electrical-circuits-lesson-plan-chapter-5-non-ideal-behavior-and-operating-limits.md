@@ -348,7 +348,6 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
   - no new component type
 - Theory page additions:
   - Source-load matching with internal resistance
-  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
   - Extending source-load matching from Chapter 2 (ideal numerical) and Chapter 4 (measurement-guided) into non-ideal constraints
 - In-lesson theory check:
   - identify which quantity matters most to the target outcome

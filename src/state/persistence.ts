@@ -1,5 +1,5 @@
 const STORAGE_KEY = 'circuits-app-state';
-const CURRENT_VERSION = 2;
+const CURRENT_VERSION = 3;
 
 export interface PersistedState {
   version: number;
@@ -16,6 +16,9 @@ export interface PersistedState {
     showCurrentOverlay: boolean;
     theoryPanelPinned: boolean;
     reducedMotion: boolean;
+    sandboxAllToolsView: boolean;
+    timePanelCollapsed: boolean;
+    timePlaybackSpeed: 'normal' | 'slow';
   };
 }
 
@@ -34,6 +37,9 @@ const DEFAULT_STATE: PersistedState = {
     showCurrentOverlay: false,
     theoryPanelPinned: false,
     reducedMotion: false,
+    sandboxAllToolsView: false,
+    timePanelCollapsed: false,
+    timePlaybackSpeed: 'normal',
   },
 };
 

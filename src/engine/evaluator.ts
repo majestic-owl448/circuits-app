@@ -1,45 +1,47 @@
 import type { SimulationResult } from '../types/circuit.ts';
+import type { CircuitComponent } from '../types/circuit.ts';
 import type { EvaluationCriteria } from '../types/lesson.ts';
+import { topologyChecker } from './evaluator/checkers/topology.ts';
+import { constraintsChecker } from './evaluator/checkers/constraints.ts';
+import { numericRangeChecker } from './evaluator/checkers/numeric-range.ts';
+import { choiceChecker } from './evaluator/checkers/choice.ts';
+import { classifyChecker } from './evaluator/checkers/classify.ts';
+import { diagnoseChecker } from './evaluator/checkers/diagnose.ts';
+import type { CheckerResult, EvaluationChecker } from './evaluator/checkers/types.ts';
+import type { MultiCriteriaEvaluationResult } from '../types/lesson.ts';
 
 export interface EvaluationResult {
   passed: boolean;
   message: string;
+  outcomes?: CheckerResult[];
 }
 
 export function evaluate(
   criteria: EvaluationCriteria,
   simulation: SimulationResult,
+  components: CircuitComponent[] = [],
 ): EvaluationResult {
-  if (criteria.circuitMustBeClosed && !simulation.isComplete) {
-    return {
-      passed: false,
-      message: 'The circuit is not complete. Make sure all components are connected in a closed loop.',
-    };
-  }
+  const checkers: EvaluationChecker[] = [
+    topologyChecker,
+    constraintsChecker,
+    numericRangeChecker,
+    choiceChecker,
+    classifyChecker,
+    diagnoseChecker,
+  ];
 
-  if (simulation.isShortCircuit) {
-    return {
-      passed: false,
-      message: 'Short circuit detected! There is a path with no resistance. Add a load (like a bulb) to the circuit.',
-    };
-  }
+  const outcomes: CheckerResult[] = [];
 
-  if (criteria.targetComponent && criteria.targetProperty && criteria.expectedRange) {
-    const compResult = simulation.componentResults.get(criteria.targetComponent);
-    if (!compResult) {
-      return {
-        passed: false,
-        message: `The target component is not part of a complete circuit.`,
-      };
+  for (const checker of checkers) {
+    const result = checker({ criteria, simulation, components });
+    if (result) {
+      outcomes.push(result);
     }
-
-    const value = compResult[criteria.targetProperty];
-    const { min, max } = criteria.expectedRange;
-
-    if (value < min || value > max) {
+    if (result && !result.passed) {
       return {
         passed: false,
-        message: `The ${criteria.targetProperty} on the target component is ${value.toFixed(2)}, but it needs to be between ${min} and ${max}.`,
+        message: result.message ?? 'Try again.',
+        outcomes,
       };
     }
   }
@@ -47,5 +49,27 @@ export function evaluate(
   return {
     passed: true,
     message: 'Correct! Well done.',
+    outcomes,
+  };
+}
+
+export function evaluateMultiCriteria(
+  criteria: EvaluationCriteria,
+  simulation: SimulationResult,
+  components: CircuitComponent[] = [],
+): MultiCriteriaEvaluationResult {
+  const result = evaluate(criteria, simulation, components);
+  const outcomes = (result.outcomes ?? []).map(outcome => ({
+    id: outcome.id,
+    passed: outcome.passed,
+    message: outcome.message,
+    severity: outcome.severity,
+  }));
+
+  const failedHardPass = outcomes.some(outcome => !outcome.passed && outcome.severity === 'hard-pass');
+
+  return {
+    passed: !failedHardPass,
+    outcomes,
   };
 }

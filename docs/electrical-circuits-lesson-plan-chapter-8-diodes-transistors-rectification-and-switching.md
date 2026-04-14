@@ -11,7 +11,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ## Chapter metadata
 
 - Chapter title: Diodes, Transistors, Rectification, and Switching
-- Stage label: Late Intermediate — Active Components
+- Stage label: Late Intermediate - Active Components
 - Chapter goal: Learner can understand diode directionality, introductory rectification, and transistor-based switching/control behavior in simulation.
 - Primary outcome: Learner can use diodes and transistors conceptually in simple circuit designs and understand why they matter in larger electrical systems.
 - Category label introduced in this chapter: Active Components (instructional category for diode and transistor lessons in this product).
@@ -203,7 +203,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 ### Unit metadata
 
 - Unit title: Rectification
-- Stage label: Late Intermediate — Active Components
+- Stage label: Late Intermediate - Active Components
 - Unit goal: Learner understands how diodes connect to AC/DC conversion through introductory rectification.
 - Explicit prerequisites:
   - Unit 1 complete
@@ -260,7 +260,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 2.2: Introductory Rectification
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 2.1
 - Main goal: Learner is introduced to rectification as a simplified way to turn alternating behavior into a more one-directional output behavior.
@@ -304,7 +304,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 2.3: Compare Unrectified and Rectified Output
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 2.2
 - Main goal: Learner compares a direct AC-driven output with a rectified output.
@@ -350,7 +350,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 ### Unit metadata
 
 - Unit title: Transistors
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Unit goal: Learner is introduced to the transistor as a component used for switching or controlling circuit behavior in a simplified instructional model.
 - Explicit prerequisites:
   - Unit 2 complete
@@ -359,7 +359,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 3.1: Meet the Transistor
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 2.3
 - Main goal: Learner is introduced to the transistor as a component that can control one part of a circuit using another.
@@ -404,7 +404,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 3.2: A Transistor as a Switch
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 3.1
 - Main goal: Learner sees the transistor used as a simplified switch.
@@ -448,7 +448,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 3.3: Use a Small Control to Affect a Larger Path
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 3.2
 - Main goal: Learner understands the basic idea that a transistor lets one part of the circuit influence another part.
@@ -494,7 +494,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 ### Unit metadata
 
 - Unit title: Switching and Control Systems
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Unit goal: Learner applies diode and transistor concepts in simple switching and control design problems.
 - Explicit prerequisites:
   - Unit 3 complete
@@ -503,7 +503,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 4.1: Diode or Transistor?
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 3.3
 - Main goal: Learner chooses whether a diode or transistor is the more appropriate component for a given simplified design goal.
@@ -548,7 +548,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 4.2: A Simple Control Circuit
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 4.1
 - Main goal: Learner creates a simple circuit where one condition controls another through a transistor in the instructional model.
@@ -595,8 +595,11 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 ### Unit metadata
 
 - Unit title: Diodes, Rectification, and Switching Review
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Unit goal: Learner integrates diode behavior, rectification, transistor switching, and component-choice reasoning.
+- Unit 5 differentiation rule:
+  - Lesson 5.1 is guided consolidation of component selection and behavior checks.
+  - Lesson 5.2 is a lower-scaffold transfer challenge with stricter learner autonomy.
 - Explicit prerequisites:
   - Unit 4 complete
 
@@ -604,7 +607,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 5.1: Review Challenge
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 4.2
 - Main goal: Learner completes a broader review challenge using the appropriate active or directional component for the problem.
@@ -651,7 +654,7 @@ To reduce ambiguity during implementation, this chapter uses the following suppo
 
 ### Lesson 5.2: Larger Integration Challenge
 
-- Stage label: Early Active Components
+- Stage label: Late Intermediate - Active Components
 - Prerequisites:
   - Lesson 5.1
 - Main goal: Learner solves a larger challenge combining conversion, rectification, and switching/control at a conceptual level.
