@@ -170,7 +170,7 @@ The learner should be allowed to play freely with the switch first. This connect
 ### 9.2 Visual style
 The early lessons should use a hybrid visual approach:
 - recognizable real-world components where helpful
-- simplified symbolic representation where useful
+- simplified symbolic representation when instructionally relevant
 
 The visuals should help learners connect physical-looking components with abstract circuit concepts.
 
@@ -426,7 +426,7 @@ Quiz feedback should be shown at the end of the quiz, except for one-question qu
 Quiz feedback should include:
 - correct answers
 - short theory refreshers
-- links back to theory topics and lessons where useful
+- links back to theory topics and lessons when instructionally relevant
 
 ## 23. Measurement Tools
 
@@ -528,7 +528,7 @@ This summary should include:
 
 This description should be available both:
 - on demand through a **Describe circuit** action
-- automatically when useful for accessibility or evaluation feedback
+- automatically when instructionally relevant for accessibility or evaluation feedback
 
 ## 28. Platform Scope
 
@@ -606,4 +606,3 @@ This app should teach electrical circuits through a freeCodeCamp-like interactiv
 - desktop-first execution
 
 The product should make learners feel that they are learning circuitry by building, testing, observing, and understanding circuits, not by passively consuming explanation alone.
-

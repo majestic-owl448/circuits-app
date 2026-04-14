@@ -1,11 +1,10 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 4: Measurement, Mixed Circuits, and Named Circuit Laws
 
 ## Purpose of this chapter
 
 This chapter deepens the learner's circuit-analysis skills after the ideal series and parallel foundation has already been built manually. It introduces virtual measurement tools through guided lessons, beginning only after the learner has already practiced manual calculation. It also expands the learner's understanding from simple pure-series and pure-parallel examples to mixed circuits, stronger source-and-load matching problems, and formal named circuit laws where those names become instructionally useful.
 
-This chapter still stays within theoretical and simulated circuit learning. It remains focused on ideal circuits first, with only limited preview of more realistic behavior where useful. Non-ideal behavior as a larger thread belongs more strongly to the next chapter.
+This chapter still stays within theoretical and simulated circuit learning. It remains focused on ideal circuits first, with only limited preview of more realistic behavior when instructionally relevant. Non-ideal behavior as a larger thread belongs more strongly to the next chapter.
 
 ## Chapter metadata
 
@@ -26,6 +25,45 @@ This chapter still stays within theoretical and simulated circuit learning. It r
   - from calculating simple known patterns
   - to investigating and diagnosing more complex circuits
   - to naming already-learned ideas formally as circuit laws
+
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch4-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch4-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - guided voltmeter, ammeter, and ohmmeter onboarding
+  - mixed-circuit manual reduction and calculation before meter verification
+  - named KCL/KVL application in guided challenge contexts
+- Sandbox mode (required by chapter end):
+  - voltmeter and ammeter available
+  - ohmmeter available in valid contexts only
+  - mixed-circuit inspection and debugging prompts
+- Optional (can be disabled for first ship if clearly labeled):
+  - advanced mixed-circuit step trace visualizations beyond required lesson workflows
+
+## Meter semantics and validation rules
+
+These rules are normative for Chapter 4 lessons and evaluators.
+
+- Voltmeter:
+  - valid usage: placed across two nodes or across a component terminal pair
+  - invalid usage: placed inline in series as if it were a path element
+- Ammeter:
+  - valid usage: placed inline in the branch/path whose current is being measured
+  - invalid usage: placed across a component as a parallel probe
+- Ohmmeter:
+  - valid usage: resistance inspection in lesson-defined, de-energized measurement contexts
+  - de-energized definition (normative): no active source contribution exists in the same connected graph component as the measurement target; if any source in that connected component is active, the context is energized
+  - invalid usage: resistance measurement in energized/running contexts unless explicitly supported by scenario rules
+- Evaluator behavior:
+  - invalid placement/use should return a specific usage error before numeric correctness checks
+  - lessons should include at least one challenge that distinguishes correct meter choice from correct placement
 
 ---
 
@@ -71,6 +109,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. identify whether calculation or measurement would help answer a given question
   2. choose the best reason to inspect a circuit with a meter
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no tool unlock yet, lesson is preparatory
 - Theory page additions:
@@ -115,6 +154,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. place the voltmeter across the correct component
   2. identify which of several displayed readings makes sense for the shown setup
+- Challenge type: `choose`, `drag-place`
 - Sandbox unlocks after lesson:
   - voltmeter available in sandbox
 - Theory page additions:
@@ -156,6 +196,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. predict a branch voltage, then verify with the voltmeter
   2. identify whether the shown reading is consistent with the circuit
+- Challenge type: `predict`, `choose`
 - Sandbox unlocks after lesson:
   - voltmeter fully usable on supported sandbox circuits
 - Theory page additions:
@@ -188,6 +229,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Concepts introduced:
   - ammeter measures current
   - current measurement supports reasoning about series and branch behavior
+  - ammeter placement rule: the meter is inserted in the path being measured
 - Formulas shown:
   - `V = IR`
   - relevant current relationships already learned
@@ -207,6 +249,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. place the ammeter where current through a bulb can be read
   2. identify which of several current readings is plausible for the shown circuit
+- Challenge type: `choose`, `drag-place`
 - Sandbox unlocks after lesson:
   - ammeter available in sandbox
 - Theory page additions:
@@ -249,6 +292,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. identify whether two measured points in a series path should match
   2. compare source current and branch current in a parallel circuit
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -268,7 +312,8 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Main goal: Learner is introduced to the ohmmeter as a way to inspect resistance values in the simulation model where that makes sense.
 - Concepts introduced:
   - ohmmeter measures resistance
-  - resistance inspection supports reasoning and checking in supported contexts
+  - resistance inspection supports reasoning and checking in lesson-defined valid contexts
+  - ohmmeter context rule: resistance checks are only valid in lesson-defined de-energized contexts
 - Formulas shown:
   - resistance-related formulas remain available
 - Components used:
@@ -278,7 +323,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Prebuilt amount:
   - guided, mostly prebuilt
 - Learner actions unlocked:
-  - place and use the ohmmeter in supported contexts
+  - place and use the ohmmeter in lesson-defined valid contexts
 - Current-flow overlay:
   - not central
 - Hint style:
@@ -288,8 +333,9 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. identify the resistance of a shown load
   2. identify when an ohmmeter reading is useful for the lesson's goal
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - ohmmeter available in supported sandbox contexts
+  - ohmmeter available in sandbox when the lesson-defined de-energized context rule is satisfied
 - Theory page additions:
   - What an ohmmeter measures
   - How the ohmmeter is used in this simulation model
@@ -342,6 +388,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. mark which segment is series and which is parallel
   2. choose which analysis step should happen first
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -386,6 +433,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. simplify the parallel part first, then continue
   2. identify the correct intermediate equivalent resistance
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - mixed-circuit reduction supported in detailed evaluations where available
 - Theory page additions:
@@ -431,6 +479,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. reduce the circuit, then calculate the voltage across a specific load
   2. calculate the current through each branch of a mixed circuit
+- Challenge type: `calculate`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -457,7 +506,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
   - mixed circuits
   - voltmeter
   - ammeter
-  - ohmmeter where supported and useful
+  - ohmmeter in lesson-defined valid contexts
 - Prebuilt amount:
   - partially prebuilt
 - Learner actions available:
@@ -474,6 +523,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. predict and verify the voltage across a selected load
   2. predict and verify the current in a selected branch
+- Challenge type: `predict`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -492,7 +542,13 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Unit title: Source and Load Matching Becomes Stronger
 - Stage label: Intermediate
 - Unit goal: Learner works more deliberately with challenges where the circuit must keep a target component inside a required operating range.
+- Thread map (source-load matching progression):
+  - Ch2 baseline: ideal single-load matching
+  - Ch4 extension: mixed-circuit matching with measurement verification
+  - Ch5 extension: non-ideal constraints and operating limits
+  - canonical reference: `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
 - Progression note (source-load matching across chapters):
+  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)".
   - Chapter 2 introduced source-load matching in simple ideal circuits with basic voltage/resistance reasoning. The learner could identify whether a single load receives the right conditions.
   - This unit extends matching to mixed circuits with multiple loads, where the learner must reason about how series and parallel structure distributes voltage and current. The new capability is analyzing compatibility in circuits with more than one path or stage.
   - Chapter 5 will further extend matching by introducing non-ideal constraints (internal resistance, wire losses, operating limits) where the source itself becomes part of the design problem.
@@ -525,7 +581,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
   - check solution
   - inspect final values
   - open more details
-  - use meters where useful
+  - use meters in lesson-defined contexts
 - Current-flow overlay:
   - available
 - Hint style:
@@ -536,6 +592,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. adapt the circuit so the bulb lights without exceeding the allowed target condition
   2. compare two circuits and identify which better matches the source to the load
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -579,10 +636,11 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. diagnose why the target load is not operating in range
   2. fix a circuit with both structural and numeric problems
+- Challenge type: `fix`, `diagnose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
-  - Debugging by measured evidence
+  - Troubleshooting and investigation: debugging by measured evidence
 - In-lesson theory check:
   - choose the best first debugging step
 - Standalone quiz topics unlocked:
@@ -590,11 +648,11 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 
 ---
 
-## Unit 5: The Laws Get Their Names
+## Unit 5: Named Laws and Chapter Review
 
 ### Unit metadata
 
-- Unit title: The Laws Get Their Names
+- Unit title: Named Laws and Chapter Review
 - Stage label: Intermediate
 - Unit goal: Learner is formally introduced to named circuit laws after already working with the ideas informally.
 - Explicit prerequisites:
@@ -633,6 +691,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. use branch currents to find the missing current at a junction
   2. identify which current relationship satisfies KCL
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -673,6 +732,7 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. identify the missing voltage in a loop
   2. identify which loop statement satisfies KVL
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -715,10 +775,12 @@ This chapter still stays within theoretical and simulated circuit learning. It r
 - Challenge examples:
   1. diagnose and correct a mixed circuit so the target load operates within range
   2. verify the corrected circuit using one or more meters
+- Challenge type: `diagnose`
 - Sandbox unlocks after lesson:
   - chapter-complete prompt encouraging meter-assisted analysis
 - Theory page additions:
   - Chapter 4 review topic links
+  - Troubleshooting and investigation thread map (measurement and mixed-circuit focus)
 - In-lesson theory check:
   - mixed quick checks
 - Standalone quiz topics unlocked:
@@ -744,7 +806,8 @@ By the end of this chapter, the theory reference should include topic-group entr
 - Calculating values in a mixed circuit
 - Investigating a mixed circuit
 - Source and load matching in ideal circuit design
-- Debugging by measured evidence
+- Troubleshooting and investigation: debugging by measured evidence
+- Troubleshooting and investigation: first-issue detection and meter-guided diagnosis
 - Kirchhoff’s Current Law
 - Kirchhoff’s Voltage Law
 
@@ -776,7 +839,7 @@ These are optional and replayable.
 By the end of Chapter 4, sandbox should support:
 - voltmeter
 - ammeter
-- ohmmeter in supported contexts
+- ohmmeter in lesson-defined valid contexts
 - mixed-circuit analysis with detailed evaluation on supported structures
 - meter-assisted debugging
 - stronger target-based design experimentation
@@ -785,6 +848,11 @@ By the end of Chapter 4, sandbox should support:
 ## Handoff to Chapter 5
 
 Chapter 5 should begin the stronger shift from ideal circuit behavior to selected non-ideal behavior.
+
+Learners should already be able to:
+- choose and place voltmeter, ammeter, and ohmmeter correctly in lesson-defined valid contexts
+- use meters to verify manual calculations and diagnose simple mixed-circuit issues
+- apply KCL/KVL naming to patterns already learned in mixed-circuit analysis
 
 That chapter should include:
 - internal resistance of the source

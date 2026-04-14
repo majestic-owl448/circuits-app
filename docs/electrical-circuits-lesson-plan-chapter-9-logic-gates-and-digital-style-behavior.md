@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 9: Logic Gates and Digital-Style Behavior
 
 ## Purpose of this chapter
@@ -27,6 +26,28 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Main conceptual transition in this chapter:
   - from switching a path
   - to combining input conditions into logical circuit outputs
+
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch9-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch9-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - state/input/output labeling in Unit 1
+  - NOT/AND/OR progression before NAND/NOR/XOR
+  - truth-table interaction in Unit 2
+  - small multi-gate design challenges in Unit 4-5
+- Sandbox mode (required by chapter end):
+  - NOT, AND, OR, NAND, NOR, XOR gates
+  - input toggles and output indicators
+  - multi-gate connection and test workflows
+- Optional (can be disabled for first ship if clearly labeled):
+  - truth-table helper overlays in sandbox
 
 ---
 
@@ -69,7 +90,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
   - toggle input conditions
   - observe output state
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - concept-first explanation
 - Completion condition:
@@ -77,9 +98,10 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify whether the output is active or inactive
   2. identify which input condition changes the output state
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new gate component yet
-  - input and output labeling more explicitly surfaced in supported sandbox modes
+  - input and output labeling more explicitly surfaced in required digital-style mode
 - Theory page additions:
   - Input states and output states
   - High and low in the simplified model
@@ -96,6 +118,10 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Prerequisites:
   - Lesson 1.1
 - Main goal: Learner sees the simplest digital-style pattern: one input condition controlling one output condition.
+- Bridge to gate construction:
+  - This lesson should include one conceptual micro-example showing that transistor switch arrangements can implement gate-like rules.
+  - Suggested instructional framing: two control switches in series behave like an AND-style condition (both needed), while a parallel control arrangement behaves like an OR-style condition (either can activate).
+  - This is a conceptual bridge only; full transistor-level gate derivations remain out of scope.
 - Concepts introduced:
   - single-input control
   - state mapping
@@ -122,10 +148,12 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify the output when the input is active
   2. identify the output when the input is inactive
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new gate component yet
 - Theory page additions:
   - Single-input control patterns
+  - Conceptual bridge from transistor switches to gate rules
 - In-lesson theory check:
   - basic input-to-output prediction
 - Standalone quiz topics unlocked:
@@ -177,6 +205,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify the output when the input is high
   2. identify the output when the input is low
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - NOT gate available in sandbox
 - Theory page additions:
@@ -219,6 +248,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify when the output is active
   2. identify which input combination leaves the output inactive
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - AND gate available in sandbox
 - Theory page additions:
@@ -261,6 +291,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify when the output is active
   2. compare AND and OR behavior for the same inputs
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - OR gate available in sandbox
 - Theory page additions:
@@ -307,8 +338,9 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
   1. fill in the missing output entries for an AND gate truth table
   2. identify which truth table corresponds to a shown gate
   3. build a truth table by toggling inputs and recording outputs
+- Challenge type: `build`, `choose`
 - Sandbox unlocks after lesson:
-  - truth-table reference support available in sandbox gate review mode if supported
+  - truth-table reference support available in sandbox gate review mode when enabled
 - Theory page additions:
   - What is a truth table?
 - In-lesson theory check:
@@ -349,6 +381,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify which gate matches a shown truth table
   2. given three truth tables, match each to its gate type
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -402,6 +435,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. compare NAND to AND
   2. compare NOR to OR
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - NAND and NOR gates available in sandbox
 - Theory page additions:
@@ -446,6 +480,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify when the XOR output is active
   2. identify which input combinations produce the same result
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - XOR gate available in sandbox
 - Theory page additions:
@@ -500,6 +535,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. choose a gate that only activates when both inputs are active
   2. choose a gate that activates when inputs differ
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -543,6 +579,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. combine gates to create a specified output rule
   2. identify why a one-gate solution is insufficient in the shown case
+- Challenge type: `build`, `choose`
 - Sandbox unlocks after lesson:
   - multi-gate design supported in sandbox
 - Theory page additions:
@@ -585,6 +622,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. identify which input combination breaks the intended behavior
   2. fix a small logic system that uses one incorrect gate
+- Challenge type: `fix`, `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -640,6 +678,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. build a logic system that matches the given rule
   2. identify and fix a system that uses the wrong gate type
+- Challenge type: `build`, `fix`, `choose`
 - Sandbox unlocks after lesson:
   - chapter-complete prompt encouraging experimentation with gate combinations
 - Theory page additions:
@@ -666,7 +705,7 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
   - gates
   - transistor-style control elements where appropriate
   - input and output elements
-  - optional conversion or source-type context if useful to the challenge
+  - optional conversion or source-type context when instructionally relevant to the challenge
 - Prebuilt amount:
   - lightly scaffolded
 - Learner actions available:
@@ -683,10 +722,12 @@ This chapter stays at an introductory level. Deep Boolean algebra, integrated ci
 - Challenge examples:
   1. build a control system whose output follows a multi-input rule
   2. diagnose and fix a design that almost works but fails under one input combination
+- Challenge type: `build`, `fix`, `diagnose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
   - Integrating switching and logic behavior
+- Troubleshooting and investigation checkpoint: gate-rule and input-combination debugging
 - In-lesson theory check:
   - input-combination reasoning
 - Standalone quiz topics unlocked:
@@ -736,7 +777,7 @@ These are optional and replayable.
 
 ## Chapter 9 sandbox state by the end
 
-By the end of Chapter 9, sandbox should support, in supported digital-style modes:
+By the end of Chapter 9, sandbox should support in required digital-style mode:
 - simplified high/low input and output representation
 - NOT, AND, OR, NAND, NOR, and XOR gates
 - truth-table reference support where available
@@ -746,8 +787,14 @@ By the end of Chapter 9, sandbox should support, in supported digital-style mode
 
 ## Handoff to Chapter 10
 
-Chapter 10 should choose between two strong directions:
-- a final review, mastery, and capstone-design chapter set that consolidates the whole curriculum, or
-- a further extension into more advanced digital or system topics
+Chapter 10 should include:
+- explicit domain-classification tasks before cross-domain capstone builds
+- mixed-domain troubleshooting and staged-system reasoning challenges
+- a final mastery evaluator with criterion-level feedback across structure, values, constraints, and advisory dimensions
 
-For the current product vision, a capstone and mastery chapter is likely the stronger next step.
+Chapter 10 implementation should assume learners can already:
+- classify and apply basic gate behaviors from truth tables
+- choose and combine gates to satisfy small output rules
+- debug simple multi-gate systems by testing input combinations
+
+Chapter 10 then focuses on cross-domain integration and mastery evidence rather than introducing many new domain concepts.

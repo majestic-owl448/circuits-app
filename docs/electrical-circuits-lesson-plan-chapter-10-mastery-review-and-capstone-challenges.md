@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 10: Mastery, Review, and Capstone Challenges
 
 ## Purpose of this chapter
@@ -27,6 +26,28 @@ This chapter also acts as the strongest bridge between course completion and any
 - Main conceptual transition in this chapter:
   - from unit-level skill
   - to whole-curriculum integration and mastery demonstration
+
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch10-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch10-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - domain classification tasks before cross-domain solving
+  - mixed-domain troubleshooting flows with iterative fixes
+  - capstone challenges across DC/non-ideal, time-dependent, AC/conversion, and active/logic domains
+  - final mastery rubric panel with criterion-level feedback (interaction model in `docs/specs/capstone-rubric-panel-ux-spec.md`)
+- Sandbox mode (required by chapter end):
+  - cross-domain prompt sets
+  - multi-stage mixed-system experimentation
+  - debugging/redesign workflows using previously unlocked tools
+- Optional (can be disabled for first ship if clearly labeled):
+  - additional mastery-only prompt bundles beyond required lesson-linked prompts
 
 ---
 
@@ -70,7 +91,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - compare
   - identify concept domains
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - summary-first
   - links back to theory topics and lesson areas
@@ -79,10 +100,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. identify whether a scenario is mainly about series/parallel, non-ideal behavior, AC/DC conversion, or logic behavior
   2. choose which reference topic is most relevant to a shown system
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new unlock, but review prompts across all prior domains become available
 - Theory page additions:
-  - Mastery roadmap
+  - Mastery progression map
   - Whole-curriculum concept map
 - In-lesson theory check:
   - concept classification review
@@ -98,11 +120,15 @@ This chapter also acts as the strongest bridge between course completion and any
   - Lesson 1.1
 - Main goal: Learner explicitly practices classifying circuit problems by domain before attempting to solve them.
 - Why this lesson exists:
-  - Unit 4, Lesson 4.1 will ask learners to "choose the right domain, then solve." But domain classification has never been taught as an explicit skill — in prior chapters, the domain was always implicit (the learner was in a DC chapter, so the problem was DC). This lesson makes domain classification a conscious, practiced skill before it becomes part of larger challenges.
+  - Unit 4, Lesson 4.1 will ask learners to "choose the right domain, then solve." Learners have been making these choices implicitly since Chapter 4 through measurement, diagnosis, and troubleshooting lessons. This lesson formalizes that implicit skill into an explicit, named method before it becomes part of larger challenges.
 - Concepts introduced:
   - domain classification as a problem-solving skill
   - the major domains: ideal DC structure, numerical DC analysis, non-ideal constraints, time-dependent behavior, AC/DC conversion, active components (diodes/transistors), digital logic
   - identifying domain by symptoms: "values are wrong" → numerical or non-ideal; "timing matters" → time-dependent; "direction matters" → diode or AC; "conditions control output" → transistor or logic
+  - primary domain versus secondary factors:
+    - primary domain = the branch that must be solved first to make progress
+    - secondary factors = additional constraints that must still pass after the primary domain is handled
+    - examples: a non-ideal DC case may include numerical checks as secondary factors; a logic case may include non-ideal limits as secondary factors
 - Formulas shown:
   - only as needed in the examples
 - Components used:
@@ -114,7 +140,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - classify domain
   - explain reasoning
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - symptom-based classification guidance
 - Completion condition:
@@ -122,6 +148,7 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. classify a failing circuit: is the problem structural, numerical, non-ideal, time-dependent, or logic-related?
   2. given a description of symptoms, choose the most likely domain before inspecting the circuit
+- Challenge type: `choose`, `classify`
 - Sandbox unlocks after lesson:
   - no new unlock
 - Theory page additions:
@@ -155,7 +182,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - choose first step
   - compare approaches
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - issue-first with reasoning explanation
 - Completion condition:
@@ -163,6 +190,7 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. decide whether to simplify, measure, compare source/load type, or inspect gate logic first
   2. identify which wrong first move would waste time in the shown scenario
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new unlock
 - Theory page additions:
@@ -209,7 +237,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - use **Describe circuit**
   - check solution
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - aligns with product-wide progressive hint model
 - Completion condition:
@@ -217,10 +245,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. identify the earliest blocking issue in a mixed-domain failure
   2. choose which of several proposed fixes should come first
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - troubleshooting prompts across multiple domains become available
 - Theory page additions:
-  - First-issue troubleshooting strategy
+  - Troubleshooting and investigation: first-issue troubleshooting strategy
 - In-lesson theory check:
   - first-fix prioritization
 - Standalone quiz topics unlocked:
@@ -261,10 +290,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. repair a circuit with both a structural and a numeric issue
   2. repair a system with a correct subpart placed in the wrong stage
+- Challenge type: `fix`
 - Sandbox unlocks after lesson:
   - no new unlock
 - Theory page additions:
-  - Stepwise troubleshooting workflow
+  - Troubleshooting and investigation: stepwise troubleshooting workflow
 - In-lesson theory check:
   - identify the best verification step after a fix
 - Standalone quiz topics unlocked:
@@ -281,6 +311,9 @@ This chapter also acts as the strongest bridge between course completion and any
 - Unit goal: Learner completes capstone-style challenges in each major branch of the curriculum.
 - Explicit prerequisites:
   - Unit 2 complete
+- Ordering model:
+  - Lessons 3.1-3.4 are domain capstones that may be completed in any order once Unit 2 is complete.
+  - Unit completion requires all four domain capstones to be passed.
 
 ---
 
@@ -321,10 +354,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. design a circuit that keeps a target load in range despite realistic losses
   2. diagnose and redesign a near-correct non-ideal DC system
+- Challenge type: `diagnose`
 - Sandbox unlocks after lesson:
   - capstone DC prompt available
 - Theory page additions:
-  - DC capstone review links
+  - Capstone strategy for ideal and non-ideal DC problems
 - In-lesson theory check:
   - mixed DC quick checks
 - Standalone quiz topics unlocked:
@@ -336,7 +370,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 3.1
+  - Unit 2 complete
 - Main goal: Learner solves a challenge involving capacitor or inductor behavior where both initial and later states matter.
 - Concepts reviewed:
   - transient behavior
@@ -367,10 +401,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. design for a required initial effect while preserving an acceptable later state
   2. identify why a circuit passes one time-based target and fails another
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - capstone time-dependent prompt available
 - Theory page additions:
-  - Time-dependent capstone review links
+  - Capstone strategy for time-dependent problems
 - In-lesson theory check:
   - initial/later target reasoning
 - Standalone quiz topics unlocked:
@@ -382,7 +417,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 3.2
+  - Unit 2 complete
 - Main goal: Learner solves a larger conceptual system challenge involving AC, DC, and conversion stages.
 - Concepts reviewed:
   - AC versus DC
@@ -405,7 +440,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - run
   - check solution
 - Current-flow overlay:
-  - available where supported
+  - available when instructionally relevant
 - Hint style:
   - system-stage reasoning
 - Completion condition:
@@ -413,10 +448,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. build the correct path from source type to load type through the needed conversion
   2. repair a system that has the right blocks in the wrong order
+- Challenge type: `build`, `fix`
 - Sandbox unlocks after lesson:
   - capstone AC/DC prompt available
 - Theory page additions:
-  - AC/DC capstone review links
+  - Capstone strategy for AC/DC conversion problems
 - In-lesson theory check:
   - stage and source/load matching checks
 - Standalone quiz topics unlocked:
@@ -428,7 +464,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 3.3
+  - Unit 2 complete
 - Main goal: Learner solves a challenge involving diodes, transistor control, or logic-gate behavior.
 - Concepts reviewed:
   - diode orientation
@@ -451,7 +487,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - test combinations
   - check solution
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - issue-first
 - Completion condition:
@@ -459,10 +495,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. choose the correct active or logical component for the rule
   2. repair a system that fails under a specific input or orientation case
+- Challenge type: `fix`, `choose`
 - Sandbox unlocks after lesson:
   - capstone active-component prompt available
 - Theory page additions:
-  - Active-components and logic capstone review links
+  - Capstone strategy for active-component and logic problems
 - In-lesson theory check:
   - component-role quick checks
 - Standalone quiz topics unlocked:
@@ -486,7 +523,7 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 3.4
+  - Unit 3 complete (all domain capstones passed)
 - Main goal: Learner solves a scenario where identifying the domain of the problem is part of the challenge.
 - Concepts reviewed:
   - problem classification
@@ -506,7 +543,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - run
   - check solution
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - first hint focuses on domain selection
 - Completion condition:
@@ -514,6 +551,7 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. determine whether the key issue is logic, conversion, non-ideal loss, or time-dependent behavior
   2. fix a system whose failure is caused by solving the wrong kind of problem first
+- Challenge type: `fix`, `choose`
 - Sandbox unlocks after lesson:
   - cross-domain prompt set available
 - Theory page additions:
@@ -547,7 +585,7 @@ This chapter also acts as the strongest bridge between course completion and any
   - inspect stage outputs
   - check solution
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - stage-by-stage
 - Completion condition:
@@ -555,6 +593,7 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. build a system where one stage conditions the source before another stage uses it
   2. identify and fix a system where each individual stage seems plausible but the overall chain is wrong
+- Challenge type: `build`, `fix`, `choose`
 - Sandbox unlocks after lesson:
   - no new unlock
 - Theory page additions:
@@ -587,9 +626,19 @@ This chapter also acts as the strongest bridge between course completion and any
 - Evaluation rubric:
   - The final mastery challenge uses a multi-criteria evaluator. The learner's solution is assessed on all applicable dimensions, with criterion-by-criterion pass/fail shown in a rubric panel (see implementation readiness doc).
   - **Dimension 1 — Correct structure**: Circuit topology is valid. Components are connected in a way that forms a complete, functional path. No open circuits, short circuits, or disconnected segments unless intentional.
-  - **Dimension 2 — Correct values**: All measurable quantities (voltage, current, resistance, power) at target components fall within the specified tolerance for the scenario. Both ideal-context and non-ideal-context tolerances apply where relevant.
+  - **Dimension 2 — Correct values**: All measurable quantities (voltage, current, resistance, power) at target components fall within the specified tolerance for the scenario. Both ideal-context and non-ideal-context tolerances apply when instructionally relevant.
   - **Dimension 3 — Constraint satisfaction**: All operating limits, source-load compatibility requirements, and conversion-stage requirements are met. No component is in a failure state. Time-dependent targets (if applicable) are met at all specified checkpoints.
-  - **Dimension 4 — Domain-appropriate reasoning**: The learner's approach matches the problem domain. Evidence of domain classification (from Lesson 1.2) is demonstrated through component choice, analysis order, and tool usage.
+  - **Dimension 4 — Domain-appropriate reasoning**: Advisory metric only. The learner's approach is compared against expected domain strategy signals in the lesson config.
+    - Required evidence signals (used for deterministic feedback):
+      - selected `primaryDomain` label before or during first check
+      - first major action category (`analyze-structure`, `measure`, `classify-source-load`, `test-input-combinations`, or other configured action)
+      - first tool family used (meter, timeline/time-view, waveform/conversion view, logic table)
+      - stage ordering for multi-stage scenarios (if applicable)
+    - Scoring rule:
+      - `aligned`: at least 3 of the configured expected signals match
+      - `partially-aligned`: exactly 2 signals match
+      - `not-aligned`: 0-1 signals match
+    - This dimension never blocks pass/fail.
   - **Dimension 5 — Efficient design**: The solution does not include unnecessary components or redundant stages. This is a soft criterion — a correct but slightly over-engineered solution still passes, but feedback notes where simplification is possible.
   - Pass threshold: Dimensions 1-3 must all pass. Dimension 4 is assessed but advisory. Dimension 5 is feedback-only.
 - Concepts reviewed:
@@ -604,12 +653,12 @@ This chapter also acts as the strongest bridge between course completion and any
   - build
   - run
   - measure
-  - inspect time-dependent behavior if relevant
+  - inspect time-dependent behavior when instructionally relevant
   - inspect detailed evaluation
   - use **Describe circuit**
   - check solution
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - minimal by default
   - progressive support only when requested or after failed checks
@@ -618,10 +667,11 @@ This chapter also acts as the strongest bridge between course completion and any
 - Challenge examples:
   1. build a valid multi-domain system that includes at least two or three major curriculum concepts working together
   2. diagnose and repair a nearly-complete system that fails for one structural reason and one domain-specific reason
+- Challenge type: `build`, `fix`, `diagnose`
 - Sandbox unlocks after lesson:
   - final mastery sandbox prompt set
 - Theory page additions:
-  - Final mastery review links
+  - Final mastery strategy checklist
 - In-lesson theory check:
   - none beyond the challenge itself
 - Standalone quiz topics unlocked:
@@ -633,8 +683,11 @@ This chapter also acts as the strongest bridge between course completion and any
 
 - Stage label: Capstone / Mastery
 - Prerequisites:
-  - Lesson 5.1
+  - Unit 4 complete
 - Main goal: Learner optionally reviews the full course through a broad mixed quiz set.
+- Availability note:
+  - This optional quiz is unlocked as soon as Unit 5 starts (before or after Lesson 5.1).
+  - Completing it is never required for chapter completion.
 - Why this exists after the mastery challenge:
   - The mastery challenge (Lesson 5.1) tests applied, hands-on ability. This quiz tests conceptual breadth and terminology recall across the entire curriculum. A learner may pass the mastery challenge by being strong in a few domains while having gaps in others. This quiz surfaces those gaps and links back to the relevant theory sections for self-directed review.
   - This quiz is optional because the mastery challenge is the primary completion gate. The quiz serves learners who want to verify their conceptual coverage or identify areas for further study.
@@ -661,10 +714,11 @@ This chapter also acts as the strongest bridge between course completion and any
   2. concept classification across multiple branches
   3. system-stage reasoning
   4. component-choice reasoning
+- Challenge type: `classify`
 - Sandbox unlocks after lesson:
   - none
 - Theory page additions:
-  - Mastery quiz links
+  - Mastery quiz review topics
 - In-lesson theory check:
   - not applicable
 - Standalone quiz topics unlocked:
@@ -678,15 +732,16 @@ By the end of this chapter, the theory reference should include topic-group entr
 - Whole-curriculum concept map
 - Domain classification for circuit problem-solving
 - Choosing the right first step in analysis
-- First-issue troubleshooting strategy
-- Stepwise troubleshooting workflow
-- DC capstone review links
-- Time-dependent capstone review links
-- AC/DC capstone review links
-- Active-components and logic capstone review links
+- Troubleshooting and investigation: first-issue troubleshooting strategy
+- Troubleshooting and investigation: stepwise troubleshooting workflow
+- Troubleshooting and investigation thread map (Ch4 -> Ch5 -> Ch6 -> Ch7 -> Ch8 -> Ch9 -> Ch10)
+- Capstone strategy for ideal and non-ideal DC problems
+- Capstone strategy for time-dependent problems
+- Capstone strategy for AC/DC conversion problems
+- Capstone strategy for active-component and logic problems
 - Cross-domain problem solving
 - Multi-stage system reasoning
-- Final mastery review links
+- Final mastery strategy checklist
 
 Each entry should link back to the lesson or lessons where it was introduced.
 
@@ -724,7 +779,7 @@ By the end of the full lesson-plan set, the learner should be able to:
 - perform numerical analysis with voltage, current, resistance, and power
 - analyze series, parallel, and mixed circuits
 - use virtual meters meaningfully
-- apply named circuit laws where useful
+- apply named circuit laws when instructionally relevant
 - reason about selected non-ideal effects
 - understand basic capacitor and inductor behavior over time
 - compare DC and AC conceptually

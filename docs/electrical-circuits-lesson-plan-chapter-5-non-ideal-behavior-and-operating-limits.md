@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 5: Non-Ideal Behavior and Operating Limits
 
 ## Purpose of this chapter
@@ -26,6 +25,34 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Main conceptual transition in this chapter:
   - ideal analysis remains foundational
   - realistic simulation adds limits, losses, and possible failure
+
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch5-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch5-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Ohmmeter carry-forward rule (normative for this chapter):
+  - Chapter 4 de-energized rule remains unchanged in non-ideal contexts.
+  - Internal-resistance and wire-loss modeling do not create exceptions to energized/de-energized validation.
+  - If any active source contributes in the same connected graph component as the measurement target, ohmmeter use is treated as energized and invalid unless a scenario explicitly overrides this for instructional reasons.
+
+- Lesson mode (required):
+  - internal source resistance scenarios
+  - wire-resistance and path-drop scenarios
+  - operating-range and operating-limit evaluation
+  - failure/burnout feedback in guided and challenge contexts
+- Sandbox mode (required by chapter end):
+  - internal resistance source parameters
+  - non-ideal wire resistance parameters
+  - target-range and failure-state inspection in required non-ideal mode
+  - ideal vs non-ideal comparison prompts
+- Optional (can be disabled for first ship if clearly labeled):
+  - tolerance-variation simulation sweeps beyond lesson-defined fixed scenarios
 
 ---
 
@@ -70,6 +97,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. choose which explanation best describes the difference between ideal and non-ideal simulation
   2. identify whether an observed mismatch is better explained by structure or realism assumptions
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -117,6 +145,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. identify whether a target component is within the acceptable range
   2. choose which result is acceptable in a non-ideal lesson context
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -135,6 +164,11 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Unit title: Internal Resistance of the Source
 - Stage label: Intermediate
 - Unit goal: Learner understands that a source may not behave like a perfect ideal voltage source under load.
+- Thread map (source-load matching progression):
+  - Ch2 baseline: ideal single-load matching
+  - Ch4 extension: mixed-circuit matching with measurement verification
+  - Ch5 extension: non-ideal constraints and operating limits
+  - canonical reference: `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
 - Explicit prerequisites:
   - Unit 1 complete
 
@@ -172,8 +206,9 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. choose which source is ideal and which is non-ideal in a comparison
   2. identify why the target load performs differently under the two source models
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - sources can now have an internal-resistance parameter in supported sandbox contexts
+  - sources can now have an internal-resistance parameter in sandbox when non-ideal mode is enabled
 - Theory page additions:
   - Internal resistance of the source
 - In-lesson theory check:
@@ -214,6 +249,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. compare ideal delivered voltage and non-ideal delivered voltage
   2. identify which reading suggests a source is dropping voltage under load
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - voltmeter becomes useful for source-drop inspection in sandbox
 - Theory page additions:
@@ -263,10 +299,11 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. compare voltmeter readings at no load and under load, then explain the difference
   2. identify which of two sources has greater internal resistance based on meter evidence
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
-  - Diagnosing source behavior with meters
+  - Troubleshooting and investigation: diagnosing source behavior with meters
 - In-lesson theory check:
   - interpret meter readings to distinguish ideal from non-ideal source behavior
 - Standalone quiz topics unlocked:
@@ -289,7 +326,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
   - source with internal resistance
   - target load
   - optional support components
-  - voltmeter and ammeter where useful
+  - voltmeter and ammeter when instructionally relevant
 - Prebuilt amount:
   - partially prebuilt or lightly scaffolded
 - Learner actions available:
@@ -306,10 +343,13 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. choose a better configuration for a source with internal resistance
   2. identify why the nominal source value alone is not enough to guarantee success
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
   - Source-load matching with internal resistance
+  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
+  - Extending source-load matching from Chapter 2 (ideal numerical) and Chapter 4 (measurement-guided) into non-ideal constraints
 - In-lesson theory check:
   - identify which quantity matters most to the target outcome
 - Standalone quiz topics unlocked:
@@ -361,8 +401,9 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. compare a circuit with ideal wires to one with non-ideal wires
   2. identify which part of the circuit is adding the extra resistance
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - wire resistance available as a supported parameter in sandbox contexts where enabled
+  - wire resistance available as a sandbox parameter in non-ideal mode
 - Theory page additions:
   - Wire resistance
 - In-lesson theory check:
@@ -402,6 +443,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. find where the voltage is being lost
   2. identify which measured difference explains the weaker target-load behavior
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -445,6 +487,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. modify the circuit so the target still works even with wire losses
   2. identify whether the main limitation is the source, the wire path, or the load choice
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -497,6 +540,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. choose which setup dissipates more power in a heat-focused load
   2. identify which quantity most directly relates to heating in this model
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -530,7 +574,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
   - run
   - observe failure
   - inspect final values
-  - use meters where useful
+  - use meters when instructionally relevant
 - Current-flow overlay:
   - available
 - Hint style:
@@ -540,6 +584,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. identify which value exceeded the acceptable limit
   2. choose a modification that prevents burnout
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - supported components can now display failure states where the sandbox mode allows it
 - Theory page additions:
@@ -585,6 +630,7 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. make the bulb light acceptably without burning it out
   2. make the heat-focused load work without exceeding its allowed range
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -637,8 +683,9 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. identify whether two close values are both acceptable
   2. identify what nominal value means in the lesson's context
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - tolerance-aware components available in supported sandbox modes if enabled
+  - tolerance-aware components available in required non-ideal mode
 - Theory page additions:
   - Component tolerance
 - In-lesson theory check:
@@ -648,11 +695,58 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 
 ---
 
-### Lesson 5.2: Non-Ideal Review Challenge
+### Lesson 5.2: Design for Tolerance, Not Just Nominal Values
 
 - Stage label: Intermediate
 - Prerequisites:
   - Lesson 5.1
+- Main goal: Learner designs a circuit that remains acceptable across lesson-defined tolerance variation, not only at nominal values.
+- Concepts introduced:
+  - tolerance-aware design
+  - robustness across acceptable value spread
+  - nominal success can still fail at tolerance edges
+- Formulas shown:
+  - prior formulas remain available
+  - optional min/max check framing where instructionally relevant
+- Components used:
+  - source with previously introduced non-ideal options
+  - tolerance-aware load or resistor set
+  - optional support components
+  - meters
+- Prebuilt amount:
+  - partially prebuilt with one failing nominal-only example
+- Learner actions available:
+  - build or adjust circuit
+  - run nominal case and tolerance-edge cases
+  - measure and compare outcomes
+  - check solution
+- Current-flow overlay:
+  - available
+- Hint style:
+  - robustness-first guidance
+  - prompts learner to verify more than one configuration case
+- Completion condition:
+  - learner produces a design that passes all lesson-defined tolerance cases for the target criterion
+- Challenge examples:
+  1. redesign a nominally correct circuit so it stays in range when the target component varies within tolerance
+  2. identify which candidate design is robust across the provided tolerance cases
+- Challenge type: `choose`
+- Sandbox unlocks after lesson:
+  - tolerance-variation prompt set available in required non-ideal mode
+- Theory page additions:
+  - Designing for tolerance instead of a single nominal value
+- In-lesson theory check:
+  - robustness-versus-nominal reasoning
+- Standalone quiz topics unlocked:
+  - tolerance-aware design basics
+
+---
+
+### Lesson 5.3: Non-Ideal Review Challenge
+
+- Stage label: Intermediate
+- Prerequisites:
+  - Lesson 5.2
 - Main goal: Learner integrates internal resistance, wire losses, heating, operating limits, and tolerance-aware thinking in one larger challenge.
 - Concepts introduced:
   - no major new concept
@@ -684,10 +778,12 @@ This chapter remains theoretical and simulation-based. It does not introduce rea
 - Challenge examples:
   1. diagnose why an apparently correct ideal design fails in the non-ideal model
   2. redesign the circuit to meet the target despite realistic losses and limits
+- Challenge type: `diagnose`
 - Sandbox unlocks after lesson:
   - chapter-complete prompt encouraging experimentation with ideal versus non-ideal versions of the same circuit
 - Theory page additions:
   - Chapter 5 review topic links
+  - Troubleshooting and investigation thread map (non-ideal diagnosis focus)
 - In-lesson theory check:
   - mixed quick checks
 - Standalone quiz topics unlocked:
@@ -703,7 +799,7 @@ By the end of this chapter, the theory reference should include topic-group entr
 - Operating ranges in non-ideal simulation
 - Internal resistance of the source
 - Voltage drop under load
-- Diagnosing source behavior with meters
+- Troubleshooting and investigation: diagnosing source behavior with meters
 - Source-load matching with internal resistance
 - Wire resistance
 - Voltage drop in non-ideal wires
@@ -712,6 +808,8 @@ By the end of this chapter, the theory reference should include topic-group entr
 - Operating limits and burnout
 - Designing within operating limits
 - Component tolerance
+- Designing for tolerance instead of a single nominal value
+- Troubleshooting and investigation: non-ideal evidence patterns and root-cause diagnosis
 
 Each entry should link back to the lesson or lessons where it was introduced.
 
@@ -731,24 +829,30 @@ Suggested quizzes unlocked by the end of the chapter:
 11. Burnout and limits basics
 12. Operating-limit design reasoning
 13. Tolerance basics
-14. Chapter 5 review quiz
+14. Tolerance-aware design basics
+15. Chapter 5 review quiz
 
 These are optional and replayable.
 
 ## Chapter 5 sandbox state by the end
 
-By the end of Chapter 5, sandbox should support, in supported non-ideal modes:
+By the end of Chapter 5, sandbox should support in required non-ideal mode:
 - sources with internal resistance
 - non-ideal wire resistance
 - voltage-drop inspection using meters
 - target-load operating ranges
-- failure or burnout states where enabled
-- tolerance-aware components where enabled
+- failure or burnout states in required non-ideal mode
+- tolerance-aware components in required non-ideal mode
 - direct comparison between ideal and non-ideal configurations of similar circuits
 
 ## Handoff to Chapter 6
 
 Chapter 6 should expand beyond purely resistive steady-state DC circuits and begin introducing time-dependent circuit behavior through new component categories.
+
+Learners should already be able to:
+- distinguish ideal versus non-ideal outcomes and explain common causes of mismatch
+- use meters to diagnose internal resistance and path-loss effects in guided scenarios
+- evaluate success against operating ranges and basic limit/failure constraints
 
 That chapter should include:
 - capacitors

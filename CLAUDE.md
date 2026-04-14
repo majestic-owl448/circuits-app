@@ -42,6 +42,11 @@ No test suite configured.
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
 - `docs/` — PRD, spec, and chapter lesson-plan documents
 - `docs/curriculum-progression-qa-checklist.md` — Implementation QA checklist for topic progression, redundancy prevention, and prerequisite clarity across Chapters 4-10
+- `docs/future-chapters-implementation-readiness.md` — Gate, dependency, and evaluator readiness constraints for Chapters 4-10
+- `docs/specs/` — Reserved for cross-chapter UX specifications when extracted from chapter plans
+- `docs/specs/time-visualization-ux-spec.md` — Cross-chapter time-visualization model for Chapters 6-7 (scrubber, timeline panel, AC extension, accessibility)
+- `docs/specs/capstone-rubric-panel-ux-spec.md` — Chapter 10 rubric panel interaction model (layout, status semantics, accessibility, QA hooks)
+- `docs/specs/sandbox-progressive-unlock-ux-spec.md` — Cross-chapter sandbox progressive-unlock interaction model (grouping, keyboard nav, persistence, locked-state messaging)
 
 ## Key Patterns
 
@@ -51,6 +56,7 @@ No test suite configured.
 - **Quiz IDs**: `quiz-chX-topic-name`. Each quiz has `unlockedBy` pointing to a lesson ID. Must match the lesson's `quizzesUnlocked` array.
 - **Circuit components**: Defined in `shared.ts` or inline in lesson configs. Types: battery, bulb, switch, resistor, wire.
 - **Challenge types**: `build`, `fix`, `predict`, `choose`, `drag-place`, `calculate`. Build challenges can specify `availableComponents`.
+- **Challenge types roadmap (future chapters)**: adds `classify` and `diagnose` before Chapter 4 implementation.
 - **showFormulaPanel**: Controls whether numeric values (voltage, resistance) appear on components. False for early lessons, true from unit 3 onward.
 
 ## Content Structure

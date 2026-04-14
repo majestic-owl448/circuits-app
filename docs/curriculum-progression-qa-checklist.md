@@ -12,6 +12,7 @@ Use this checklist while implementing new chapters to keep topic progression cle
 - Run this checklist at unit-design time and again before merging a chapter.
 - Mark each item pass/fail and add a short note when failing.
 - If an item fails, fix the lesson metadata or challenge framing before adding more content.
+- Wording standard: prefer "when instructionally relevant" over ambiguous phrases such as "where useful" or "where supported" unless a feature-gating mode is named explicitly.
 
 ## Global progression checks (all chapters)
 
@@ -21,6 +22,13 @@ Use this checklist while implementing new chapters to keep topic progression cle
 - [ ] Formula use matches stage level (conceptual first, then procedural, then mixed).
 - [ ] Unlock flow is monotonic (no lesson requires concepts not yet introduced).
 - [ ] Challenge types align with lesson intent (`choose` for concept checks, `build/fix` for application, `calculate` for numeric fluency).
+- [ ] Every challenge example in planning docs has an explicit challenge type tag (`build`, `fix`, `predict`, `choose`, `drag-place`, `calculate`, `classify`, `diagnose`).
+- [ ] Every lesson in chapter plans maps unambiguously to a lesson ID using `lesson-chX-Y-Z`.
+- [ ] Every standalone quiz topic maps unambiguously to a quiz ID using `quiz-chX-topic-name`.
+- [ ] Quiz-to-lesson mapping is valid: each quiz `unlockedBy` points to an existing lesson ID.
+- [ ] Theory-to-lesson mapping is valid: each theory entry links to an introducing lesson.
+- [ ] Sandbox unlock monotonicity holds: previously unlocked tool families remain available.
+- [ ] Handoff assumptions are validated against the next chapter's Unit 1 prerequisites.
 
 ## Baseline anchors from implemented chapters (1-3)
 
@@ -49,6 +57,7 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Internal resistance, wire losses, and heating are introduced as distinct causes with distinct evidence.
 - [ ] Diagnostic meter lesson (Lesson 2.3) teaches using meters to detect non-ideal effects before the design lesson (Lesson 2.4) asks learners to design around them.
 - [ ] Challenges require diagnosis of non-ideal effects, not only recalculation of ideal formulas.
+- [ ] Unit 5 includes a tolerance-aware design practice lesson before the chapter review challenge.
 
 ### Chapter 6: Capacitors, Inductors, Time Behavior
 
@@ -57,6 +66,7 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Inductor energy release (Lesson 3.4) mirrors capacitor discharge (Lesson 2.4) — both components have explicit charge/store and release/discharge lessons.
 - [ ] Time-based checkpoints are explicit in challenge instructions (initial, middle, final as relevant).
 - [ ] Time-Visualization UX Specification is finalized before implementation begins (see Chapter 6 lesson plan).
+- [ ] Time-Visualization UX Specification includes explicit AC repeating-cycle scrubber behavior used by Chapter 7 waveform lessons.
 - [ ] Frequency/period forward note prepares learners for Chapter 7's AC content without introducing formal terminology.
 - [ ] Learners are asked to reason about behavior over time, not just a single final value.
 
@@ -65,7 +75,7 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Chapter start explicitly contrasts repeating AC behavior with Chapter 6 transients.
 - [ ] Lesson 1.2 includes a required side-by-side visual comparison of transient vs AC behavior using the timeline panel.
 - [ ] AC concepts stay conceptual first (waveform literacy before heavy math).
-- [ ] Lesson 2.3 (reactive preview) establishes the intuition that AC repetition speed affects C/L behavior, without formal frequency terminology.
+- [ ] Lesson 2.3 (reactive preview) establishes the intuition that AC repetition speed affects C/L behavior and introduces frequency/period names at an introductory level.
 - [ ] Conversion lessons preserve causal story (why convert, then how, then compare outcomes).
 - [ ] Mixed-system examples integrate prior reasoning instead of introducing unrelated scenarios.
 
@@ -76,6 +86,7 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Rectification is framed as an application of AC + diode directionality from Chapters 7 and 8 Unit 1.
 - [ ] Transistor lessons build from switch/control semantics before adding larger-path effects.
 - [ ] Unit 4 explicitly prepares the learner for logic abstraction in Chapter 9.
+- [ ] Chapter boundaries explicitly state diode forward-drop modeling scope (baseline ideal-conduction model versus optional non-ideal extension).
 
 ### Chapter 9: Logic Gates and Digital-Style Behavior
 
@@ -85,6 +96,7 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Gate comparison lesson (2.5) uses truth tables as the comparison structure.
 - [ ] XOR lesson includes concrete motivation showing why AND and OR cannot express the "inputs differ" rule.
 - [ ] Small design lessons require gate selection reasoning, not just memorization.
+- [ ] Unit 1 includes a conceptual transistor-to-gate bridge example (switch arrangements as gate-like rules) before formal gate taxonomy.
 
 ### Chapter 10: Mastery Review and Capstones
 
@@ -94,6 +106,15 @@ Use these anchors to avoid backsliding when writing future chapters.
 - [ ] Cross-domain challenges require selecting the right domain first, then solving.
 - [ ] Final mastery challenge (Lesson 5.1) has explicit rubric with five dimensions: structure, values, constraints, domain reasoning, efficiency. Dimensions 1-3 are hard gates.
 - [ ] Optional mastery quiz (Lesson 5.2) is clearly positioned as a conceptual breadth check distinct from the hands-on mastery challenge.
+- [ ] Unit 3 domain capstones can be completed in any order once Unit 2 is complete, with all four required before Unit 4.
+- [ ] Optional mastery quiz is available before or after the final mastery challenge and never blocks completion.
+- [ ] Dimension 4 evidence signals use a defined vocabulary in lesson config and are implementable deterministically.
+
+## UX and accessibility scale checks (chapters 7-10)
+
+- [ ] Sandbox progressive-unlock UI keeps chapter-appropriate tool surfaces without hiding already-earned tools permanently.
+- [ ] New visual elements (waveform views, rectification comparisons, gate diagrams, truth tables) inherit Chapter 6 accessibility baselines.
+- [ ] Chapter 10 rubric panel inherits Chapter 6 accessibility baselines (keyboard, non-color-only status, text summary fallback, reduced-motion support).
 
 ## Redundancy watchlist
 
@@ -103,6 +124,18 @@ Check these common overlap points each time you add or revise content:
 - [ ] Chapter 2 numerical checking vs Chapter 4 meter usage are clearly differentiated.
 - [ ] Chapter 6 time-dependent behavior vs Chapter 7 AC repetition are clearly differentiated.
 - [ ] Chapter 8 switching/control vs Chapter 9 logic abstraction are clearly differentiated.
+
+### Source-load matching progression thread map (canonical)
+
+Use this as the single reference thread whenever source-load matching language appears in chapter plans.
+
+- Chapter 2: ideal single-load matching baseline (numerical and conceptual fit checks).
+- Chapter 4: measurement-guided matching in mixed circuits (multi-path reasoning + meter verification).
+- Chapter 5: non-ideal matching under losses and operating limits (internal resistance, wire loss, safe ranges).
+- Chapter 7: AC/DC compatibility matching with conversion-stage selection.
+
+- [ ] Each chapter that references source-load matching points to this canonical thread map.
+- [ ] No chapter presents source-load matching as a brand-new concept unless explicitly labeled as extension/reframe.
 
 ## Prerequisite clarity checklist
 

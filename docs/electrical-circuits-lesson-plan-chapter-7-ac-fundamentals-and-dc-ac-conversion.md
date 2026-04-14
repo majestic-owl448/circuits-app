@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 7: AC Fundamentals and DC/AC Conversion
 
 ## Purpose of this chapter
@@ -23,15 +22,44 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - inspect AC and DC source behavior in the simulation
   - compare simple source types and load outcomes
   - reason about conversion stages conceptually
-  - use existing inspection tools where supported in the AC model
+  - use existing inspection tools in lesson-defined AC contexts
 - Main conceptual transition in this chapter:
   - from DC-only reasoning
   - to understanding alternating behavior
   - to understanding systems that include both DC and AC stages
 
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch7-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch7-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - all Unit 1-5 lesson interactions in this plan
+  - timeline-panel comparison in Lesson 1.2
+  - conceptual conversion blocks in Unit 3
+- Sandbox mode (required by chapter end):
+  - AC source placement
+  - introductory AC waveform view
+  - AC/DC comparison scenarios
+  - DC-to-AC and AC-to-DC conversion blocks
+- Optional (can be disabled for first ship if clearly labeled):
+  - capacitor/inductor AC preview experiments in sandbox
+
 ---
 
 ## Unit 1: What AC Is
+
+### AC waveform view relation to Chapter 6 timeline panel
+
+- The Chapter 7 AC waveform view is not a separate UX system.
+- It is the Chapter 6 timeline panel configured for repeating-cycle visualization instead of one-time transient windows.
+- AC scrubber behavior follows the Chapter 6 AC extension: cycle-relative anchors, optional two-cycle view for comparison, continuous loop playback in AC mode, and checkpoint snap/pause when challenge evaluation requires it.
+- If a distinct signal widget is introduced in future implementations, it must mirror the same checkpoint and accessibility rules defined in `docs/specs/time-visualization-ux-spec.md`.
 
 ### Unit metadata
 
@@ -55,7 +83,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - current direction and source behavior can vary over time in AC
 - Formulas shown:
   - no heavy new formulas required yet
-  - earlier DC formulas remain available where useful as reference
+  - earlier DC formulas remain available when instructionally relevant as reference
 - Components used:
   - one DC source
   - one AC source
@@ -68,7 +96,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - observe behavior
 - Current-flow overlay:
   - available
-  - may show directionality differences where supported by the simulation UI
+  - directionality differences shown when the lesson enables directional overlay mode
 - Hint style:
   - concept-first explanation
 - Completion condition:
@@ -76,6 +104,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify which source is AC and which is DC
   2. choose the best beginner-friendly explanation of how AC differs from DC
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - AC source available in sandbox
 - Theory page additions:
@@ -123,6 +152,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify which changing behavior is transient and which is AC using the timeline panel
   2. identify whether a shown source alternates repeatedly or only changes once after switching
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -156,7 +186,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - inspect
   - compare source behavior and waveform visualization
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - visualization-focused explanation
 - Completion condition:
@@ -164,8 +194,9 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify where the displayed behavior is changing direction
   2. identify whether the shown wave is consistent with AC or DC
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - simple waveform display available in supported AC sandbox modes
+  - simple waveform display available in AC sandbox mode using the Chapter 6 timeline-panel interaction model
 - Theory page additions:
   - Introductory AC wave view
 - In-lesson theory check:
@@ -217,6 +248,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify which behavior corresponds to AC drive of the load
   2. identify which comparison statement is correct for the shown simulation
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -257,6 +289,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify whether the load is being driven by alternating behavior
   2. compare simple resistive response under AC versus DC
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - resistive-load AC experiments available in supported sandbox mode
 - Theory page additions:
@@ -278,7 +311,10 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - AC can interact with capacitor and inductor behavior differently than simple DC switching scenarios
   - the speed of repetition matters: how quickly AC alternates can affect how much a capacitor or inductor "responds" in the simplified model
   - this is an introductory preview, not a full advanced treatment
-- Forward note: The idea that AC repetition speed affects component behavior is the conceptual seed for impedance and frequency-dependent analysis in more advanced curricula. This lesson does not use formal frequency, period, or impedance terminology, but establishes the intuition that "faster changes and slower changes produce different results with these components."
+- Forward note: The idea that AC repetition speed affects component behavior is the conceptual seed for impedance and frequency-dependent analysis in more advanced curricula (outside current product scope). This lesson does not use formal frequency, period, or impedance terminology, but establishes the intuition that "faster changes and slower changes produce different results with these components."
+- Terminology transition requirement:
+  - This lesson is where formal naming begins: introduce **frequency** and **period** by name at an introductory level after the intuition is established.
+  - Keep the treatment light: define terms, relate them to faster/slower repetition, and avoid advanced impedance math.
 - Formulas shown:
   - conceptual focus only
 - Components used:
@@ -299,8 +335,9 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify which component-source combination behaves differently from the earlier DC-only cases
   2. identify why this is only an introductory preview and not yet a full advanced AC treatment
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
-  - optional simple AC preview modes for capacitors and inductors where supported
+  - optional simple AC preview modes for capacitors and inductors when AC-reactive preview mode is enabled
 - Theory page additions:
   - Introductory preview of reactive behavior under AC
 - In-lesson theory check:
@@ -317,6 +354,12 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Unit title: Conversion Between DC and AC
 - Stage label: Late Intermediate
 - Unit goal: Learner understands that some systems use conversion stages to move between DC and AC.
+- Thread map (source-load matching progression):
+  - Ch2 baseline: ideal single-load matching
+  - Ch4 extension: mixed-circuit matching with measurement verification
+  - Ch5 extension: non-ideal constraints and operating limits
+  - Ch7 extension: AC/DC compatibility and conversion-stage selection
+  - canonical reference: `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
 - Explicit prerequisites:
   - Unit 2 complete
 
@@ -332,6 +375,8 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - source type and load type may not match directly
   - conversion stages solve compatibility problems
   - modern systems often include both DC and AC segments
+  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
+  - progression framing: this extends Chapter 2 and Chapter 4 source-load matching from ideal DC-only contexts into mixed AC/DC compatibility contexts
 - Formulas shown:
   - conceptual focus
 - Components used:
@@ -346,7 +391,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - inspect
   - compare source-load combinations
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - concept-first explanation
 - Completion condition:
@@ -354,10 +399,13 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify when source and load types do not match
   2. choose when a conversion stage is needed
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - abstract DC/AC conversion block available in sandbox
 - Theory page additions:
   - Why convert between DC and AC?
+  - canonical thread reference: see `docs/curriculum-progression-qa-checklist.md` -> "Source-load matching progression thread map (canonical)"
+  - Extending source-load matching from Chapters 2 and 4 into AC/DC systems
 - In-lesson theory check:
   - source-load mismatch reasoning
 - Standalone quiz topics unlocked:
@@ -375,6 +423,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - DC-to-AC conversion
   - conversion block as part of the system
   - load may need a different source form than the original source provides
+  - scope boundary note: the conversion block is intentionally abstract in this chapter; detailed inverter internals are deferred
 - Formulas shown:
   - conceptual focus only
 - Components used:
@@ -388,7 +437,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - run
   - inspect source/load compatibility
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - guided system explanation
 - Completion condition:
@@ -396,10 +445,12 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. insert the conversion stage into the correct place
   2. identify why the AC load cannot be directly fed by the original DC source in the lesson scenario
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - DC-to-AC conversion stage fully usable in supported sandbox scenarios
 - Theory page additions:
   - DC-to-AC conversion at an introductory level
+  - Why the DC-to-AC stage is treated as a conceptual black box at this level
 - In-lesson theory check:
   - conversion-path reasoning
 - Standalone quiz topics unlocked:
@@ -437,6 +488,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. place the conversion stage correctly
   2. identify why the DC load needs conversion before connection
+- Challenge type: `choose`, `drag-place`
 - Sandbox unlocks after lesson:
   - AC-to-DC conversion stage available in supported sandbox scenarios
 - Theory page additions:
@@ -484,7 +536,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - run it
   - inspect the source stage and load stage
 - Current-flow overlay:
-  - available where supported
+  - available when instructionally relevant
 - Hint style:
   - system-level explanation
 - Completion condition:
@@ -492,6 +544,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. complete the system so the AC load can be powered from the DC source
   2. identify why the conversion stage is necessary in this example
+- Challenge type: `build`, `choose`
 - Sandbox unlocks after lesson:
   - solar-like DC source example prompt available in sandbox
 - Theory page additions:
@@ -526,7 +579,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - compare
   - identify correct system
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - comparison-driven explanation
 - Completion condition:
@@ -534,6 +587,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. identify which system is viable
   2. identify the main conceptual error in the direct-connection system
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new components
 - Theory page additions:
@@ -588,6 +642,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. match the correct source path to the correct load type
   2. identify which system requires conversion and which does not
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - chapter-complete AC/DC comparison prompt available
 - Theory page additions:
@@ -624,7 +679,7 @@ This chapter does not aim to become a full advanced AC engineering course. It in
   - run
   - check solution
 - Current-flow overlay:
-  - available where supported
+  - available when instructionally relevant
 - Hint style:
   - issue-first
   - explanation on request
@@ -633,10 +688,12 @@ This chapter does not aim to become a full advanced AC engineering course. It in
 - Challenge examples:
   1. design a system where the available source and required load type differ
   2. identify and fix a system with the wrong conversion stage
+- Challenge type: `fix`, `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
   - Designing mixed AC/DC systems at an introductory level
+  - Troubleshooting and investigation checkpoint: source-type mismatch and conversion-stage diagnosis
 - In-lesson theory check:
   - conversion-stage selection reasoning
 - Standalone quiz topics unlocked:
@@ -685,25 +742,26 @@ These are optional and replayable.
 
 ## Chapter 7 sandbox state by the end
 
-By the end of Chapter 7, sandbox should support, in supported AC modes:
+By the end of Chapter 7, sandbox should support in required AC mode:
 - AC source placement
 - introductory AC waveform display
 - simple comparison between AC and DC source behavior
 - resistive-load AC experiments
-- optional preview experiments with capacitors and inductors under AC where supported
+- optional preview experiments with capacitors and inductors under AC when AC-reactive preview mode is enabled
 - DC-to-AC conversion block
 - AC-to-DC conversion block
 - mixed AC/DC source-load scenarios
 
 ## Handoff to Chapter 8
 
-Chapter 8 should decide how far the curriculum wants to go beyond this point.
+Chapter 8 should include:
+- diode directionality and orientation-dependent behavior in simple instructional circuits
+- diode-based rectification as a concrete implementation of Chapter 7 conversion ideas
+- transistor-based switching/control concepts as the next control-domain extension
 
-Reasonable next directions include:
-- deeper AC analysis, if desired
-- semiconductors such as diodes and transistors
-- switching and rectification
-- logic or control-oriented circuit behavior
-- larger integrative final challenge chapters
+Chapter 8 implementation should assume learners can already:
+- distinguish AC from DC behavior in both qualitative and timeline views
+- explain why conversion blocks are needed between mismatched source and load domains
+- build simple AC/DC conceptual paths using DC-to-AC and AC-to-DC conversion blocks
 
-At this point, the curriculum has already reached a broad and substantial theoretical scope.
+Chapter 8 then concretizes those conversion ideas through diode-based rectification and introduces transistor-based control.

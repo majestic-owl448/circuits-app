@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 6: Capacitors, Inductors, and Time-Dependent Behavior
 
 ## Purpose of this chapter
@@ -28,6 +27,28 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - initial behavior and later behavior may differ
   - capacitors and inductors require time-aware reasoning
 
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch6-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch6-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - transient versus steady-state comparisons
+  - RC-style and RL-style guided time-dependent lessons
+  - time-checkpoint challenges using initial/mid/final lesson-defined windows
+  - Time-Visualization UX Specification in `docs/specs/time-visualization-ux-spec.md`
+- Sandbox mode (required by chapter end):
+  - capacitor and inductor placement
+  - RC-style and RL-style exploratory scenarios
+  - time inspection controls (scrubber + checkpoint-aware readouts)
+- Optional (can be disabled for first ship if clearly labeled):
+  - extended timeline plotting options beyond the default one- or two-quantity panel
+
 ---
 
 ## Unit 1: Circuits Can Change Over Time
@@ -54,7 +75,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - the idea of a response after a switch is toggled
 - Formulas shown:
   - no heavy new formula requirement yet
-  - prior DC formulas remain available as reference where relevant
+  - prior DC formulas remain available as reference when instructionally relevant
 - Components used:
   - simple comparison setups
   - one purely resistive reference circuit
@@ -74,6 +95,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify which circuit reaches its behavior immediately and which changes over time
   2. identify what “steady state” means in the lesson context
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component yet
 - Theory page additions:
@@ -114,6 +136,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify the initial condition of the circuit after closing the switch
   2. identify the later steady-state condition
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component yet
 - Theory page additions:
@@ -162,7 +185,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - toggle
   - watch time-dependent behavior
 - Current-flow overlay:
-  - available where useful
+  - available when instructionally relevant
 - Hint style:
   - guided introduction
   - full explanation by default
@@ -171,6 +194,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify the new component
   2. choose the best beginner-friendly description of what a capacitor does
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - capacitor available in sandbox
 - Theory page additions:
@@ -215,6 +239,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify whether current is the same at the start and later in the event
   2. identify whether the capacitor is still changing or has reached a later stable condition
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - RC-style simple charging circuits available in sandbox
 - Theory page additions:
@@ -235,15 +260,17 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Concepts introduced:
   - capacitor circuit steady state
   - initial behavior can differ from long-term behavior
+  - introductory time constant intuition: larger `R*C` means slower settling, smaller `R*C` means faster settling
 - Formulas shown:
   - simple conceptual relations
+  - qualitative time-constant relationship `tau = R*C` as an optional instructional aid
   - no advanced exponential treatment required
 - Components used:
   - source
   - switch
   - resistor
   - capacitor
-  - voltmeter where useful
+  - voltmeter when instructionally relevant
 - Prebuilt amount:
   - mostly prebuilt
 - Learner actions available:
@@ -259,6 +286,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify whether the capacitor branch is still changing after a long time
   2. compare initial and final voltmeter readings in a guided example
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -301,6 +329,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. compare charging and discharging behavior
   2. identify what is happening to the capacitor in a shown event
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - simple discharge examples available in sandbox
 - Theory page additions:
@@ -340,7 +369,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - source
   - switch
   - inductor
-  - resistor where useful
+  - resistor when instructionally relevant
 - Prebuilt amount:
   - mostly prebuilt
 - Learner actions available:
@@ -356,6 +385,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify the inductor among shown components
   2. choose the best beginner-friendly description of how it differs from a simple resistor
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - inductor available in sandbox
 - Theory page additions:
@@ -383,7 +413,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - switch
   - resistor
   - inductor
-  - ammeter where useful
+  - ammeter when instructionally relevant
 - Prebuilt amount:
   - guided RL-style circuit
 - Learner actions available:
@@ -399,6 +429,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify whether current is already at final value right after switching
   2. compare current behavior early and later in the event
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - simple RL-style circuits available in sandbox
 - Theory page additions:
@@ -419,14 +450,16 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Concepts introduced:
   - long-term inductor behavior
   - initial behavior and steady state are different
+  - introductory time constant intuition: larger `L/R` means slower settling, smaller `L/R` means faster settling
 - Formulas shown:
   - conceptual focus
+  - qualitative time-constant relationship `tau = L/R` as an optional instructional aid
 - Components used:
   - source
   - switch
   - resistor
   - inductor
-  - ammeter and voltmeter where useful
+  - ammeter and voltmeter when instructionally relevant
 - Prebuilt amount:
   - mostly prebuilt
 - Learner actions available:
@@ -442,6 +475,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify the later stable behavior
   2. compare the inductor circuit’s early and late state
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -474,7 +508,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
   - switch
   - resistor
   - inductor
-  - ammeter and voltmeter where useful
+  - ammeter and voltmeter when instructionally relevant
 - Prebuilt amount:
   - guided, with switching arrangement that produces energy-release behavior
 - Learner actions available:
@@ -491,6 +525,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify what is happening to the inductor after the switch changes
   2. compare inductor energy release to capacitor discharge at a qualitative level
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - simple inductor energy-release examples available in sandbox
 - Theory page additions:
@@ -543,6 +578,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. identify which shown response corresponds to a capacitor circuit
   2. identify which shown response corresponds to an inductor circuit
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -587,6 +623,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. choose which component best fits the required behavior
   2. explain through selection which design better matches the target
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -643,6 +680,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. design for a target initial effect right after switching
   2. identify why a circuit fails the initial-response requirement even if the long-term state looks acceptable
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -687,10 +725,12 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. design for a target steady-state behavior
   2. identify why a design with a good initial response still fails the later requirement
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
   - Designing for steady-state response
+- Troubleshooting and investigation checkpoint: transient-versus-steady-state diagnosis
 - In-lesson theory check:
   - steady-state design reasoning
 - Standalone quiz topics unlocked:
@@ -732,6 +772,7 @@ This chapter remains theoretical and simulation-based. It uses visual change ove
 - Challenge examples:
   1. choose and configure the correct time-dependent component for the required behavior
   2. diagnose why a near-correct solution fails either the initial or the later condition
+- Challenge type: `choose`, `diagnose`
 - Sandbox unlocks after lesson:
   - chapter-complete prompt encouraging experimentation with RC-style and RL-style circuits
 - Theory page additions:
@@ -787,7 +828,7 @@ These are optional and replayable.
 
 ## Chapter 6 sandbox state by the end
 
-By the end of Chapter 6, sandbox should support, in supported time-dependent modes:
+By the end of Chapter 6, sandbox should support in required time-dependent mode:
 - capacitor placement and use
 - inductor placement and use
 - RC-style and RL-style simple circuits
@@ -806,56 +847,26 @@ To prepare for this transition:
 
 ## Time-Visualization UX Specification
 
-This section defines the interaction model for time-dependent circuit visualization used throughout Chapter 6 and referenced in later chapters. This specification must be finalized before Chapter 6 implementation begins (see implementation readiness doc, Gate B).
+The full cross-chapter Time-Visualization UX Specification has been migrated to:
 
-### Core components
+- `docs/specs/time-visualization-ux-spec.md`
 
-1. **Time scrubber**
-   - A horizontal slider control below the circuit workspace, representing the full simulation time window for the current lesson scenario.
-   - The scrubber has labeled anchor points: `t₀` (initial state, immediately after switch), optional `t_mid` (midpoint checkpoint), and `t_final` (steady state or end of observation window).
-   - Dragging the scrubber updates the circuit visualization to show component states (voltage, current, visual indicators) at the selected time.
-   - The scrubber position is displayed as a relative label (e.g., "Early," "Middle," "Late") rather than raw seconds, to keep the focus conceptual.
+This chapter and Chapter 7 should treat that spec as authoritative for:
 
-2. **Playback controls**
-   - Play/pause button: animates the circuit from `t₀` through `t_final` at a pedagogically appropriate speed (not real-time; compressed to ~5-8 seconds for a full cycle).
-   - Speed control: two speeds — normal and slow (half speed). No fast-forward.
-   - Reset button: returns to `t₀`.
-   - All controls are keyboard-accessible (Space for play/pause, Left/Right arrow for scrubber step, R for reset).
-
-3. **Timeline panel (compact plot)**
-   - A small panel (collapsible, default open in time-dependent lessons) showing one or two quantities plotted over the simulation time window.
-   - Default quantities: voltage across the target component and current through the target component. Lessons can configure which quantities are shown.
-   - The current scrubber position is shown as a vertical marker on the plot.
-   - The plot uses two clearly distinguishable line styles (solid vs dashed, not color-only) for accessibility.
-   - Axis labels use the same learner-friendly terms used elsewhere in the product (e.g., "Voltage across capacitor" not "V_C(t)").
-
-4. **Checkpoint markers**
-   - Lessons can define checkpoint windows (e.g., `t₀`, `t_mid`, `t_final`) where the learner must inspect or answer about the circuit state.
-   - Checkpoints appear as labeled dots on the time scrubber and as highlighted regions on the timeline plot.
-   - When a lesson challenge requires a checkpoint answer, the scrubber snaps to that checkpoint and the relevant values are highlighted.
-
-### Accessibility requirements
-
-- All time-dependent visualizations must be operable via keyboard alone (no mouse-only interactions).
-- The timeline plot must not rely on color alone to distinguish lines — use line style (solid, dashed, dotted) and shape markers.
-- A text summary of the current state at the scrubber position must be available via the existing "Describe circuit" action, including approximate values and whether the circuit is still changing or has settled.
-- Reduced-motion mode: when the user's system prefers reduced motion, playback is replaced by step-through (scrubber moves in discrete jumps with no animation). The circuit visualization updates instantly rather than animating.
-
-### Interaction with existing tools
-
-- Meters (voltmeter, ammeter) show the value at the current scrubber position, not just the steady-state value.
-- Current-flow overlay animates at the scrubber position's rate and direction.
-- The "Check solution" action evaluates at the checkpoint(s) specified by the lesson, not at an arbitrary scrubber position.
-
-### Scope boundaries
-
-- This specification covers Chapters 6-7 (time-dependent and AC visualization). Chapter 7's AC waveform view extends this model by adding repeating cycles rather than single transient windows.
-- The time scrubber does not support sub-millisecond precision. All time-domain simulations use educationally simplified time scales.
-- No oscilloscope-style triggering or multi-channel comparison is required. The timeline panel shows at most two quantities simultaneously.
+- scrubber behavior and checkpoints,
+- playback controls and reduced-motion behavior,
+- timeline panel semantics,
+- accessibility requirements,
+- AC repeating-cycle extension behavior.
 
 ## Handoff to Chapter 7
 
 Chapter 7 should begin introducing alternating current and circuits that convert between DC and AC in a conceptual and simulation-first way.
+
+Learners should already be able to:
+- distinguish transient behavior from steady-state behavior in time-dependent lessons
+- use scrubber checkpoints to inspect and compare initial, middle, and final states
+- interpret time-aware meter and timeline readings for simple RC/RL instructional cases
 
 That chapter should include:
 - what AC is

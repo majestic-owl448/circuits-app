@@ -23,7 +23,7 @@ Based on: `docs/electrical_circuits_interactive_app_prd.md`
 | State management | React Context + useReducer (escalate to Zustand only if needed) |
 | Persistence | LocalStorage (via a thin abstraction layer) |
 | Circuit simulation | Custom engine (built in-house) |
-| Testing | Vitest + React Testing Library |
+| Testing | No automated test suite configured in current repo state |
 | Deployment | GitHub Actions -> GitHub Pages |
 
 ## 3. MVP Scope
@@ -163,6 +163,11 @@ interface CircuitComponent {
   name: string; // Display name, e.g. "Bulb 1"
 }
 
+MVP note:
+- The `CircuitComponent.type` union above is intentionally limited to current MVP implementation.
+- Future chapter plans (Chapters 4-10) require additional component categories (for example, measurement tools, capacitor, inductor, diode, transistor, logic gate, AC source, conversion blocks).
+- Until this spec is expanded, lesson-plan documents and implementation-readiness constraints are authoritative for post-MVP component categories.
+
 interface ComponentProperties {
   voltage?: number;      // For batteries (V)
   resistance?: number;   // For resistors/bulbs (ohms)
@@ -276,6 +281,11 @@ interface Challenge {
   hints: string[];                    // Progressive hints
 }
 
+MVP note:
+- The `Challenge.type` union above reflects current implemented challenge types.
+- Future chapter plans require additional challenge types: `drag-place`, `calculate`, `classify`, and `diagnose`.
+- Authoring and runtime validation for these types is required before Chapter 4 implementation (see `docs/future-chapters-implementation-readiness.md`).
+
 interface EvaluationCriteria {
   circuitMustBeClosed?: boolean;
   targetComponent?: string;
@@ -364,16 +374,16 @@ Vite config:
 On push to `main`:
 1. Checkout
 2. Install dependencies (`npm ci`)
-3. Run tests (`npm test`)
-4. Build (`npm run build`)
-5. Deploy `dist/` to GitHub Pages via `actions/deploy-pages`
+3. Build (`npm run build`)
+4. Deploy `dist/` to GitHub Pages via `actions/deploy-pages`
 
 ### 12.3 Local development
 
 ```bash
 npm install
 npm run dev      # Vite dev server with HMR
-npm test         # Run Vitest
+npm run lint     # Run ESLint
+npm run build    # Type-check + production build
 ```
 
 ## 13. MVP Lesson Outlines

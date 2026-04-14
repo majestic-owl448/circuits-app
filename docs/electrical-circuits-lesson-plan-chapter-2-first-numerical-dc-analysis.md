@@ -298,7 +298,7 @@ This chapter follows the Foundations chapter and assumes the learner already und
   - mostly prebuilt
 - Learner actions available:
   - inspection and checking
-  - limited building if useful
+  - limited building when instructionally relevant
 - Current-flow overlay:
   - available
 - Hint style:
@@ -560,7 +560,7 @@ This chapter follows the Foundations chapter and assumes the learner already und
 - Components used:
   - one source
   - one load
-  - optional second load only if useful for naming demonstration, but not yet as a true series/parallel concept lesson
+  - optional second load only when instructionally relevant for naming demonstration, but not yet as a true series/parallel concept lesson
 - Prebuilt amount:
   - partially prebuilt
 - Learner actions available:

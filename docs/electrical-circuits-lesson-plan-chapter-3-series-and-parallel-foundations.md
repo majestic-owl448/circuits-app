@@ -222,7 +222,7 @@ This chapter continues using ideal DC circuits and introduces both qualitative a
   1. calculate total series resistance for two identical bulbs
   2. choose which total resistance value matches the circuit
 - Sandbox unlocks after lesson:
-  - series evaluation in sandbox can now show total resistance where supported
+  - series evaluation in sandbox can now show total resistance when the numerical-evaluation mode is enabled
 - Theory page additions:
   - Equivalent resistance in series
 - In-lesson theory check:
@@ -305,7 +305,7 @@ This chapter continues using ideal DC circuits and introduces both qualitative a
   1. calculate the power for one bulb in the series circuit
   2. identify why the bulbs are dimmer than the one-bulb reference case
 - Sandbox unlocks after lesson:
-  - series power values available in numerical evaluation where supported
+  - series power values available in numerical evaluation when the numerical-evaluation mode is enabled
 - Theory page additions:
   - Power and brightness in an ideal series circuit
 - In-lesson theory check:
@@ -631,7 +631,7 @@ This chapter continues using ideal DC circuits and introduces both qualitative a
   1. calculate equivalent resistance for two identical bulbs in parallel
   2. identify which equivalent resistance value fits the circuit
 - Sandbox unlocks after lesson:
-  - parallel evaluation can show equivalent resistance where supported
+  - parallel evaluation can show equivalent resistance when the numerical-evaluation mode is enabled
 - Theory page additions:
   - Equivalent resistance in parallel
 - In-lesson theory check:
@@ -925,7 +925,7 @@ By the end of Chapter 3, sandbox should support:
 - numerical evaluation for supported series and parallel circuits
 - challenge-style experimentation with target-based goals
 - flexible component naming and circuit-specific evaluation language
-- detailed numerical breakdowns where supported
+- detailed numerical breakdowns when the numerical-evaluation mode is enabled
 
 ## Handoff to Chapter 4
 

@@ -1,4 +1,3 @@
-# Interactive Electrical Circuits Learning App
 # Lesson Plan, Chapter 8: Diodes, Transistors, Rectification, and Switching
 
 ## Purpose of this chapter
@@ -12,9 +11,10 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ## Chapter metadata
 
 - Chapter title: Diodes, Transistors, Rectification, and Switching
-- Stage label: Late Intermediate to Advanced Beginner Electronics
+- Stage label: Late Intermediate — Active Components
 - Chapter goal: Learner can understand diode directionality, introductory rectification, and transistor-based switching/control behavior in simulation.
 - Primary outcome: Learner can use diodes and transistors conceptually in simple circuit designs and understand why they matter in larger electrical systems.
+- Category label introduced in this chapter: Active Components (instructional category for diode and transistor lessons in this product).
 - Main simulation model: simplified instructional models of diodes and transistors, connected to earlier DC, AC, and conversion ideas
 - Main interaction style: guided behavior discovery first, then structured analysis and targeted design challenges
 - Default lesson style: comparison-heavy early, more design-oriented later
@@ -26,6 +26,31 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Main conceptual transition in this chapter:
   - from passive circuit response
   - to components that direct or control behavior more selectively
+
+## ID mapping for implementation
+
+- Lesson IDs in this chapter must map directly from lesson numbering: lesson `U.L` -> `lesson-ch8-U-L`.
+- Standalone quiz IDs in this chapter must use `quiz-ch8-topic-name` with stable kebab-case slugs derived from quiz titles.
+- Keep slugs stable across revisions to avoid breaking `unlockedBy` and registry references.
+
+## Implementation boundary notes for this chapter
+
+To reduce ambiguity during implementation, this chapter uses the following support contract:
+
+- Lesson mode (required):
+  - diode orientation-dependent behavior
+  - introductory rectification comparisons
+  - transistor switching/control-path behavior
+- Sandbox mode (required by chapter end):
+  - diode placement with orientation-sensitive outcomes
+  - transistor placement in simplified control scenarios
+  - rectification exploration prompts
+- Optional (can be disabled for first ship if clearly labeled):
+  - larger multi-stage integrations that combine conversion + rectification + control in one open-ended sandbox scenario
+- Modeling scope note:
+  - diode behavior defaults to an instructional ideal-conduction model in this chapter's baseline lessons
+  - forward-voltage-drop modeling is an optional non-ideal extension and is out of required scope for initial Chapter 8 implementation
+  - DC-to-AC conversion internals (inverter implementation) remain intentionally abstract at this stage; learners should connect the idea to transistor switching behavior without requiring full inverter circuit derivations
 
 ---
 
@@ -49,6 +74,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Main goal: Learner is introduced to the diode as a new component whose behavior depends on orientation.
 - Concepts introduced:
   - diode
+  - active component (instructional category)
   - directional behavior
   - a component can allow one circuit behavior in one orientation and a different result in the opposite orientation
 - Formulas shown:
@@ -58,7 +84,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
   - source
   - diode
   - simple load
-  - switch where useful
+  - switch when instructionally relevant
 - Prebuilt amount:
   - mostly prebuilt
 - Learner actions available:
@@ -74,6 +100,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify the diode in a shown circuit
   2. choose which orientation allows the intended behavior in the simplified model
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - diode available in sandbox
 - Theory page additions:
@@ -116,6 +143,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify which orientation gives the intended output
   2. fix a circuit where the diode is reversed
+- Challenge type: `fix`, `choose`
 - Sandbox unlocks after lesson:
   - diode orientation now matters explicitly in sandbox behavior
 - Theory page additions:
@@ -137,7 +165,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
   - diode as a functional design choice in a circuit
   - directionality can be used intentionally
 - Formulas shown:
-  - conceptual focus with prior circuit formulas available where useful
+  - conceptual focus with prior circuit formulas available when instructionally relevant
 - Components used:
   - DC source
   - diode
@@ -158,6 +186,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. build a circuit that only works in the intended orientation
   2. identify why a diode is useful in the shown design
+- Challenge type: `build`, `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -174,7 +203,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ### Unit metadata
 
 - Unit title: Rectification
-- Stage label: Late Intermediate to Advanced Beginner Electronics
+- Stage label: Late Intermediate — Active Components
 - Unit goal: Learner understands how diodes connect to AC/DC conversion through introductory rectification.
 - Explicit prerequisites:
   - Unit 1 complete
@@ -217,6 +246,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify what the diode changes in the AC-driven circuit
   2. identify why this behavior connects to AC-to-DC conversion ideas
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - AC-plus-diode experiments available in supported sandbox mode
 - Theory page additions:
@@ -230,7 +260,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 2.2: Introductory Rectification
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 2.1
 - Main goal: Learner is introduced to rectification as a simplified way to turn alternating behavior into a more one-directional output behavior.
@@ -244,7 +274,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
   - AC source
   - diode
   - load
-  - simple waveform or output display if supported
+  - simple waveform or output display when rectification-view mode is enabled
 - Prebuilt amount:
   - mostly prebuilt
 - Learner actions available:
@@ -260,6 +290,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify which output is rectified
   2. identify why the diode is necessary for the shown effect
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - introductory rectification examples available in sandbox
 - Theory page additions:
@@ -273,7 +304,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 2.3: Compare Unrectified and Rectified Output
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 2.2
 - Main goal: Learner compares a direct AC-driven output with a rectified output.
@@ -302,6 +333,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify which output better matches a DC-like target requirement
   2. identify the main role of the diode stage in the rectified system
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -318,7 +350,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ### Unit metadata
 
 - Unit title: Transistors
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Unit goal: Learner is introduced to the transistor as a component used for switching or controlling circuit behavior in a simplified instructional model.
 - Explicit prerequisites:
   - Unit 2 complete
@@ -327,7 +359,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 3.1: Meet the Transistor
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 2.3
 - Main goal: Learner is introduced to the transistor as a component that can control one part of a circuit using another.
@@ -358,6 +390,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify the transistor in the shown circuit
   2. choose the best beginner-friendly explanation of what the transistor is doing
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - transistor available in sandbox
 - Theory page additions:
@@ -371,7 +404,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 3.2: A Transistor as a Switch
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 3.1
 - Main goal: Learner sees the transistor used as a simplified switch.
@@ -401,6 +434,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. identify when the transistor is allowing the load path to operate
   2. compare the transistor switch concept to a normal switch at a beginner level
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - transistor-switch examples available in sandbox
 - Theory page additions:
@@ -414,7 +448,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 3.3: Use a Small Control to Affect a Larger Path
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 3.2
 - Main goal: Learner understands the basic idea that a transistor lets one part of the circuit influence another part.
@@ -443,6 +477,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. complete the circuit so the control path affects the target load
   2. identify why the transistor is useful in the design
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -459,7 +494,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ### Unit metadata
 
 - Unit title: Switching and Control Systems
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Unit goal: Learner applies diode and transistor concepts in simple switching and control design problems.
 - Explicit prerequisites:
   - Unit 3 complete
@@ -468,7 +503,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 4.1: Diode or Transistor?
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 3.3
 - Main goal: Learner chooses whether a diode or transistor is the more appropriate component for a given simplified design goal.
@@ -499,6 +534,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. choose whether the goal is about directionality or control
   2. identify which component best matches the required behavior
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
@@ -512,7 +548,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 4.2: A Simple Control Circuit
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 4.1
 - Main goal: Learner creates a simple circuit where one condition controls another through a transistor in the instructional model.
@@ -542,6 +578,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. make the target load respond only when the control condition is present
   2. identify why a passive-only design does not meet the same control goal
+- Challenge type: `choose`
 - Sandbox unlocks after lesson:
   - control-style transistor challenge prompts available in sandbox
 - Theory page additions:
@@ -558,7 +595,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 ### Unit metadata
 
 - Unit title: Diodes, Rectification, and Switching Review
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Unit goal: Learner integrates diode behavior, rectification, transistor switching, and component-choice reasoning.
 - Explicit prerequisites:
   - Unit 4 complete
@@ -567,7 +604,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 5.1: Review Challenge
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 4.2
 - Main goal: Learner completes a broader review challenge using the appropriate active or directional component for the problem.
@@ -600,6 +637,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. choose the correct component for rectification versus control
   2. diagnose and fix a circuit that uses the wrong component type
+- Challenge type: `fix`, `choose`, `diagnose`
 - Sandbox unlocks after lesson:
   - chapter-complete prompt encouraging experiments with diode orientation, rectification, and transistor control
 - Theory page additions:
@@ -613,7 +651,7 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 
 ### Lesson 5.2: Larger Integration Challenge
 
-- Stage label: Advanced Beginner Electronics
+- Stage label: Early Active Components
 - Prerequisites:
   - Lesson 5.1
 - Main goal: Learner solves a larger challenge combining conversion, rectification, and switching/control at a conceptual level.
@@ -644,10 +682,12 @@ This chapter is still theoretical and simulation-based. Electron-level or deep s
 - Challenge examples:
   1. build a system that needs rectification at one stage and control at another
   2. identify and fix a system where the right idea is used in the wrong place
+- Challenge type: `build`, `fix`, `choose`
 - Sandbox unlocks after lesson:
   - no new component type
 - Theory page additions:
   - Integrating directionality, conversion, and control
+- Troubleshooting and investigation checkpoint: directionality-versus-control diagnosis
 - In-lesson theory check:
   - stage-role reasoning
 - Standalone quiz topics unlocked:
@@ -694,7 +734,7 @@ These are optional and replayable.
 
 ## Chapter 8 sandbox state by the end
 
-By the end of Chapter 8, sandbox should support, in supported active-component modes:
+By the end of Chapter 8, sandbox should support in required active-component mode:
 - diode placement and orientation-dependent behavior
 - introductory rectification experiments
 - transistor placement in simplified switching/control circuits
@@ -703,10 +743,14 @@ By the end of Chapter 8, sandbox should support, in supported active-component m
 
 ## Handoff to Chapter 9
 
-Chapter 9 should decide whether the curriculum wants to continue toward:
-- logic gates and digital-style behavior
-- more advanced transistor applications
-- larger system-design capstones
-- final review and mastery chapters
+Chapter 9 should include:
+- explicit input/state/output language for behaviors learners used as switch/control patterns in Chapter 8
+- formal gate taxonomy and truth-table-based reasoning
+- small multi-gate design and debugging tasks that build on Chapter 8 control intuition
 
-At this point, the curriculum has already covered a broad theoretical electronics path from simple ideal circuits through active components and conversion behavior.
+Chapter 9 implementation should assume learners can already:
+- reason about transistor control as state-like switching (on/off control condition)
+- distinguish directionality problems (diode) from control problems (transistor)
+- connect Chapter 7 conversion blocks to Chapter 8 diode-based rectification
+
+Chapter 9 then re-labels these switching behaviors into explicit input/state/output language and formal gate rules.
