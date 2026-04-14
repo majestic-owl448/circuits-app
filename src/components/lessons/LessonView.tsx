@@ -296,6 +296,7 @@ function LessonViewInner({
             <CircuitWorkspace
               circuit={circuit}
               showCurrentOverlay={effectiveShowOverlay}
+              reducedMotion={preferences.reducedMotion}
               highlights={currentStep?.highlights}
               interactive={true}
               wiringMode={phase === 'challenges' && (currentChallenge?.type === 'fix' || currentChallenge?.type === 'build')}

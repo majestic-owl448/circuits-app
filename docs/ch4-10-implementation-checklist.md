@@ -12,8 +12,8 @@ Implementation checklist for foundational work needed before and during Chapters
 
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
-- [~] Existing Chapters 1-3 learner flow remains functional
-- [ ] Accessibility checks completed for newly added interactive UI
+- [x] Existing Chapters 1-3 learner flow remains functional
+- [~] Accessibility checks completed for newly added interactive UI
 - [x] `CLAUDE.md` status is updated to reflect actual implementation progress
 
 ## Phase 0 - Baseline Fixtures for Existing Behavior
@@ -59,11 +59,11 @@ Implementation checklist for foundational work needed before and during Chapters
   - [x] Legacy backend reproduces baseline fixture outputs
 
 ### `src/engine/mna/solver.ts` (new)
-- [~] Implement MNA-based solution path for mixed topologies
-- [~] Support node-voltage and branch-current solution extraction
+- [x] Implement MNA-based solution path for mixed topologies
+- [x] Support node-voltage and branch-current solution extraction
 - Acceptance criteria:
-  - [ ] Mixed series/parallel fixture circuits solve correctly
-  - [ ] Open-switch paths are handled correctly and deterministically
+  - [x] Mixed series/parallel fixture circuits solve correctly
+  - [x] Open-switch paths are handled correctly and deterministically
 
 ### `src/engine/mna/matrix.ts` (new)
 - [x] Add matrix assembly/solve helpers with numerical guards
@@ -78,7 +78,7 @@ Implementation checklist for foundational work needed before and during Chapters
 ### `src/engine/mna/postprocess.ts` (new)
 - [x] Convert solved states into per-component values for UI/evaluator use
 - Acceptance criteria:
-  - [ ] Computed per-component values align with expected fixture tolerances
+  - [x] Computed per-component values align with expected fixture tolerances
 
 ### `package.json`
 - [x] Add dedicated MNA verification script (`verify:engine:mna`)
@@ -308,14 +308,14 @@ Implementation checklist for foundational work needed before and during Chapters
 ## Documentation and Tracking
 
 ### `CLAUDE.md`
-- [ ] Keep current app status synchronized with phase completion and key architectural milestones
+- [x] Keep current app status synchronized with phase completion and key architectural milestones
 - Acceptance criteria:
-  - [ ] Status section reflects actual delivered state, not planned state
+  - [x] Status section reflects actual delivered state, not planned state
 
-### `docs/implementation-review-chapters-4-10.md`
-- [ ] Update phase statuses/milestones as implementation progresses
+### `docs/review-ch4-10-readiness-2026-04-14.md`
+- [x] Update phase statuses/milestones as implementation progresses
 - Acceptance criteria:
-  - [ ] Review doc and this checklist remain aligned
+  - [x] Review doc and this checklist remain aligned
 
 ### `docs/specs/time-visualization-ux-spec.md`
 - [ ] Mark implemented versus pending spec behaviors during Phase 6+

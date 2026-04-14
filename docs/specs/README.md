@@ -9,5 +9,6 @@ Current status:
   - `sandbox-progressive-unlock-ux-spec.md`
 - Keep chapter lesson plans as concise pointers to these shared specs.
 
-Migration rule:
-- If a second large cross-chapter UX spec is added (for example, logic-table interaction model, waveform inspection model, or capstone rubric interaction model), move shared UX specifications into this directory and leave short pointers in chapter lesson plans.
+Maintenance rule:
+- Keep cross-chapter UX behavior canonical in this directory and keep chapter lesson plans as concise pointers.
+- Add new shared specs here when interaction models are reused across chapters (for example, logic-table interactions or waveform inspection extensions).

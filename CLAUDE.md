@@ -32,9 +32,13 @@ Interactive educational app for learning electrical circuits. Structured as prog
 
 ```bash
 npm run dev      # dev server
-npm run build    # tsc --noEmit + vite build
+npm run build    # tsc -b + vite build
 npm run lint     # eslint
 npm run preview  # preview production build
+npm run verify:engine         # baseline engine fixtures
+npm run verify:engine:mna     # MNA fixture verification
+npm run verify:engine:compare # backend parity fixture verification
+npm run verify:evaluator      # evaluator fixture verification
 ```
 
 No test suite configured.
@@ -57,7 +61,7 @@ No test suite configured.
 - `docs/future-chapters-implementation-readiness.md` — Gate, dependency, and evaluator readiness constraints for Chapters 4-10
 - `docs/ch4-10-implementation-checklist.md` — Phase-based file-by-file implementation plan and acceptance checklist for Chapters 4-10 foundation work
 - `src/engine/__fixtures__/` — Deterministic Chapter 1-3 engine behavior fixtures and runner for regression protection during solver refactor
-- `docs/specs/` — Reserved for cross-chapter UX specifications when extracted from chapter plans
+- `docs/specs/` — Canonical cross-chapter UX specifications
 - `docs/specs/time-visualization-ux-spec.md` — Cross-chapter time-visualization model for Chapters 6-7 (scrubber, timeline panel, AC extension, accessibility)
 - `docs/specs/capstone-rubric-panel-ux-spec.md` — Chapter 10 rubric panel interaction model (layout, status semantics, accessibility, QA hooks)
 - `docs/specs/sandbox-progressive-unlock-ux-spec.md` — Cross-chapter sandbox progressive-unlock interaction model (grouping, keyboard nav, persistence, locked-state messaging)
@@ -69,8 +73,7 @@ No test suite configured.
 - **Lesson IDs**: `lesson-chX-Y-Z` (chapter X, unit Y, lesson Z). Export names: `lessonChX_Y_Z`.
 - **Quiz IDs**: `quiz-chX-topic-name`. Each quiz has `unlockedBy` pointing to a lesson ID. Must match the lesson's `quizzesUnlocked` array.
 - **Circuit components**: Defined in `shared.ts` or inline in lesson configs. Types: battery, bulb, switch, resistor, wire.
-- **Challenge types**: `build`, `fix`, `predict`, `choose`, `drag-place`, `calculate`. Build challenges can specify `availableComponents`.
-- **Challenge types roadmap (future chapters)**: adds `classify` and `diagnose` before Chapter 4 implementation.
+- **Challenge types**: `build`, `fix`, `predict`, `choose`, `drag-place`, `calculate`, `classify`, `diagnose`. Build challenges can specify `availableComponents`.
 - **showFormulaPanel**: Controls whether numeric values (voltage, resistance) appear on components. False for early lessons, true from unit 3 onward.
 
 ## Content Structure

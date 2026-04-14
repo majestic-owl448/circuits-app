@@ -64,6 +64,7 @@ function getTerminals(
 interface Props {
   circuit: UseCircuitReturn;
   showCurrentOverlay: boolean;
+  reducedMotion?: boolean;
   highlights?: string[];
   interactive?: boolean;
   wiringMode?: boolean;
@@ -78,6 +79,7 @@ interface Props {
 export function CircuitWorkspace({
   circuit,
   showCurrentOverlay,
+  reducedMotion = false,
   highlights = [],
   interactive = true,
   wiringMode = false,
@@ -266,6 +268,7 @@ export function CircuitWorkspace({
           <CurrentOverlay
             segments={currentSegments}
             current={simulation.totalCurrent}
+            reducedMotion={reducedMotion}
           />
         )}
 

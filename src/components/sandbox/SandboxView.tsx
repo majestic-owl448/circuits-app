@@ -201,6 +201,7 @@ export function SandboxView() {
         <CircuitWorkspace
           circuit={circuit}
           showCurrentOverlay={showOverlay}
+          reducedMotion={preferences.reducedMotion}
           interactive
           wiringMode
           placementMode={canPlace && !!selectedPlacementType}

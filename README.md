@@ -33,6 +33,10 @@ npm run dev
 | `npm run build` | Type-check and build for production |
 | `npm run lint` | Run ESLint |
 | `npm run preview` | Preview the production build locally |
+| `npm run verify:engine` | Run baseline engine fixtures |
+| `npm run verify:engine:mna` | Run mixed-topology MNA fixtures |
+| `npm run verify:engine:compare` | Run backend parity fixture checks |
+| `npm run verify:evaluator` | Run evaluator behavior fixtures |
 
 ## Docs
 
