@@ -1,6 +1,6 @@
 import type { QuizConfig } from '../../types/quiz.ts';
 
-export const quizRegistryChapter3: QuizConfig[] = [
+const quizzes: QuizConfig[] = [
   {
       id: 'quiz-ch3-series-identification',
       title: 'Series Circuit Identification',
@@ -983,3 +983,5 @@ export const quizRegistryChapter3: QuizConfig[] = [
       ],
     },
 ];
+
+export default quizzes;

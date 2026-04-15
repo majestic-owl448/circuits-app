@@ -1,6 +1,6 @@
 import type { QuizConfig } from '../../types/quiz.ts';
 
-export const quizRegistryChapter2: QuizConfig[] = [
+const quizzes: QuizConfig[] = [
   {
       id: 'quiz-ch2-voltage-values',
       title: 'Voltage Values and Units',
@@ -775,3 +775,5 @@ export const quizRegistryChapter2: QuizConfig[] = [
       ],
     },
 ];
+
+export default quizzes;

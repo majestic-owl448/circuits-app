@@ -1,6 +1,6 @@
 import type { QuizConfig } from '../../types/quiz.ts';
 
-export const quizRegistryChapter1: QuizConfig[] = [
+const quizzes: QuizConfig[] = [
   {
       id: 'quiz-complete-loop',
       title: 'Open and Closed Circuits',
@@ -727,3 +727,5 @@ export const quizRegistryChapter1: QuizConfig[] = [
       ],
     },
 ];
+
+export default quizzes;

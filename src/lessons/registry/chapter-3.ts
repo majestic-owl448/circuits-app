@@ -18,7 +18,7 @@ import { lessonCh3_5_1 } from '../chapter-3/unit-5/lesson-ch3-5-1/config.ts';
 import { lessonCh3_5_2 } from '../chapter-3/unit-5/lesson-ch3-5-2/config.ts';
 import { lessonCh3_5_3 } from '../chapter-3/unit-5/lesson-ch3-5-3/config.ts';
 
-export const lessonRegistryChapter3: LessonConfig[] = [
+const lessons: LessonConfig[] = [
   lessonCh3_1_1,
   lessonCh3_1_2,
   lessonCh3_1_3,
@@ -38,3 +38,5 @@ export const lessonRegistryChapter3: LessonConfig[] = [
   lessonCh3_5_2,
   lessonCh3_5_3,
 ];
+
+export default lessons;
