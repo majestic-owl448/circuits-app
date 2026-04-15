@@ -130,6 +130,13 @@ export interface EvaluationCriteria {
   }>;
   hardPassChecks?: string[];
   advisoryChecks?: string[];
+  learnerCategory?: string;
+  expectedCategory?: string;
+  learnerCause?: string;
+  acceptedCauses?: string[];
+  requiredEvidenceSignals?: string[];
+  observedEvidenceSignals?: string[];
+  minEvidenceMatches?: number;
 }
 
 export interface EvaluationCriterionOutcome {

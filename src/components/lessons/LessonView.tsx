@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { useCircuit } from '../../hooks/useCircuit.ts';
 import { loadLessonsForChapter } from '../../data/loaders.ts';
@@ -79,17 +79,45 @@ function LessonViewInner({
     components: lesson.initialCircuit.map(c => ({ ...c })),
   });
 
-  const [timeState, setTimeState] = useState(() => createInitialTimeState(circuit.simulation));
+  const [timeState, setTimeState] = useState<{
+    sliderValue: number;
+    isPlaying: boolean;
+    speed: 'normal' | 'slow';
+  }>({
+    sliderValue: 0,
+    isPlaying: false,
+    speed: 'normal',
+  });
+  const derivedTimeState = useMemo(() => createInitialTimeState(circuit.simulation), [circuit.simulation]);
 
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;
   const checkpointSimulations = lesson.id.startsWith('lesson-ch6')
     ? {
-      t0: circuit.simulation,
-      t_mid: circuit.simulation,
-      t_final: circuit.simulation,
+      t0: derivedTimeState.snapshots.find(snapshot => snapshot.checkpoint === 't0')?.simulation ?? circuit.simulation,
+      t_mid: derivedTimeState.snapshots.find(snapshot => snapshot.checkpoint === 't_mid')?.simulation ?? circuit.simulation,
+      t_final: derivedTimeState.snapshots.find(snapshot => snapshot.checkpoint === 't_final')?.simulation ?? circuit.simulation,
     }
     : undefined;
+
+  useEffect(() => {
+    if (!lesson.id.startsWith('lesson-ch6') || !timeState.isPlaying) {
+      return;
+    }
+
+    const timer = window.setInterval(() => {
+      setTimeState(prev => {
+        const next = advanceTimeSlider(prev.sliderValue, prev.speed, false);
+        return {
+          ...prev,
+          sliderValue: next,
+          isPlaying: next < 100,
+        };
+      });
+    }, 180);
+
+    return () => window.clearInterval(timer);
+  }, [lesson.id, timeState.isPlaying]);
 
   const handleLessonComplete = useCallback(() => {
     dispatch({

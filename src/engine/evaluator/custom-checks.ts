@@ -93,18 +93,6 @@ export function evaluateCustomCheck(
           : 'Build two bulb branches that connect across the same pair of junctions.',
       };
     }
-    case 'classify': {
-      return {
-        passed: true,
-        message: 'Classify check configuration accepted.',
-      };
-    }
-    case 'diagnose': {
-      return {
-        passed: true,
-        message: 'Diagnose check configuration accepted.',
-      };
-    }
     default:
       return {
         passed: false,

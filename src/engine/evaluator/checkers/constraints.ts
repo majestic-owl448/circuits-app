@@ -31,7 +31,7 @@ export const constraintsChecker: EvaluationChecker = ({ criteria, simulation, co
     };
   }
 
-  if (criteria.customCheck) {
+  if (criteria.customCheck && criteria.customCheck !== 'classify' && criteria.customCheck !== 'diagnose') {
     const custom = evaluateCustomCheck(criteria.customCheck, components);
     if (!custom.passed) {
       return {

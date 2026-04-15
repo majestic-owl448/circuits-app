@@ -46,19 +46,18 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
         return;
       }
 
-      if (selectedClassifyCategory === challenge.classifyConfig.correctCategory) {
-        setFeedback({
-          passed: true,
-          message: `Correct. This belongs to "${challenge.classifyConfig.correctCategory}".`,
-        });
-      } else {
-        setFeedback({
-          passed: false,
-          message: `Not quite. Review the evidence and try again.`,
-        });
-        if (hintIndex < challenge.hints.length - 1) {
-          setHintIndex(prev => prev + 1);
-        }
+      const classifyCriteria = {
+        ...challenge.evaluationCriteria,
+        customCheck: 'classify',
+        learnerCategory: selectedClassifyCategory,
+        expectedCategory: challenge.classifyConfig.correctCategory,
+        requiredEvidenceSignals: challenge.classifyConfig.requiredEvidenceSignals,
+      };
+
+      const result = evaluate(classifyCriteria, simulation, components);
+      setFeedback(result);
+      if (!result.passed && hintIndex < challenge.hints.length - 1) {
+        setHintIndex(prev => prev + 1);
       }
       return;
     }
@@ -69,20 +68,20 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
         return;
       }
 
-      const passed = challenge.diagnoseConfig.acceptedCauses.includes(selectedDiagnoseCause);
-      if (passed) {
-        setFeedback({
-          passed: true,
-          message: 'Correct diagnosis. Well done connecting the evidence to the root cause.',
-        });
-      } else {
-        setFeedback({
-          passed: false,
-          message: 'That cause does not match the evidence pattern. Try again.',
-        });
-        if (hintIndex < challenge.hints.length - 1) {
-          setHintIndex(prev => prev + 1);
-        }
+      const diagnoseCriteria = {
+        ...challenge.evaluationCriteria,
+        customCheck: 'diagnose',
+        learnerCause: selectedDiagnoseCause,
+        acceptedCauses: challenge.diagnoseConfig.acceptedCauses,
+        requiredEvidenceSignals: challenge.evaluationCriteria.requiredEvidenceSignals,
+        observedEvidenceSignals: challenge.evaluationCriteria.observedEvidenceSignals,
+        minEvidenceMatches: challenge.diagnoseConfig.minEvidenceMatches,
+      };
+
+      const result = evaluate(diagnoseCriteria, simulation, components);
+      setFeedback(result);
+      if (!result.passed && hintIndex < challenge.hints.length - 1) {
+        setHintIndex(prev => prev + 1);
       }
       return;
     }

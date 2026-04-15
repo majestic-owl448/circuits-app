@@ -15,17 +15,44 @@ export interface TimeSimulationState {
   speed: 'normal' | 'slow';
 }
 
+const CHECKPOINT_FACTORS: Record<TimeSnapshot['checkpoint'], number> = {
+  t0: 0.2,
+  t_mid: 0.6,
+  t_final: 1,
+};
+
+function scaleSimulation(base: SimulationResult, factor: number): SimulationResult {
+  const clampedFactor = Math.max(0, Math.min(1, factor));
+  const scaledComponentResults = new Map(
+    [...base.componentResults.entries()].map(([componentId, result]) => [
+      componentId,
+      {
+        componentId,
+        voltage: result.voltage * clampedFactor,
+        current: result.current * clampedFactor,
+        power: result.power * clampedFactor * clampedFactor,
+      },
+    ]),
+  );
+
+  return {
+    ...base,
+    totalCurrent: base.totalCurrent * clampedFactor,
+    componentResults: scaledComponentResults,
+  };
+}
+
+function trackedVoltageFor(simulation: SimulationResult): number {
+  return simulation.totalResistance > 0 ? simulation.totalCurrent * simulation.totalResistance : 0;
+}
+
 export function createInitialTimeState(base: SimulationResult): TimeSimulationState {
   const checkpoints = createCheckpointSnapshots(base);
   const timeline = createTimelinePoints(base);
 
   return {
     sliderValue: 0,
-    snapshots: [
-      { checkpoint: 't0', simulation: base },
-      { checkpoint: 't_mid', simulation: base },
-      { checkpoint: 't_final', simulation: base },
-    ],
+    snapshots: checkpoints.map(checkpoint => ({ checkpoint: checkpoint.checkpoint, simulation: checkpoint.simulation })),
     checkpoints,
     timeline,
     isPlaying: false,
@@ -35,17 +62,27 @@ export function createInitialTimeState(base: SimulationResult): TimeSimulationSt
 
 export function createCheckpointSnapshots(base: SimulationResult): TimeDomainSnapshot[] {
   return [
-    { checkpoint: 't0', label: 'Early', simulation: base },
-    { checkpoint: 't_mid', label: 'Middle', simulation: base },
-    { checkpoint: 't_final', label: 'Late', simulation: base },
+    { checkpoint: 't0', label: 'Early', simulation: scaleSimulation(base, CHECKPOINT_FACTORS.t0) },
+    { checkpoint: 't_mid', label: 'Middle', simulation: scaleSimulation(base, CHECKPOINT_FACTORS.t_mid) },
+    { checkpoint: 't_final', label: 'Late', simulation: scaleSimulation(base, CHECKPOINT_FACTORS.t_final) },
   ];
 }
 
 export function createTimelinePoints(base: SimulationResult): TimePointResult[] {
+  const points = [0, 0.25, 0.5, 0.75, 1];
+
   return [
-    { t: 0, totalCurrent: base.totalCurrent, trackedVoltage: base.totalResistance > 0 ? base.totalCurrent * base.totalResistance : 0, trackedCurrent: base.totalCurrent },
-    { t: 0.5, totalCurrent: base.totalCurrent, trackedVoltage: base.totalResistance > 0 ? base.totalCurrent * base.totalResistance : 0, trackedCurrent: base.totalCurrent },
-    { t: 1, totalCurrent: base.totalCurrent, trackedVoltage: base.totalResistance > 0 ? base.totalCurrent * base.totalResistance : 0, trackedCurrent: base.totalCurrent },
+    ...points.map(t => {
+      const eased = t * t * (3 - 2 * t);
+      const sample = scaleSimulation(base, eased);
+
+      return {
+        t,
+        totalCurrent: sample.totalCurrent,
+        trackedVoltage: trackedVoltageFor(sample),
+        trackedCurrent: sample.totalCurrent,
+      };
+    }),
   ];
 }
 

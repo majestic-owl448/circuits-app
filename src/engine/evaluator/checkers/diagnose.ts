@@ -5,6 +5,41 @@ export const diagnoseChecker: EvaluationChecker = ({ criteria }) => {
     return null;
   }
 
+  const learnerCause = criteria.learnerCause?.trim();
+  const acceptedCauses = criteria.acceptedCauses ?? [];
+
+  if (!learnerCause || acceptedCauses.length === 0) {
+    return {
+      id: 'diagnose.missing-cause-selection',
+      passed: false,
+      severity: 'hard-pass',
+      message: 'Diagnose challenge requires learner cause and accepted cause configuration.',
+    };
+  }
+
+  if (!acceptedCauses.includes(learnerCause)) {
+    return {
+      id: 'diagnose.cause-mismatch',
+      passed: false,
+      severity: 'hard-pass',
+      message: `Cause "${learnerCause}" does not match accepted causes: ${acceptedCauses.join(', ')}.`,
+    };
+  }
+
+  const requiredSignals = criteria.requiredEvidenceSignals ?? [];
+  const observedSignals = criteria.observedEvidenceSignals ?? [];
+  const matches = requiredSignals.filter(signal => observedSignals.includes(signal)).length;
+  const minMatches = Math.max(0, criteria.minEvidenceMatches ?? requiredSignals.length);
+
+  if (matches < minMatches) {
+    return {
+      id: 'diagnose.insufficient-evidence',
+      passed: false,
+      severity: 'hard-pass',
+      message: `Matched ${matches}/${minMatches} required evidence signals.`,
+    };
+  }
+
   if (!criteria.hardPassChecks || criteria.hardPassChecks.length === 0) {
     return {
       id: 'diagnose.missing-hard-checks',
