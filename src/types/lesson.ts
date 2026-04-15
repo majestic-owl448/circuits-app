@@ -112,6 +112,14 @@ export interface EvaluationCriteria {
   targetComponent?: string;
   targetProperty?: 'power' | 'current' | 'voltage';
   expectedRange?: { min: number; max: number };
+  requiredCheckpoint?: 't0' | 't_mid' | 't_final';
+  checkpointRanges?: Array<{
+    checkpoint: 't0' | 't_mid' | 't_final';
+    componentId: string;
+    property: 'power' | 'current' | 'voltage';
+    min: number;
+    max: number;
+  }>;
   customCheck?: string;
   correctChoiceId?: string;
   expectedRanges?: Array<{

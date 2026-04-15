@@ -27,6 +27,12 @@
   fill: var(--color-error);
 }
 
+.meterTarget circle,
+.meterTarget line,
+.meterTarget polyline {
+  filter: drop-shadow(0 0 5px var(--color-primary));
+}
+
 .label {
   pointer-events: none;
   user-select: none;

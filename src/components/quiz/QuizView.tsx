@@ -1,12 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
-import { quizRegistry } from '../../quizzes/quiz-registry.ts';
-import type { QuizQuestion } from '../../types/quiz.ts';
+import { loadQuizzesForChapter } from '../../data/loaders.ts';
+import type { QuizConfig, QuizQuestion } from '../../types/quiz.ts';
 import styles from './QuizView.module.css';
 
 export function QuizView() {
   const { activeQuizId } = useAppState();
   const dispatch = useAppDispatch();
+  const [quizRegistry, setQuizRegistry] = useState<QuizConfig[] | null>(null);
+
+  useEffect(() => {
+    let mounted = true;
+    Promise.all([loadQuizzesForChapter(1), loadQuizzesForChapter(2), loadQuizzesForChapter(3)]).then(chapters => {
+      if (mounted) setQuizRegistry(chapters.flat());
+    });
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  if (!quizRegistry) {
+    return (
+      <div className={styles.page}>
+        <p className={styles.error}>Loading quiz...</p>
+      </div>
+    );
+  }
 
   const quiz = quizRegistry.find(q => q.id === activeQuizId);
   if (!quiz) {
@@ -27,7 +46,7 @@ function QuizViewInner({
   quiz,
   dispatch,
 }: {
-  quiz: typeof quizRegistry[number];
+  quiz: QuizConfig;
   dispatch: ReturnType<typeof useAppDispatch>;
 }) {
   const [questionIndex, setQuestionIndex] = useState(0);

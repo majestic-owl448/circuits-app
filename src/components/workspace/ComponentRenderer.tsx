@@ -9,6 +9,7 @@ interface Props {
   isFocused: boolean;
   isCircuitComplete: boolean;
   isDeletable?: boolean;
+  isMeterTarget?: boolean;
   showValues?: boolean;
   onClick: () => void;
   onFocus: () => void;
@@ -23,6 +24,7 @@ export function ComponentRenderer({
   isFocused,
   isCircuitComplete,
   isDeletable = false,
+  isMeterTarget = false,
   showValues = true,
   onClick,
   onFocus,
@@ -38,7 +40,7 @@ export function ComponentRenderer({
 
   return (
     <g
-      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''}`}
+      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''} ${isMeterTarget ? styles.meterTarget : ''}`}
       transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
       onClick={onClick}
       onDoubleClick={() => {

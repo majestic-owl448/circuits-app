@@ -7,11 +7,13 @@ import styles from './ChallengeView.module.css';
 interface Props {
   challenge: Challenge;
   simulation: SimulationResult;
+  checkpointSimulations?: Partial<Record<'t0' | 't_mid' | 't_final', SimulationResult>>;
+  currentCheckpoint?: 't0' | 't_mid' | 't_final';
   components: import('../../types/circuit.ts').CircuitComponent[];
   onComplete: () => void;
 }
 
-export function ChallengeView({ challenge, simulation, components, onComplete }: Props) {
+export function ChallengeView({ challenge, simulation, checkpointSimulations, currentCheckpoint, components, onComplete }: Props) {
   const [hintIndex, setHintIndex] = useState(-1);
   const [feedback, setFeedback] = useState<{ passed: boolean; message: string } | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
@@ -108,7 +110,37 @@ export function ChallengeView({ challenge, simulation, components, onComplete }:
       return;
     }
 
-    const result = evaluate(challenge.evaluationCriteria, simulation, components);
+    const requestedCheckpoint = challenge.evaluationCriteria.requiredCheckpoint;
+    const activeCheckpoint = requestedCheckpoint ?? currentCheckpoint;
+    const selectedSimulation = (activeCheckpoint && checkpointSimulations?.[activeCheckpoint])
+      ? checkpointSimulations[activeCheckpoint]
+      : simulation;
+
+    const baseResult = evaluate(challenge.evaluationCriteria, selectedSimulation, components);
+
+    if (baseResult.passed && challenge.evaluationCriteria.checkpointRanges && challenge.evaluationCriteria.checkpointRanges.length > 0) {
+      const failedRange = challenge.evaluationCriteria.checkpointRanges.find(range => {
+        const checkpointSimulation = checkpointSimulations?.[range.checkpoint];
+        if (!checkpointSimulation) return true;
+        const component = checkpointSimulation.componentResults.get(range.componentId);
+        if (!component) return true;
+        const value = component[range.property];
+        return value < range.min || value > range.max;
+      });
+
+      if (failedRange) {
+        setFeedback({
+          passed: false,
+          message: `Checkpoint ${failedRange.checkpoint} does not meet ${failedRange.property} target range.`,
+        });
+        if (hintIndex < challenge.hints.length - 1) {
+          setHintIndex(prev => prev + 1);
+        }
+        return;
+      }
+    }
+
+    const result = baseResult;
     setFeedback(result);
     if (!result.passed && hintIndex < challenge.hints.length - 1) {
       setHintIndex(prev => prev + 1);
@@ -116,6 +148,8 @@ export function ChallengeView({ challenge, simulation, components, onComplete }:
   }, [
     challenge,
     simulation,
+    checkpointSimulations,
+    currentCheckpoint,
     components,
     selectedChoice,
     selectedClassifyCategory,

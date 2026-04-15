@@ -3,10 +3,11 @@ import styles from './MeterOverlay.module.css';
 
 interface Props {
   meterState: MeterState | null;
+  componentLabel?: string;
   onClose: () => void;
 }
 
-export function MeterOverlay({ meterState, onClose }: Props) {
+export function MeterOverlay({ meterState, componentLabel, onClose }: Props) {
   if (!meterState) {
     return null;
   }
@@ -28,10 +29,15 @@ export function MeterOverlay({ meterState, onClose }: Props) {
           </div>
           <p className={styles.message}>{meterState.result.message}</p>
           {meterState.mode === 'voltmeter' && meterState.targetNodeAId && meterState.targetNodeBId && (
-            <p className={styles.message}>Nodes: {meterState.targetNodeAId} to {meterState.targetNodeBId}</p>
+            <p className={styles.message}>
+              Probes: {meterState.targetNodeALabel ?? meterState.targetNodeAId} to {meterState.targetNodeBLabel ?? meterState.targetNodeBId}
+            </p>
           )}
           {meterState.mode === 'voltmeter' && meterState.pendingNodeId && (
-            <p className={styles.message}>Selected first probe at {meterState.pendingNodeId}. Select second node.</p>
+            <p className={styles.message}>Selected first probe at {meterState.pendingNodeLabel ?? meterState.pendingNodeId}. Select second node.</p>
+          )}
+          {(meterState.mode === 'ammeter' || meterState.mode === 'ohmmeter') && meterState.targetComponentId && (
+            <p className={styles.message}>Target: {componentLabel ?? meterState.targetComponentId}</p>
           )}
         </div>
       ) : (

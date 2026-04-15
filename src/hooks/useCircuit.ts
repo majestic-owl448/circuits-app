@@ -34,9 +34,33 @@ export interface MeterState {
   mode: MeterMode;
   targetNodeAId?: string;
   targetNodeBId?: string;
+  targetNodeALabel?: string;
+  targetNodeBLabel?: string;
   targetComponentId?: string;
   pendingNodeId?: string;
+  pendingNodeLabel?: string;
   result: MeasurementResult | null;
+}
+
+function nodeLabelFromIndex(index: number): string {
+  const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  if (index < alphabet.length) {
+    return `Node ${alphabet[index]}`;
+  }
+  return `Node ${index + 1}`;
+}
+
+function buildNodeLabelMap(nodes: CircuitNode[]): Map<string, string> {
+  const sorted = [...nodes].sort((a, b) => {
+    if (a.position.y !== b.position.y) return a.position.y - b.position.y;
+    if (a.position.x !== b.position.x) return a.position.x - b.position.x;
+    return a.id.localeCompare(b.id);
+  });
+  const labels = new Map<string, string>();
+  sorted.forEach((node, index) => {
+    labels.set(node.id, nodeLabelFromIndex(index));
+  });
+  return labels;
 }
 
 export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: CircuitComponent[] }) {
@@ -48,6 +72,8 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     () => solve(nodes, components),
     [nodes, components],
   );
+
+  const nodeLabels = useMemo(() => buildNodeLabelMap(nodes), [nodes]);
 
   const failedAwareComponents = useMemo(
     () => applyFailureStates(components, simulation),
@@ -168,11 +194,15 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
       if (!prev || prev.mode !== 'voltmeter') return prev;
 
       if (!prev.pendingNodeId) {
+        const targetNodeALabel = nodeLabels.get(nodeId) ?? nodeId;
         return {
           ...prev,
           pendingNodeId: nodeId,
+          pendingNodeLabel: targetNodeALabel,
           targetNodeAId: nodeId,
+          targetNodeALabel,
           targetNodeBId: undefined,
+          targetNodeBLabel: undefined,
           result: null,
         };
       }
@@ -180,16 +210,21 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
       const targetNodeAId = prev.pendingNodeId;
       const targetNodeBId = nodeId;
       const result = measureVoltage(targetNodeAId, targetNodeBId, simulation);
+      const targetNodeALabel = nodeLabels.get(targetNodeAId) ?? targetNodeAId;
+      const targetNodeBLabel = nodeLabels.get(targetNodeBId) ?? targetNodeBId;
 
       return {
         ...prev,
         pendingNodeId: undefined,
+        pendingNodeLabel: undefined,
         targetNodeAId,
         targetNodeBId,
+        targetNodeALabel,
+        targetNodeBLabel,
         result,
       };
     });
-  }, [simulation]);
+  }, [simulation, nodeLabels]);
 
   const clearMeasurement = useCallback(() => {
     setMeterState(null);
@@ -203,7 +238,14 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
         return;
       }
       const result = measureVoltage(pair.nodeAId, pair.nodeBId, simulation);
-      setMeterState({ mode, targetNodeAId: pair.nodeAId, targetNodeBId: pair.nodeBId, result });
+      setMeterState({
+        mode,
+        targetNodeAId: pair.nodeAId,
+        targetNodeBId: pair.nodeBId,
+        targetNodeALabel: nodeLabels.get(pair.nodeAId) ?? pair.nodeAId,
+        targetNodeBLabel: nodeLabels.get(pair.nodeBId) ?? pair.nodeBId,
+        result,
+      });
       return;
     }
 
@@ -224,7 +266,7 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
 
     const result = measureResistance(selectedId, components, simulation);
     setMeterState({ mode, targetComponentId: selectedId, result });
-  }, [components, nodes, simulation]);
+  }, [components, nodes, simulation, nodeLabels]);
 
   return {
     nodes,
@@ -240,6 +282,7 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     reset,
     setNodes,
     meterState,
+    nodeLabels,
     startMeasurement,
     measureSelected,
     clearMeasurement,

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { useCircuit } from '../../hooks/useCircuit.ts';
-import { lessonRegistry } from '../../lessons/lesson-registry.ts';
+import { loadLessonsForChapter } from '../../data/loaders.ts';
 import { LessonLayout } from '../layout/LessonLayout.tsx';
 import { TheoryPanel } from '../layout/TheoryPanel.tsx';
 import { FormulaPanel } from '../layout/FormulaPanel.tsx';
@@ -20,8 +20,27 @@ import styles from './LessonView.module.css';
 export function LessonView() {
   const { activeLessonId, preferences } = useAppState();
   const dispatch = useAppDispatch();
+  const [lesson, setLesson] = useState<LessonConfig | null>(null);
 
-  const lesson = lessonRegistry.find(l => l.id === activeLessonId);
+  useEffect(() => {
+    let mounted = true;
+    const chapterMatch = activeLessonId?.match(/^lesson-ch(\d+)-/);
+    const chapter = chapterMatch ? Number(chapterMatch[1]) : 1;
+
+    loadLessonsForChapter(chapter).then(registry => {
+      if (!mounted) return;
+      const found = registry.find(l => l.id === activeLessonId) ?? null;
+      setLesson(found);
+    });
+    return () => {
+      mounted = false;
+    };
+  }, [activeLessonId]);
+
+  if (!lesson && activeLessonId) {
+    return <div className={styles.error}>Loading lesson...</div>;
+  }
+
   if (!lesson) {
     return <div className={styles.error}>Lesson not found.</div>;
   }
@@ -63,6 +82,13 @@ function LessonViewInner({
 
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;
+  const checkpointSimulations = lesson.id.startsWith('lesson-ch6')
+    ? {
+      t0: circuit.simulation,
+      t_mid: circuit.simulation,
+      t_final: circuit.simulation,
+    }
+    : undefined;
 
   const handleLessonComplete = useCallback(() => {
     dispatch({
@@ -190,6 +216,8 @@ function LessonViewInner({
         <ChallengeView
           challenge={currentChallenge}
           simulation={circuit.simulation}
+          checkpointSimulations={checkpointSimulations}
+          currentCheckpoint={lesson.id.startsWith('lesson-ch6') ? checkpointForSlider(timeState.sliderValue) : undefined}
           components={circuit.components}
           onComplete={handleChallengeComplete}
         />

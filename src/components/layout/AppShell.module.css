@@ -9,3 +9,9 @@
   display: flex;
   flex-direction: column;
 }
+
+.loading {
+  color: var(--color-text-secondary);
+  padding: var(--spacing-lg);
+  text-align: center;
+}

@@ -94,7 +94,7 @@ export function CircuitWorkspace({
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [focusedComponent, setFocusedComponent] = useState<string | null>(null);
 
-  const { nodes, components, simulation, toggleSwitch, addWire, renameComponent } = circuit;
+  const { nodes, components, simulation, toggleSwitch, addWire, renameComponent, nodeLabels } = circuit;
 
   const wires = components.filter(c => c.type === 'wire');
   const nonWires = components.filter(c => c.type !== 'wire');
@@ -139,6 +139,14 @@ export function CircuitWorkspace({
     }
     return segs;
   }, [simulation, nodes, components]);
+
+  const nodeMap = useMemo(() => new Map(nodes.map(node => [node.id, node])), [nodes]);
+  const meterTargetComponent = useMemo(
+    () => (circuit.meterState?.targetComponentId
+      ? components.find(component => component.id === circuit.meterState?.targetComponentId)
+      : undefined),
+    [components, circuit.meterState?.targetComponentId],
+  );
 
   const handleNodeClick = useCallback((nodeId: string) => {
     if (!wiringMode) return;
@@ -290,6 +298,7 @@ export function CircuitWorkspace({
               isFocused={focusedComponent === comp.id}
               isCircuitComplete={simulation.isComplete && !simulation.isShortCircuit}
               isDeletable={deletionMode}
+              isMeterTarget={meterTargetComponent?.id === comp.id}
               onClick={() => handleComponentClick(comp.id)}
               onFocus={() => setFocusedComponent(comp.id)}
               showValues={showValues}
@@ -309,17 +318,68 @@ export function CircuitWorkspace({
         ))}
 
         {circuit.meterState?.mode === 'voltmeter' && nodes.map(node => (
-          <circle
-            key={`meter-node-${node.id}`}
-            cx={node.position.x}
-            cy={node.position.y}
-            r="10"
-            className={styles.meterNodeTarget}
-            onClick={() => circuit.selectMeasurementNode(node.id)}
-          />
+          <g key={`meter-node-${node.id}`}>
+            <circle
+              cx={node.position.x}
+              cy={node.position.y}
+              r="10"
+              className={styles.meterNodeTarget}
+              onClick={() => circuit.selectMeasurementNode(node.id)}
+            />
+            <text
+              className={styles.meterNodeLabel}
+              x={node.position.x}
+              y={node.position.y - 14}
+              textAnchor="middle"
+            >
+              {nodeLabels.get(node.id) ?? node.id}
+            </text>
+          </g>
         ))}
+
+        {circuit.meterState?.mode === 'voltmeter' && circuit.meterState.targetNodeAId && nodeMap.get(circuit.meterState.targetNodeAId) && (
+          <g>
+            <circle
+              className={styles.voltProbeRed}
+              cx={nodeMap.get(circuit.meterState.targetNodeAId)!.position.x}
+              cy={nodeMap.get(circuit.meterState.targetNodeAId)!.position.y}
+              r="7"
+            />
+            <text
+              className={styles.probeBadge}
+              x={nodeMap.get(circuit.meterState.targetNodeAId)!.position.x}
+              y={nodeMap.get(circuit.meterState.targetNodeAId)!.position.y + 3}
+              textAnchor="middle"
+            >
+              +
+            </text>
+          </g>
+        )}
+
+        {circuit.meterState?.mode === 'voltmeter' && circuit.meterState.targetNodeBId && nodeMap.get(circuit.meterState.targetNodeBId) && (
+          <g>
+            <circle
+              className={styles.voltProbeBlack}
+              cx={nodeMap.get(circuit.meterState.targetNodeBId)!.position.x}
+              cy={nodeMap.get(circuit.meterState.targetNodeBId)!.position.y}
+              r="7"
+            />
+            <text
+              className={styles.probeBadge}
+              x={nodeMap.get(circuit.meterState.targetNodeBId)!.position.x}
+              y={nodeMap.get(circuit.meterState.targetNodeBId)!.position.y + 3}
+              textAnchor="middle"
+            >
+              -
+            </text>
+          </g>
+        )}
       </svg>
-      <MeterOverlay meterState={circuit.meterState} onClose={circuit.clearMeasurement} />
+      <MeterOverlay
+        meterState={circuit.meterState}
+        componentLabel={meterTargetComponent?.name}
+        onClose={circuit.clearMeasurement}
+      />
     </div>
   );
 }
