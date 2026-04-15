@@ -24,6 +24,10 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Measurement UX hardening update: meter overlay now shows learner-friendly node labels and selected target labels; workspace now renders explicit voltmeter probe markers and meter-target component highlighting.
 - Bundle-risk hardening update: non-home views (`Lesson`, `Sandbox`, `Theory`, `Quiz`) now load through lazy imports with suspense fallback to reduce initial bundle pressure.
 - Time-check readiness update: challenge evaluation now supports optional checkpoint-targeted evaluation fields (`requiredCheckpoint`, `checkpointRanges`) and lesson wiring provides checkpoint simulation context for Chapter 6 flows.
+- Time-check hardening update: Chapter 6 lesson checkpoint simulations now use deterministic staged snapshots and playback progression instead of a single reused simulation object.
+- Evaluator hardening update: `classify`/`diagnose` now run deterministic category/cause + evidence-threshold checks suitable for Chapter 5 diagnostics and Chapter 10 Dimension 4 evidence gating.
+- Chapter-ready fixture update: added planned Chapter 4/5 classify/diagnose challenge fixture templates at `src/lessons/planned/ch4-ch5/challenge-fixtures.ts` to accelerate first content implementation pass.
+- Known partial: time checkpoint progression is currently educational interpolation, not full RC/RL transient physics yet.
 - Planning docs cleanup update: superseded readiness review snapshots from 2026-04-14 were removed after consolidation into canonical implementation/readiness/spec docs.
 - Data loading update: lesson and quiz registries are loaded through dynamic chapter-based loaders (`src/data/loaders.ts`) with map-driven chapter registration. Adding a new chapter requires only a single-line addition to the loader maps. Consumers use centralized `loadLessonRegistry()`/`loadQuizRegistry()` instead of assembling chapter lists. Old monolithic registries (`lesson-registry.ts`, `quiz-registry.ts`) have been removed.
 

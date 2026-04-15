@@ -176,6 +176,20 @@ Implementation usage guidance (non-gate) for Chapter 4 and Chapter 5:
 - Existing `choose` challenges remain acceptable when the interaction is simple recognition and no diagnostic evidence model is needed.
 - **Gate D (Validation)**: representative chapter fixtures pass lint/build and manual walkthrough.
 
+### Gate Dashboard (current foundation status)
+
+| Gate | Status | Owner area | Done when |
+|---|---|---|---|
+| Gate A (Engine) | [~] Partial | Engine | Chapter-targeted engine models are implemented with deterministic fixture coverage for the active chapter scope. |
+| Gate B (UI) | [~] Partial | UI + accessibility | Required chapter tools are keyboard-operable, reduced-motion safe, and spec parity checks are complete. |
+| Gate C (Content Schema) | [x] Ready | Types + lesson authoring | Required challenge/evaluator schema fields are available and validated for Chapters 4-10 (`classify`/`diagnose` included). |
+| Gate D (Validation) | [~] Partial | CI + QA | Lint/build + representative engine/evaluator fixtures + chapter walkthrough checklist are green for the chapter being started. |
+
+Status notes:
+
+- Gate C is ready to author Chapter 4+ content (`classify`/`diagnose` types and deterministic evaluation fields are implemented).
+- Gate A and Gate B remain partial for Chapter 6+ physical transient fidelity: checkpoint/timeline behavior is deterministic and checkpoint-aware, but still a staged educational interpolation rather than full RC/RL dynamics.
+
 ## 4) Effort and Risk Scoring (Planning Heuristic)
 
 Scale: `Effort` 1-5, `Risk` 1-5.

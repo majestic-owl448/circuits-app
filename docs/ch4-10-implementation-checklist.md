@@ -156,9 +156,11 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ### `src/engine/evaluator/checkers/classify.ts` (new)
 - [x] Evaluate `classify` challenge responses
+- [x] Enforce deterministic category/evidence hard-pass checks for chapter fixtures
 
 ### `src/engine/evaluator/checkers/diagnose.ts` (new)
 - [x] Evaluate `diagnose` challenge responses and evidence thresholds
+- [x] Enforce deterministic cause/evidence-match thresholds aligned with Chapter 10 Dimension 4 evidence rules
 
 ### `src/engine/evaluator/checkers/constraints.ts` (new)
 - [x] Validate operating-limit and constraint checks (prepping Chapter 5/10)
@@ -239,7 +241,8 @@ Implementation checklist for foundational work needed before and during Chapters
 ### `src/engine/time/simulator.ts` (new)
 - [~] Implement time-step simulation contract for educational RC/RL behavior
 - Acceptance criteria:
-  - [~] Time-state snapshots are deterministic for checkpoints (`t0`, `t_mid`, `t_final`)
+  - [x] Time-state snapshots are deterministic for checkpoints (`t0`, `t_mid`, `t_final`)
+  - [~] Checkpoint values represent full transient engine behavior (currently staged interpolation for educational scaffolding)
 
 ### `src/types/circuit.ts`
 - [x] Add time-state types for snapshots and timeline points
@@ -259,9 +262,10 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ### `src/components/lessons/LessonView.tsx`
 - [x] Integrate time controls/panel into time-enabled lesson flows
-- [~] Ensure challenge evaluation can target required checkpoint windows
+- [x] Ensure challenge evaluation can target required checkpoint windows
 - Acceptance criteria:
-  - [~] Lesson checks evaluate against configured checkpoints, not arbitrary slider positions
+  - [x] Lesson checks evaluate against configured checkpoints, not arbitrary slider positions
+  - [~] Playback drives physically modeled per-checkpoint state (pending full transient solver integration)
 
 ### `src/state/persistence.ts`
 - [x] Persist time-visualization preferences as needed
