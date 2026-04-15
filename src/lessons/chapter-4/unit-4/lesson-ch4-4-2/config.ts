@@ -1,5 +1,15 @@
 import type { LessonConfig } from '../../../../types/lesson.ts';
-import { CH4_SOURCE_LOAD_CIRCUIT, CH4_MIXED_NODES } from '../../shared.ts';
+import { CH4_MIXED_NODES } from '../../shared.ts';
+import type { CircuitComponent } from '../../../../types/circuit.ts';
+
+const failingOpenCircuit: CircuitComponent[] = [
+  { id: 'battery-1', type: 'battery', nodeA: 'n1', nodeB: 'n7', properties: { voltage: 9 }, name: 'Battery', position: { x: 70, y: 270 }, rotation: 0 },
+  { id: 'wire-top', type: 'wire', nodeA: 'n1', nodeB: 'n2', properties: {}, name: 'Wire', position: { x: 210, y: 120 }, rotation: 0 },
+  { id: 'resistor-limit', type: 'resistor', nodeA: 'n2', nodeB: 'n3', properties: { resistance: 18 }, name: 'Limiter', position: { x: 385, y: 120 }, rotation: 0 },
+  { id: 'bulb-target', type: 'bulb', nodeA: 'n3', nodeB: 'n5', properties: { resistance: 45 }, name: 'Target Bulb', position: { x: 385, y: 205 }, rotation: 0 },
+  { id: 'switch-1', type: 'switch', nodeA: 'n7', nodeB: 'n6', properties: { isClosed: true }, name: 'Switch', position: { x: 210, y: 420 }, rotation: 0 },
+  { id: 'wire-bottom-a', type: 'wire', nodeA: 'n6', nodeB: 'n5', properties: {}, name: 'Wire', position: { x: 300, y: 355 }, rotation: 0 },
+];
 
 export const lessonCh4_4_2: LessonConfig = {
   id: 'lesson-ch4-4-2',
@@ -9,7 +19,7 @@ export const lessonCh4_4_2: LessonConfig = {
   stageLabel: 'Intermediate',
   prerequisites: ['lesson-ch4-4-1'],
   conceptsIntroduced: ['issue-first debugging', 'evidence-backed diagnosis'],
-  initialCircuit: CH4_SOURCE_LOAD_CIRCUIT,
+  initialCircuit: failingOpenCircuit,
   initialNodes: CH4_MIXED_NODES,
   steps: [
     { id: 'step-1', text: 'When a target is out of range, isolate the first blocking issue using structure and measurements.' },
@@ -30,6 +40,21 @@ export const lessonCh4_4_2: LessonConfig = {
   challenges: [
     {
       id: 'challenge-1',
+      prompt: 'Fix the circuit so target-load current can increase toward range by reducing excessive series resistance in the source-to-load path.',
+      type: 'fix',
+      initialCircuit: failingOpenCircuit,
+      initialNodes: CH4_MIXED_NODES,
+      evaluationCriteria: {
+        circuitMustBeClosed: true,
+      },
+      hints: [
+        'You need a closed loop first.',
+        'Find and restore the missing connection in the source-to-load return path.',
+      ],
+      availableComponents: ['battery', 'bulb', 'switch', 'resistor', 'wire'],
+    },
+    {
+      id: 'challenge-2',
       prompt: 'Select the likely root cause when target load current is below required range and meter evidence shows high total resistance.',
       type: 'diagnose',
       evaluationCriteria: {
@@ -71,6 +96,12 @@ export const lessonCh4_4_2: LessonConfig = {
       id: 'theory-ch4-debugging-evidence',
       title: 'Troubleshooting and investigation: debugging by measured evidence',
       content: 'Use measurements to identify the most likely failure cause, then apply targeted corrections.',
+      sourceLesson: 'lesson-ch4-4-2',
+    },
+    {
+      id: 'theory-ch4-ohmmeter-placement-simulation',
+      title: 'How to place an ohmmeter in the simulation',
+      content: 'Select the ohmmeter tool and target a component path in a de-energized context to inspect resistance safely.',
       sourceLesson: 'lesson-ch4-4-2',
     },
   ],

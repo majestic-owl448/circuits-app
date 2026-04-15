@@ -388,6 +388,30 @@ export const theoryRegistry: TheoryEntry[] = [
     topic: 'Measurement and Verification',
   },
   {
+    id: 'theory-ch4-voltmeter-placement-simulation',
+    title: 'How to place a voltmeter in the simulation',
+    content:
+      'Use the voltmeter tool to select two points or terminals and read the potential difference across that pair.',
+    sourceLesson: 'lesson-ch4-1-2',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-ammeter-placement-simulation',
+    title: 'How to place an ammeter in the simulation',
+    content:
+      'Use the ammeter tool to target a branch path so the reading reflects current through that branch.',
+    sourceLesson: 'lesson-ch4-2-1',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-ohmmeter-placement-simulation',
+    title: 'How to place an ohmmeter in the simulation',
+    content:
+      'Use the ohmmeter tool only in de-energized contexts, then target a component path to inspect resistance.',
+    sourceLesson: 'lesson-ch4-4-2',
+    topic: 'Measurement and Verification',
+  },
+  {
     id: 'theory-ch4-mixed-structure',
     title: 'What is a mixed circuit?',
     content:

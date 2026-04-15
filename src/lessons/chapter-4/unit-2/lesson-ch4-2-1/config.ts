@@ -40,6 +40,25 @@ export const lessonCh4_2_1: LessonConfig = {
         { id: 'c1-c', label: 'They always read battery voltage', isCorrect: false, explanation: 'That is not what ammeters do.' },
       ],
     },
+    {
+      id: 'challenge-2',
+      prompt: 'Place the missing resistor between n2 and n3 so the branch is complete and ready for inline current inspection.',
+      type: 'drag-place',
+      initialCircuit: [
+        { id: 'battery-1', type: 'battery', nodeA: 'n1', nodeB: 'n4', properties: { voltage: 9 }, name: 'Battery', position: { x: 100, y: 200 }, rotation: 0 },
+        { id: 'wire-1', type: 'wire', nodeA: 'n1', nodeB: 'n2', properties: {}, name: 'Wire', position: { x: 300, y: 100 }, rotation: 0 },
+        { id: 'switch-1', type: 'switch', nodeA: 'n4', nodeB: 'n3', properties: { isClosed: true }, name: 'Switch', position: { x: 300, y: 400 }, rotation: 0 },
+      ],
+      initialNodes: STANDARD_NODES,
+      componentToPlace: 'resistor',
+      targetSlotNodeA: 'n2',
+      targetSlotNodeB: 'n3',
+      evaluationCriteria: { circuitMustBeClosed: true },
+      hints: [
+        'Place the resistor in the only open gap.',
+        'A complete branch is needed before inline measurement can make sense.',
+      ],
+    },
   ],
   theoryContent: [
     {
@@ -66,6 +85,12 @@ export const lessonCh4_2_1: LessonConfig = {
       id: 'theory-ch4-ammeter-basics',
       title: 'What an ammeter measures',
       content: 'Use ammeters inline to inspect branch current and compare readings with expected values.',
+      sourceLesson: 'lesson-ch4-2-1',
+    },
+    {
+      id: 'theory-ch4-ammeter-placement-simulation',
+      title: 'How to place an ammeter in the simulation',
+      content: 'Select the ammeter tool and target a branch component path to inspect current flow through that path.',
       sourceLesson: 'lesson-ch4-2-1',
     },
   ],

@@ -23,10 +23,10 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
   const [showBreakdown, setShowBreakdown] = useState(false);
 
   const handleCheck = useCallback(() => {
-    if (challenge.type === 'choose') {
+    if (challenge.type === 'choose' || challenge.type === 'predict') {
       const choice = challenge.choices?.find(c => c.id === selectedChoice);
       if (!choice) {
-        setFeedback({ passed: false, message: 'Please select an answer.' });
+          setFeedback({ passed: false, message: challenge.type === 'predict' ? 'Please select a prediction.' : 'Please select an answer.' });
         return;
       }
       if (choice.isCorrect) {
@@ -162,7 +162,7 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
       <div className={styles.badge}>Challenge</div>
       <p className={styles.prompt}>{challenge.prompt}</p>
 
-      {challenge.type === 'choose' && challenge.choices && (
+      {(challenge.type === 'choose' || challenge.type === 'predict') && challenge.choices && (
         <div className={styles.choices} role="radiogroup" aria-label="Answer choices">
           {challenge.choices.map(choice => (
             <label key={choice.id} className={styles.choice}>

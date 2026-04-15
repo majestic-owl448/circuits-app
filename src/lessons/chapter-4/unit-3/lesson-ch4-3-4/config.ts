@@ -31,7 +31,7 @@ export const lessonCh4_3_4: LessonConfig = {
     {
       id: 'challenge-1',
       prompt: 'A predicted branch voltage and measured branch voltage differ significantly. What is the best next step?',
-      type: 'choose',
+      type: 'predict',
       evaluationCriteria: { correctChoiceId: 'c1-a' },
       hints: ['Choose the option that uses evidence-driven debugging.'],
       choices: [

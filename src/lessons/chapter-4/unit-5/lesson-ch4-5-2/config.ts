@@ -30,17 +30,15 @@ export const lessonCh4_5_2: LessonConfig = {
   challenges: [
     {
       id: 'challenge-1',
-      prompt: 'A 9 V source loop has one known drop of 4 V. Assuming ideal wires, what remaining drop satisfies KVL?',
-      type: 'calculate',
-      evaluationCriteria: {},
-      hints: ['Voltage rises and drops in a loop must balance.'],
-      calculationTarget: {
-        quantity: 'voltage',
-        expectedValue: 5,
-        tolerance: 0.01,
-        unit: 'V',
-        formula: 'V_remaining = 9 - 4',
-      },
+      prompt: 'Which statement correctly expresses KVL for a single closed loop?',
+      type: 'choose',
+      evaluationCriteria: { correctChoiceId: 'c1-a' },
+      hints: ['KVL is a loop-balance statement for voltage.'],
+      choices: [
+        { id: 'c1-a', label: 'The signed sum of voltage changes around the loop is zero', isCorrect: true, explanation: 'Correct.' },
+        { id: 'c1-b', label: 'All branch currents must be equal', isCorrect: false, explanation: 'That is not KVL.' },
+        { id: 'c1-c', label: 'Total resistance in the loop is always constant', isCorrect: false, explanation: 'Resistance values can vary; KVL is about voltage balance.' },
+      ],
     },
   ],
   theoryContent: [

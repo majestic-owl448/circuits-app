@@ -30,22 +30,6 @@ export const lessonCh4_5_3: LessonConfig = {
   challenges: [
     {
       id: 'challenge-1',
-      prompt: 'Classify the best initial strategy for a mixed-circuit troubleshooting task.',
-      type: 'classify',
-      evaluationCriteria: {
-        hardPassChecks: ['classify-category-selection'],
-        advisoryChecks: ['classify-evidence-quality'],
-        observedEvidenceSignals: ['mixed-topology', 'target-range-failure'],
-      },
-      hints: ['Select the strategy that starts with topology and target constraints.'],
-      classifyConfig: {
-        categories: ['Topology-first analysis', 'Random component swapping', 'Skip to meter-only workflow'],
-        correctCategory: 'Topology-first analysis',
-        requiredEvidenceSignals: ['mixed-topology'],
-      },
-    },
-    {
-      id: 'challenge-2',
       prompt: 'Given low target-load current and measured high equivalent resistance, choose the most likely cause.',
       type: 'diagnose',
       evaluationCriteria: {

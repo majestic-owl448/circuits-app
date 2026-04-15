@@ -30,17 +30,15 @@ export const lessonCh4_5_1: LessonConfig = {
   challenges: [
     {
       id: 'challenge-1',
-      prompt: 'At a junction, one branch carries 0.2 A and another carries 0.3 A away from the node. What source-side current satisfies KCL?',
-      type: 'calculate',
-      evaluationCriteria: {},
-      hints: ['Sum outgoing branch currents for incoming total.'],
-      calculationTarget: {
-        quantity: 'current',
-        expectedValue: 0.5,
-        tolerance: 0.01,
-        unit: 'A',
-        formula: 'I_in = I_branch1 + I_branch2',
-      },
+      prompt: 'Which expression correctly applies KCL at a node with two outgoing branch currents I1 and I2?',
+      type: 'choose',
+      evaluationCriteria: { correctChoiceId: 'c1-b' },
+      hints: ['KCL matches incoming and outgoing totals.'],
+      choices: [
+        { id: 'c1-a', label: 'I_in = I1 - I2', isCorrect: false, explanation: 'Subtraction is not the general KCL relationship for outgoing sums.' },
+        { id: 'c1-b', label: 'I_in = I1 + I2', isCorrect: true, explanation: 'Correct. Incoming current equals total outgoing current.' },
+        { id: 'c1-c', label: 'I_in = V_source / R_total only', isCorrect: false, explanation: 'That is an Ohm\'s law relationship, not the KCL node equation itself.' },
+      ],
     },
   ],
   theoryContent: [

@@ -43,6 +43,25 @@ export const lessonCh4_1_2: LessonConfig = {
         { id: 'c1-c', label: 'Use only when the switch is open', isCorrect: false, explanation: 'Voltmeter use is not limited to open-switch states.' },
       ],
     },
+    {
+      id: 'challenge-2',
+      prompt: 'Place the missing resistor between n2 and n3 to create a target component you can measure across with a voltmeter.',
+      type: 'drag-place',
+      initialCircuit: [
+        { id: 'battery-1', type: 'battery', nodeA: 'n1', nodeB: 'n4', properties: { voltage: 9 }, name: 'Battery', position: { x: 100, y: 200 }, rotation: 0 },
+        { id: 'wire-1', type: 'wire', nodeA: 'n1', nodeB: 'n2', properties: {}, name: 'Wire', position: { x: 300, y: 100 }, rotation: 0 },
+        { id: 'switch-1', type: 'switch', nodeA: 'n4', nodeB: 'n3', properties: { isClosed: true }, name: 'Switch', position: { x: 300, y: 400 }, rotation: 0 },
+      ],
+      initialNodes: STANDARD_NODES,
+      componentToPlace: 'resistor',
+      targetSlotNodeA: 'n2',
+      targetSlotNodeB: 'n3',
+      evaluationCriteria: { circuitMustBeClosed: true },
+      hints: [
+        'Place the resistor in the open slot to complete the loop.',
+        'Use the n2-to-n3 gap as the measurement target location.',
+      ],
+    },
   ],
   theoryContent: [
     {
@@ -69,6 +88,12 @@ export const lessonCh4_1_2: LessonConfig = {
       id: 'theory-ch4-voltmeter-basics',
       title: 'What a voltmeter measures',
       content: 'Use a voltmeter across two nodes to read potential difference and verify predicted voltage values.',
+      sourceLesson: 'lesson-ch4-1-2',
+    },
+    {
+      id: 'theory-ch4-voltmeter-placement-simulation',
+      title: 'How to place a voltmeter in the simulation',
+      content: 'Select the voltmeter tool, choose two nodes or terminals, and read the potential difference across that pair.',
       sourceLesson: 'lesson-ch4-1-2',
     },
   ],

@@ -30,14 +30,26 @@ export const lessonCh4_1_3: LessonConfig = {
   challenges: [
     {
       id: 'challenge-1',
+      prompt: 'Predict what relationship you expect between your calculated voltage and a correct voltmeter reading on the same two points.',
+      type: 'predict',
+      evaluationCriteria: { correctChoiceId: 'p1-a' },
+      hints: ['Prediction should connect model and measurement.'],
+      choices: [
+        { id: 'p1-a', label: 'They should be close if the model and target points are correct', isCorrect: true, explanation: 'Correct. Agreement supports the model and setup.' },
+        { id: 'p1-b', label: 'They should always differ by at least 50%', isCorrect: false, explanation: 'Large mismatch is not expected in a correct setup.' },
+        { id: 'p1-c', label: 'Prediction does not matter once you can measure', isCorrect: false, explanation: 'Prediction is still essential for reasoning.' },
+      ],
+    },
+    {
+      id: 'challenge-2',
       prompt: 'A reading matches your prediction. What is the best interpretation?',
       type: 'choose',
-      evaluationCriteria: { correctChoiceId: 'c1-a' },
+      evaluationCriteria: { correctChoiceId: 'c2-a' },
       hints: ['Choose the reasoning-focused answer.'],
       choices: [
-        { id: 'c1-a', label: 'The model is supported by measurement evidence', isCorrect: true, explanation: 'Correct.' },
-        { id: 'c1-b', label: 'The circuit is always perfect in all conditions', isCorrect: false, explanation: 'One measurement does not prove all conditions.' },
-        { id: 'c1-c', label: 'Formulas are no longer needed', isCorrect: false, explanation: 'Formulas still guide prediction.' },
+        { id: 'c2-a', label: 'The model is supported by measurement evidence', isCorrect: true, explanation: 'Correct.' },
+        { id: 'c2-b', label: 'The circuit is always perfect in all conditions', isCorrect: false, explanation: 'One measurement does not prove all conditions.' },
+        { id: 'c2-c', label: 'Formulas are no longer needed', isCorrect: false, explanation: 'Formulas still guide prediction.' },
       ],
     },
   ],
