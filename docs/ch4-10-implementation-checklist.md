@@ -13,7 +13,7 @@ Implementation checklist for foundational work needed before and during Chapters
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 - [x] Existing Chapters 1-3 learner flow remains functional
-- [~] Accessibility checks completed for newly added interactive UI
+- [~] Accessibility checks completed for newly added interactive UI (evidence: `docs/ch4-10-accessibility-evidence.md`)
 - [x] `CLAUDE.md` status is updated to reflect actual implementation progress
 
 ## Phase 0 - Baseline Fixtures for Existing Behavior
@@ -311,6 +311,14 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ## Documentation and Tracking
 
+### `docs/ch4-10-accessibility-evidence.md` (new)
+- [x] Add consolidated accessibility verification log for new Chapter 4-10 foundation UI surfaces
+- Acceptance criteria:
+  - [x] Includes keyboard-operability checks per surface
+  - [x] Includes non-color-only differentiation checks per surface
+  - [x] Includes reduced-motion behavior checks per surface
+  - [x] Calls out remaining gaps with owners/next actions
+
 ### `CLAUDE.md`
 - [x] Keep current app status synchronized with phase completion and key architectural milestones
 - Acceptance criteria:
@@ -319,7 +327,8 @@ Implementation checklist for foundational work needed before and during Chapters
 ### `docs/specs/time-visualization-ux-spec.md`
 - [x] Mark implemented versus pending spec behaviors during Phase 6+
 - Acceptance criteria:
-  - [x] Gate B readiness for Chapter 6 can be validated from spec status
+  - [x] Gate B foundation readiness for Chapter 6 can be validated from spec status
+  - [x] Spec wording clearly distinguishes Gate B foundation readiness from Gate A transient-physics readiness
 
 ### `docs/ch4-10-id-mapping-tables.md`
 - [x] Add explicit per-chapter lesson/quiz ID mapping tables for Chapters 4-10
@@ -336,3 +345,14 @@ Implementation checklist for foundational work needed before and during Chapters
 5. Phase 5
 6. Phase 6
 7. Phase 7
+
+## Chapter Start Checklist Template (for each Chapter 4-10 kickoff)
+
+Use this quick template before implementation starts on a chapter:
+
+- [ ] IDs mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes
+- [ ] Loader wiring prep complete in `src/data/loaders.ts` (registry/map entries ready)
+- [ ] Unit metadata drafted in `src/lessons/units.ts` with target lesson ordering
+- [ ] Quiz unlock linkage validated (`quiz.unlockedBy` aligns with lesson `quizzesUnlocked`)
+- [ ] Representative chapter fixture plan added for any new engine/evaluator behavior
+- [ ] Chapter gate snapshot recorded (A/B/C/D status and explicit blockers)

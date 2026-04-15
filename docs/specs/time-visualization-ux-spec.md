@@ -6,6 +6,7 @@ This specification defines the interaction model for time-dependent circuit visu
 
 - Applies to Chapter 6 time-dependent lessons and Chapter 7 AC waveform extension behavior.
 - Gate status: Phase 6 foundation implementation is complete and this spec is now the validation reference for Gate B readiness tracking.
+- Readiness distinction: Chapter 6 Gate B is green for foundation UI/accessibility behavior, while full transient physics fidelity is tracked under Gate A and remains a separate prerequisite for Chapter 6+ content finalization.
 
 ## Implementation status (as of 2026-04-14)
 
@@ -26,6 +27,7 @@ Pending for chapter-content implementation/expansion:
 Gate B tracking note:
 
 - Chapter 6 Gate B (UI readiness) is considered green for foundation work, with chapter-level content validation still required when Chapter 6 lessons are authored.
+- Cross-doc alignment note: this Gate B status does not imply Gate A is fully green for Chapter 6+ transient physics. Gate A remains partial until full RC/RL transient behavior replaces staged educational interpolation.
 
 ## Core components
 

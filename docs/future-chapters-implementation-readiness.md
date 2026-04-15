@@ -47,7 +47,7 @@ This addendum strengthens the Chapter 4-10 lesson plans with implementation-read
 - **UI/tooling requirements**
   - Time scrubber/playback controls.
   - Plot or compact timeline panel for voltage/current over time.
-  - **CRITICAL: Full Time-Visualization UX Specification is defined in `docs/specs/time-visualization-ux-spec.md`.** That specification covers: time scrubber interaction model, playback controls (play/pause/speed/reset), timeline panel (compact plot with quantity selection), checkpoint markers, accessibility requirements (keyboard, reduced-motion, text summaries), and meter integration. This specification must be finalized and implemented as Gate B before Chapter 6 content work begins.
+  - **CRITICAL: Full Time-Visualization UX Specification is defined in `docs/specs/time-visualization-ux-spec.md`.** That specification covers: time scrubber interaction model, playback controls (play/pause/speed/reset), timeline panel (compact plot with quantity selection), checkpoint markers, accessibility requirements (keyboard, reduced-motion, text summaries), and meter integration. Foundation Gate B implementation is complete; chapter-level validation against this spec is still required when Chapter 6 content is authored.
 
 ### Chapter 7 - AC Fundamentals and DC/AC Conversion
 - **Engine requirements**
@@ -181,14 +181,16 @@ Implementation usage guidance (non-gate) for Chapter 4 and Chapter 5:
 | Gate | Status | Owner area | Done when |
 |---|---|---|---|
 | Gate A (Engine) | [~] Partial | Engine | Chapter-targeted engine models are implemented with deterministic fixture coverage for the active chapter scope. |
-| Gate B (UI) | [~] Partial | UI + accessibility | Required chapter tools are keyboard-operable, reduced-motion safe, and spec parity checks are complete. |
+| Gate B (UI) | [~] Partial | UI + accessibility | Foundation UI/spec implementation is complete; chapter-level parity and accessibility validation must be completed for each chapter scope before that chapter is marked ready. |
 | Gate C (Content Schema) | [x] Ready | Types + lesson authoring | Required challenge/evaluator schema fields are available and validated for Chapters 4-10 (`classify`/`diagnose` included). |
 | Gate D (Validation) | [~] Partial | CI + QA | Lint/build + representative engine/evaluator fixtures + chapter walkthrough checklist are green for the chapter being started. |
 
 Status notes:
 
 - Gate C is ready to author Chapter 4+ content (`classify`/`diagnose` types and deterministic evaluation fields are implemented).
-- Gate A and Gate B remain partial for Chapter 6+ physical transient fidelity: checkpoint/timeline behavior is deterministic and checkpoint-aware, but still a staged educational interpolation rather than full RC/RL dynamics.
+- Gate A remains partial for Chapter 6+ physical transient fidelity: checkpoint/timeline behavior is deterministic and checkpoint-aware, but still a staged educational interpolation rather than full RC/RL dynamics.
+- Gate B is green for Chapter 6 foundation UI/accessibility behaviors, with chapter-level parity validation still required during Chapter 6+ content authoring.
+- Gate split clarification: Gate B can be green for Chapter 6 foundation UI/accessibility behaviors while Gate A remains partial for full transient physics fidelity; both must be green before Chapter 6+ content is considered fully implementation-ready.
 
 ## 4) Effort and Risk Scoring (Planning Heuristic)
 
@@ -217,6 +219,17 @@ Legend:
 4. Add challenge evaluator rules and tolerance configs.
 5. Expand remaining units with increasing learner autonomy.
 6. Run chapter-level content consistency checks (lesson IDs, quiz unlocks, rubric fields).
+
+## 5.1) Chapter Start Checklist (Run before each chapter kickoff)
+
+Use this mini-checklist before opening implementation work for any Chapter 4-10 chapter:
+
+- [ ] IDs are mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes in the chapter.
+- [ ] Loader wiring is prepared in `src/data/loaders.ts` (chapter registry import paths and map entries are ready for the new chapter).
+- [ ] Unit metadata in `src/lessons/units.ts` is drafted for the chapter with planned lesson ordering.
+- [ ] Quiz unlock linkage plan is validated so each planned quiz `unlockedBy` matches a lesson `quizzesUnlocked` entry.
+- [ ] Chapter fixture coverage plan is added for engine/evaluator validation where new chapter behavior introduces new checks.
+- [ ] Chapter-specific gate snapshot is recorded (Gate A/B/C/D status with blocking deltas called out).
 
 ## 6) Full-Curriculum Content Scale Note
 

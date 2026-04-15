@@ -28,7 +28,9 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Evaluator hardening update: `classify`/`diagnose` now run deterministic category/cause + evidence-threshold checks suitable for Chapter 5 diagnostics and Chapter 10 Dimension 4 evidence gating.
 - Chapter-ready fixture update: added planned Chapter 4/5 classify/diagnose challenge fixture templates at `src/lessons/planned/ch4-ch5/challenge-fixtures.ts` to accelerate first content implementation pass.
 - Known partial: time checkpoint progression is currently educational interpolation, not full RC/RL transient physics yet.
+- Gate readiness snapshot (future chapters): Ready now for Chapter 4-5 start; Chapter 6+ remains conditional until Gate A transient physics fidelity is fully green (Gate B foundation UI/accessibility is green for Chapter 6 foundations).
 - Planning docs cleanup update: superseded readiness review snapshots from 2026-04-14 were removed after consolidation into canonical implementation/readiness/spec docs.
+- Documentation tracking update: added consolidated accessibility evidence log at `docs/ch4-10-accessibility-evidence.md` and chapter-start checklist templates in readiness/checklist docs to standardize Chapter 4-10 kickoff prep.
 - Data loading update: lesson and quiz registries are loaded through dynamic chapter-based loaders (`src/data/loaders.ts`) with map-driven chapter registration. Adding a new chapter requires only a single-line addition to the loader maps. Consumers use centralized `loadLessonRegistry()`/`loadQuizRegistry()` instead of assembling chapter lists. Old monolithic registries (`lesson-registry.ts`, `quiz-registry.ts`) have been removed.
 
 ## Tech Stack
