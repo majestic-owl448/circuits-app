@@ -25,6 +25,7 @@ export interface LessonConfig {
   availableActions: LessonAction[];
   currentOverlayAvailable: boolean;
   showFormulaPanel: boolean;
+  usesTimeControls?: boolean;
   formulasShown: FormulaRef[];
   theoryPageAdditions: TheoryPageEntry[];
   quizzesUnlocked: string[];

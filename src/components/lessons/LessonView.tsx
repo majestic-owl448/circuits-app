@@ -92,7 +92,7 @@ function LessonViewInner({
 
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;
-  const checkpointSimulations = lesson.id.startsWith('lesson-ch6')
+  const checkpointSimulations = lesson.usesTimeControls
     ? {
       t0: derivedTimeState.snapshots.find(snapshot => snapshot.checkpoint === 't0')?.simulation ?? circuit.simulation,
       t_mid: derivedTimeState.snapshots.find(snapshot => snapshot.checkpoint === 't_mid')?.simulation ?? circuit.simulation,
@@ -101,7 +101,7 @@ function LessonViewInner({
     : undefined;
 
   useEffect(() => {
-    if (!lesson.id.startsWith('lesson-ch6') || !timeState.isPlaying) {
+    if (!lesson.usesTimeControls || !timeState.isPlaying) {
       return;
     }
 
@@ -117,7 +117,7 @@ function LessonViewInner({
     }, 180);
 
     return () => window.clearInterval(timer);
-  }, [lesson.id, timeState.isPlaying]);
+  }, [lesson.usesTimeControls, timeState.isPlaying]);
 
   const handleLessonComplete = useCallback(() => {
     dispatch({
@@ -246,7 +246,7 @@ function LessonViewInner({
           challenge={currentChallenge}
           simulation={circuit.simulation}
           checkpointSimulations={checkpointSimulations}
-          currentCheckpoint={lesson.id.startsWith('lesson-ch6') ? checkpointForSlider(timeState.sliderValue) : undefined}
+          currentCheckpoint={lesson.usesTimeControls ? checkpointForSlider(timeState.sliderValue) : undefined}
           components={circuit.components}
           onComplete={handleChallengeComplete}
         />
@@ -276,7 +276,7 @@ function LessonViewInner({
           </button>
         )}
       </div>
-      {lesson.id.startsWith('lesson-ch6') && (
+      {lesson.usesTimeControls && (
         <>
           <TimeControls
             sliderValue={timeState.sliderValue}
