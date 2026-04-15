@@ -25,9 +25,7 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Bundle-risk hardening update: non-home views (`Lesson`, `Sandbox`, `Theory`, `Quiz`) now load through lazy imports with suspense fallback to reduce initial bundle pressure.
 - Time-check readiness update: challenge evaluation now supports optional checkpoint-targeted evaluation fields (`requiredCheckpoint`, `checkpointRanges`) and lesson wiring provides checkpoint simulation context for Chapter 6 flows.
 - Planning docs cleanup update: superseded readiness review snapshots from 2026-04-14 were removed after consolidation into canonical implementation/readiness/spec docs.
-- Data loading update: lesson and quiz registries are now loaded through dynamic loader boundaries (`src/data/loaders.ts`) and consumed lazily by Home/Lesson/Quiz views to reduce eager main-bundle coupling.
-- Bundle hardening update (round 2): lesson config loading is now split by chapter (`src/lessons/registry/chapter-1.ts`, `src/lessons/registry/chapter-2.ts`, `src/lessons/registry/chapter-3.ts`) and loaded on demand via `loadLessonsForChapter`, reducing the previous monolithic lesson-registry chunk.
-- Bundle hardening update (round 3): quiz config loading is now also split by chapter (`src/quizzes/registry/chapter-1.ts`, `src/quizzes/registry/chapter-2.ts`, `src/quizzes/registry/chapter-3.ts`) and loaded via `loadQuizzesForChapter`, removing eager monolithic quiz-registry loading.
+- Data loading update: lesson and quiz registries are loaded through dynamic chapter-based loaders (`src/data/loaders.ts`) with map-driven chapter registration. Adding a new chapter requires only a single-line addition to the loader maps. Consumers use centralized `loadLessonRegistry()`/`loadQuizRegistry()` instead of assembling chapter lists. Old monolithic registries (`lesson-registry.ts`, `quiz-registry.ts`) have been removed.
 
 ## Tech Stack
 
@@ -57,12 +55,13 @@ No test suite configured.
 - `src/state/` — React Context + useReducer (`app-context.tsx`), context instances (`app-contexts.ts`), hooks (`app-hooks.ts`), localStorage persistence (`persistence.ts`)
 - `src/engine/` — Circuit simulation logic
 - `src/hooks/` — Custom hooks (e.g., `useCircuit`)
+- `src/data/loaders.ts` — Dynamic chapter-based lesson/quiz loading with caching (add new chapters here)
 - `src/lessons/` — Lesson configs organized by chapter/unit:
   - `shared.ts` — Shared circuit definitions (STANDARD_CIRCUIT, SERIES_TWO_BULBS, PARALLEL_TWO_BULBS, etc.)
-  - `lesson-registry.ts` — All lessons imported and exported as flat array
+  - `registry/` — Per-chapter lesson config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
   - `units.ts` — Unit definitions with lesson ID lists
   - `chapter-2/`, `chapter-3/` — Each has `unit-N/lesson-chX-N-N/config.ts`
-- `src/quizzes/quiz-registry.ts` — All quiz definitions in one file
+- `src/quizzes/registry/` — Per-chapter quiz config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
 - `docs/` — PRD, spec, and chapter lesson-plan documents
 - `docs/curriculum-progression-qa-checklist.md` — Implementation QA checklist for topic progression, redundancy prevention, and prerequisite clarity across Chapters 4-10

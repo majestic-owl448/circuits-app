@@ -28,12 +28,13 @@ No test suite configured.
 - `src/state/` — React Context + useReducer (`app-context.tsx`), localStorage persistence (`persistence.ts`)
 - `src/engine/` — Circuit simulation logic
 - `src/hooks/` — Custom hooks (e.g., `useCircuit`)
+- `src/data/loaders.ts` — Dynamic chapter-based lesson/quiz loading with caching (add new chapters here)
 - `src/lessons/` — Lesson configs organized by chapter/unit:
   - `shared.ts` — Shared circuit definitions (STANDARD_CIRCUIT, SERIES_TWO_BULBS, PARALLEL_TWO_BULBS, etc.)
-  - `lesson-registry.ts` — All lessons imported and exported as flat array
+  - `registry/` — Per-chapter lesson config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
   - `units.ts` — Unit definitions with lesson ID lists
   - `chapter-2/`, `chapter-3/` — Each has `unit-N/lesson-chX-N-N/config.ts`
-- `src/quizzes/quiz-registry.ts` — All quiz definitions in one file
+- `src/quizzes/registry/` — Per-chapter quiz config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
 
 ## Key Patterns
