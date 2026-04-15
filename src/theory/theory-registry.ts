@@ -338,6 +338,127 @@ export const theoryRegistry: TheoryEntry[] = [
     sourceLesson: 'lesson-ch2-5-1',
     topic: 'Evaluation and Interpretation',
   },
+  // Chapter 4 — Measurement, Mixed Circuits, and Named Laws
+  {
+    id: 'theory-ch4-measurement-role',
+    title: 'Why measurement tools matter',
+    content:
+      'Measurement provides evidence for predictions and helps isolate mistakes during troubleshooting. In this curriculum, manual reasoning comes first and measurement verifies or refines conclusions.',
+    sourceLesson: 'lesson-ch4-1-1',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-voltmeter-basics',
+    title: 'What a voltmeter measures',
+    content:
+      'A voltmeter measures potential difference between two points. It is used across nodes or component terminals and supports voltage verification workflows.',
+    sourceLesson: 'lesson-ch4-1-2',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-voltage-verification',
+    title: 'Using the voltmeter to verify circuit reasoning',
+    content:
+      'Prediction-first verification makes voltage conclusions testable. Agreement between predicted and measured values increases confidence in the model.',
+    sourceLesson: 'lesson-ch4-1-3',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-ammeter-basics',
+    title: 'What an ammeter measures',
+    content:
+      'An ammeter measures current through a selected branch and is used inline with the path being inspected.',
+    sourceLesson: 'lesson-ch4-2-1',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-ammeter-verification',
+    title: 'Using the ammeter to verify current relationships',
+    content:
+      'Ammeter readings provide evidence for expected current patterns in series and parallel structures.',
+    sourceLesson: 'lesson-ch4-2-2',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-ohmmeter-basics',
+    title: 'What an ohmmeter measures',
+    content:
+      'An ohmmeter inspects resistance in valid de-energized contexts. If active source contribution exists in the connected component, ohmmeter readings are invalid.',
+    sourceLesson: 'lesson-ch4-2-3',
+    topic: 'Measurement and Verification',
+  },
+  {
+    id: 'theory-ch4-mixed-structure',
+    title: 'What is a mixed circuit?',
+    content:
+      'Mixed circuits combine series and parallel substructures in the same network. Correct analysis starts by identifying these substructures first.',
+    sourceLesson: 'lesson-ch4-3-1',
+    topic: 'Mixed-Circuit Analysis',
+  },
+  {
+    id: 'theory-ch4-mixed-reduction',
+    title: 'Step-by-step mixed-circuit reduction',
+    content:
+      'Reduce mixed circuits by replacing identifiable substructures with equivalent resistances and checking intermediate values before final totals.',
+    sourceLesson: 'lesson-ch4-3-2',
+    topic: 'Mixed-Circuit Analysis',
+  },
+  {
+    id: 'theory-ch4-mixed-calculation',
+    title: 'Calculating values in a mixed circuit',
+    content:
+      'Mixed-circuit calculations combine reduction with Ohm\'s law and power relationships to produce branch and total expected values.',
+    sourceLesson: 'lesson-ch4-3-3',
+    topic: 'Mixed-Circuit Analysis',
+  },
+  {
+    id: 'theory-ch4-mixed-investigation',
+    title: 'Investigating a mixed circuit',
+    content:
+      'Prediction plus measurement is the core workflow for verifying and troubleshooting mixed circuits.',
+    sourceLesson: 'lesson-ch4-3-4',
+    topic: 'Mixed-Circuit Analysis',
+  },
+  {
+    id: 'theory-ch4-source-load-matching',
+    title: 'Source and load matching in ideal circuit design',
+    content:
+      'A valid source-load match keeps target component values inside required operating ranges, not merely in a closed and active loop.',
+    sourceLesson: 'lesson-ch4-4-1',
+    topic: 'Source-Load Matching',
+  },
+  {
+    id: 'theory-ch4-debugging-evidence',
+    title: 'Troubleshooting and investigation: debugging by measured evidence',
+    content:
+      'Effective troubleshooting identifies a primary cause from evidence, applies a focused correction, and rechecks results.',
+    sourceLesson: 'lesson-ch4-4-2',
+    topic: 'Source-Load Matching',
+  },
+  {
+    id: 'theory-ch4-kcl',
+    title: 'Kirchhoff\'s Current Law',
+    content:
+      'KCL states that at any node, total incoming current equals total outgoing current.',
+    sourceLesson: 'lesson-ch4-5-1',
+    topic: 'Named Circuit Laws',
+  },
+  {
+    id: 'theory-ch4-kvl',
+    title: 'Kirchhoff\'s Voltage Law',
+    content:
+      'KVL states that the signed sum of voltage rises and drops around a closed loop is zero.',
+    sourceLesson: 'lesson-ch4-5-2',
+    topic: 'Named Circuit Laws',
+  },
+  {
+    id: 'theory-ch4-review',
+    title: 'Chapter 4 review topic links',
+    content:
+      'Chapter 4 integrates meter workflows, mixed-circuit decomposition, source-load matching, and named law usage (KCL/KVL).',
+    sourceLesson: 'lesson-ch4-5-3',
+    topic: 'Named Circuit Laws',
+  },
 ];
 
 /** Get all entries for a given list of entry IDs. */

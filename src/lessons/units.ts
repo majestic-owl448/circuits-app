@@ -108,4 +108,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Reason about circuits where loads are not identical and where more than one correct design can satisfy the challenge goal.',
     lessons: ['lesson-ch3-5-1', 'lesson-ch3-5-2', 'lesson-ch3-5-3'],
   },
+  // Chapter 4: Measurement, Mixed Circuits, and Named Circuit Laws
+  {
+    id: 'ch4-unit-1',
+    title: 'The First Measurement Tool',
+    stageLabel: 'Early Intermediate to Intermediate',
+    description: 'Introduce measurement as verification after manual analysis foundations.',
+    lessons: ['lesson-ch4-1-1', 'lesson-ch4-1-2', 'lesson-ch4-1-3'],
+  },
+  {
+    id: 'ch4-unit-2',
+    title: 'More Tools for Inspection',
+    stageLabel: 'Intermediate',
+    description: 'Expand measurement from voltage to current and resistance workflows.',
+    lessons: ['lesson-ch4-2-1', 'lesson-ch4-2-2', 'lesson-ch4-2-3'],
+  },
+  {
+    id: 'ch4-unit-3',
+    title: 'Mixed Circuits',
+    stageLabel: 'Intermediate',
+    description: 'Analyze mixed series-parallel structures with reduction and verification.',
+    lessons: ['lesson-ch4-3-1', 'lesson-ch4-3-2', 'lesson-ch4-3-3', 'lesson-ch4-3-4'],
+  },
+  {
+    id: 'ch4-unit-4',
+    title: 'Source and Load Matching Becomes Stronger',
+    stageLabel: 'Intermediate',
+    description: 'Reason about target operating ranges and debug failing designs.',
+    lessons: ['lesson-ch4-4-1', 'lesson-ch4-4-2'],
+  },
+  {
+    id: 'ch4-unit-5',
+    title: 'Named Laws and Chapter Review',
+    stageLabel: 'Intermediate',
+    description: 'Apply KCL and KVL naming in guided contexts and integrated review tasks.',
+    lessons: ['lesson-ch4-5-1', 'lesson-ch4-5-2', 'lesson-ch4-5-3'],
+  },
 ];

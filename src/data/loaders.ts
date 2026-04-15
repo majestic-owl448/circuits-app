@@ -5,12 +5,14 @@ const LESSON_LOADERS = new Map<number, () => Promise<{ default: LessonConfig[] }
   [1, () => import('../lessons/registry/chapter-1.ts')],
   [2, () => import('../lessons/registry/chapter-2.ts')],
   [3, () => import('../lessons/registry/chapter-3.ts')],
+  [4, () => import('../lessons/registry/chapter-4.ts')],
 ]);
 
 const QUIZ_LOADERS = new Map<number, () => Promise<{ default: QuizConfig[] }>>([
   [1, () => import('../quizzes/registry/chapter-1.ts')],
   [2, () => import('../quizzes/registry/chapter-2.ts')],
   [3, () => import('../quizzes/registry/chapter-3.ts')],
+  [4, () => import('../quizzes/registry/chapter-4.ts')],
 ]);
 
 let lessonRegistryPromise: Promise<LessonConfig[]> | null = null;
