@@ -4,9 +4,9 @@ Interactive educational app for learning electrical circuits. Structured as prog
 
 ## Current Status
 
-- Chapters 1-3 are implemented and wired into registries.
-- Lesson count: 47 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18).
-- Quiz count: 44 total (Chapter 1-3 coverage).
+- Chapters 1-4 are implemented and wired into registries.
+- Lesson count: 62 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15).
+- Quiz count: 59 total (Chapter 1-4 coverage).
 - Build and lint pass.
 - Chapters 4-10 planning docs now include clarified challenge-type cardinality, normalized feature-gating wording standards (including Chapters 4-10 phrasing cleanup), deterministic Chapter 10 Dimension 4 capture rules, Unit 5 lesson differentiation guidance, and explicit documentation-boundary rules for defaults/thread dedupe/spec-pointer usage.
 - Added implementation execution checklist for Chapters 4-10 at `docs/ch4-10-implementation-checklist.md` with phase-by-phase file-level tasks and acceptance criteria.
@@ -33,6 +33,7 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Documentation tracking update: added consolidated accessibility evidence log at `docs/ch4-10-accessibility-evidence.md` and chapter-start checklist templates in readiness/checklist docs to standardize Chapter 4-10 kickoff prep.
 - Data loading update: lesson and quiz registries are loaded through dynamic chapter-based loaders (`src/data/loaders.ts`) with map-driven chapter registration. Adding a new chapter requires only a single-line addition to the loader maps. Consumers use centralized `loadLessonRegistry()`/`loadQuizRegistry()` instead of assembling chapter lists. Old monolithic registries (`lesson-registry.ts`, `quiz-registry.ts`) have been removed.
 - Pre-Chapter 4 readiness cleanup: time-control gating in `LessonView.tsx` now uses `LessonConfig.usesTimeControls` flag instead of hardcoded `lesson-ch6` string checks; Phase 6 checklist status split into foundation (done) vs full physics (pending); chapter-start checklist deduplicated to single canonical location in implementation checklist; accessibility evidence log updated with methodology and re-verification notes; readiness doc now points to implementation checklist as source of truth for operational checklists.
+- Chapter 4 implementation pass completed: added Chapter 4 lesson configs (5 units, 15 lessons), Chapter 4 quiz registry (15 quizzes), Chapter 4 shared circuit fixtures, unit metadata entries, and chapter loader wiring for both lessons and quizzes.
 
 ## Tech Stack
 
@@ -65,10 +66,10 @@ No test suite configured.
 - `src/data/loaders.ts` — Dynamic chapter-based lesson/quiz loading with caching (add new chapters here)
 - `src/lessons/` — Lesson configs organized by chapter/unit:
   - `shared.ts` — Shared circuit definitions (STANDARD_CIRCUIT, SERIES_TWO_BULBS, PARALLEL_TWO_BULBS, etc.)
-  - `registry/` — Per-chapter lesson config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
+  - `registry/` — Per-chapter lesson config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`, `chapter-4.ts`)
   - `units.ts` — Unit definitions with lesson ID lists
   - `chapter-2/`, `chapter-3/` — Each has `unit-N/lesson-chX-N-N/config.ts`
-- `src/quizzes/registry/` — Per-chapter quiz config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`)
+- `src/quizzes/registry/` — Per-chapter quiz config default exports (`chapter-1.ts`, `chapter-2.ts`, `chapter-3.ts`, `chapter-4.ts`)
 - `src/types/` — Type definitions (`circuit.ts`, `lesson.ts`, `quiz.ts`)
 - `docs/` — PRD, spec, and chapter lesson-plan documents
 - `docs/curriculum-progression-qa-checklist.md` — Implementation QA checklist for topic progression, redundancy prevention, and prerequisite clarity across Chapters 4-10
@@ -95,3 +96,4 @@ No test suite configured.
 - **Chapter 1** (Foundations): 5 units, 15 lessons — basic circuit concepts
 - **Chapter 2** (Numerical DC Analysis): 5 units, 14 lessons — Ohm's Law, power
 - **Chapter 3** (Series & Parallel): 5 units, 18 lessons — series/parallel circuits and calculations
+- **Chapter 4** (Measurement, Mixed Circuits, and Named Circuit Laws): 5 units, 15 lessons — meter workflows, mixed-circuit analysis, source-load matching, KCL/KVL naming
