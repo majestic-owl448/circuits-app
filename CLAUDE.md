@@ -32,6 +32,7 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Planning docs cleanup update: superseded readiness review snapshots from 2026-04-14 were removed after consolidation into canonical implementation/readiness/spec docs.
 - Documentation tracking update: added consolidated accessibility evidence log at `docs/ch4-10-accessibility-evidence.md` and chapter-start checklist templates in readiness/checklist docs to standardize Chapter 4-10 kickoff prep.
 - Data loading update: lesson and quiz registries are loaded through dynamic chapter-based loaders (`src/data/loaders.ts`) with map-driven chapter registration. Adding a new chapter requires only a single-line addition to the loader maps. Consumers use centralized `loadLessonRegistry()`/`loadQuizRegistry()` instead of assembling chapter lists. Old monolithic registries (`lesson-registry.ts`, `quiz-registry.ts`) have been removed.
+- Pre-Chapter 4 readiness cleanup: time-control gating in `LessonView.tsx` now uses `LessonConfig.usesTimeControls` flag instead of hardcoded `lesson-ch6` string checks; Phase 6 checklist status split into foundation (done) vs full physics (pending); chapter-start checklist deduplicated to single canonical location in implementation checklist; accessibility evidence log updated with methodology and re-verification notes; readiness doc now points to implementation checklist as source of truth for operational checklists.
 
 ## Tech Stack
 

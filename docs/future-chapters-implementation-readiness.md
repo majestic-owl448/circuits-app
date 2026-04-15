@@ -2,6 +2,8 @@
 
 This addendum strengthens the Chapter 4-10 lesson plans with implementation-ready constraints, dependencies, and acceptance rules.
 
+> **Source of truth for operational checklists:** Phase-by-phase file-level tasks, acceptance criteria, and chapter-start checklists live in `docs/ch4-10-implementation-checklist.md`. This document defines gates, constraints, and planning heuristics; the implementation checklist is the operational counterpart.
+
 ## Naming Conventions for Chapter 4-10 Content
 
 - Lesson IDs must follow `lesson-chX-Y-Z` and map directly to chapter/unit/lesson numbering used in lesson-plan documents.
@@ -220,16 +222,9 @@ Legend:
 5. Expand remaining units with increasing learner autonomy.
 6. Run chapter-level content consistency checks (lesson IDs, quiz unlocks, rubric fields).
 
-## 5.1) Chapter Start Checklist (Run before each chapter kickoff)
+## 5.1) Chapter Start Checklist
 
-Use this mini-checklist before opening implementation work for any Chapter 4-10 chapter:
-
-- [ ] IDs are mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes in the chapter.
-- [ ] Loader wiring is prepared in `src/data/loaders.ts` (chapter registry import paths and map entries are ready for the new chapter).
-- [ ] Unit metadata in `src/lessons/units.ts` is drafted for the chapter with planned lesson ordering.
-- [ ] Quiz unlock linkage plan is validated so each planned quiz `unlockedBy` matches a lesson `quizzesUnlocked` entry.
-- [ ] Chapter fixture coverage plan is added for engine/evaluator validation where new chapter behavior introduces new checks.
-- [ ] Chapter-specific gate snapshot is recorded (Gate A/B/C/D status with blocking deltas called out).
+See the canonical chapter-start checklist template in `docs/ch4-10-implementation-checklist.md` (section "Chapter Start Checklist Template"). Run it before opening implementation work for any Chapter 4-10 chapter.
 
 ## 6) Full-Curriculum Content Scale Note
 

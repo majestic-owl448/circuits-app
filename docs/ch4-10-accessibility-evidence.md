@@ -2,6 +2,10 @@
 
 This document tracks accessibility verification evidence for newly added Chapter 4-10 foundation UI surfaces.
 
+## Methodology
+
+Verification was performed via manual keyboard walkthrough and visual inspection of each surface in the dev server. Checks confirmed that all interactive controls are reachable and operable via keyboard alone, that visual distinctions do not rely solely on color, and that reduced-motion preferences are respected where animations are present. No automated accessibility testing or screen reader testing (e.g., VoiceOver, NVDA) has been performed yet.
+
 ## Verification Scope
 
 - Foundation surfaces introduced before Chapter 4-10 content authoring:
@@ -22,7 +26,7 @@ This document tracks accessibility verification evidence for newly added Chapter
 - Non-color-only differentiation: PASS
   - Meter readouts and target/probe cues include text labels and explicit markers, not color alone.
 - Reduced-motion behavior: N/A
-  - Surface does not rely on animated transitions for core understanding.
+  - No animations currently present. Re-verify if animated transitions (e.g., probe movement, reading transitions) are added in future chapters.
 
 ### Time controls + timeline (`src/components/workspace/TimeControls.tsx`, `src/components/workspace/TimelinePanel.tsx`, `src/components/lessons/LessonView.tsx`)
 
@@ -40,7 +44,7 @@ This document tracks accessibility verification evidence for newly added Chapter
 - Non-color-only differentiation: PASS
   - Group labels and availability messaging are textual and do not depend on color alone.
 - Reduced-motion behavior: N/A
-  - Core interaction does not require animation for state comprehension.
+  - No animations currently present. Re-verify if animated transitions (e.g., domain expand/collapse, unlock animations) are added in future chapters.
 
 ## Open Items
 

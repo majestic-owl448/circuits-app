@@ -238,11 +238,14 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ## Phase 6 - Time Visualization Foundation (Gate B before Chapter 6)
 
+Foundation scaffolding is complete (Gate B green). Full transient physics (Gate A) remains partial — see `docs/future-chapters-implementation-readiness.md` for gate status.
+
 ### `src/engine/time/simulator.ts` (new)
 - [~] Implement time-step simulation contract for educational RC/RL behavior
-- Acceptance criteria:
+- Acceptance criteria (foundation — done):
   - [x] Time-state snapshots are deterministic for checkpoints (`t0`, `t_mid`, `t_final`)
-  - [~] Checkpoint values represent full transient engine behavior (currently staged interpolation for educational scaffolding)
+- Acceptance criteria (full physics — pending):
+  - [~] Checkpoint values represent full RC/RL transient engine behavior (currently staged interpolation for educational scaffolding)
 
 ### `src/types/circuit.ts`
 - [x] Add time-state types for snapshots and timeline points
@@ -265,6 +268,8 @@ Implementation checklist for foundational work needed before and during Chapters
 - [x] Ensure challenge evaluation can target required checkpoint windows
 - Acceptance criteria:
   - [x] Lesson checks evaluate against configured checkpoints, not arbitrary slider positions
+  - [x] Time-control gating uses `usesTimeControls` flag on `LessonConfig` (no hardcoded chapter ID checks)
+- Acceptance criteria (full physics — pending):
   - [~] Playback drives physically modeled per-checkpoint state (pending full transient solver integration)
 
 ### `src/state/persistence.ts`
