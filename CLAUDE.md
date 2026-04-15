@@ -20,6 +20,14 @@ Interactive educational app for learning electrical circuits. Structured as prog
 - Hardening pass completed on new foundations: evaluator now emits criterion-level outcomes with hard-pass/advisory severities, time module includes checkpoint/slider progression helpers, and ohmmeter validation now checks energized connected-component context rather than global source presence.
 - Hardening pass round 2 completed: evaluator custom checks are now wired through a dedicated custom-check module, challenge evaluation receives live component state for structural validation, voltmeter node-pair selection supports explicit two-probe targeting, and reduced-motion time scrubber now snaps to checkpoint anchors.
 - Added evaluator regression safety net: `npm run verify:evaluator` now validates deterministic fixtures for custom checks and multi-criteria hard-pass/advisory outcomes, and is included in the standard verification flow.
+- Readiness hardening update: Home now supports chapter filtering, collapsible chapter sections, and lesson/quiz search; quizzes are grouped by chapter to support full-curriculum scale navigation.
+- Measurement UX hardening update: meter overlay now shows learner-friendly node labels and selected target labels; workspace now renders explicit voltmeter probe markers and meter-target component highlighting.
+- Bundle-risk hardening update: non-home views (`Lesson`, `Sandbox`, `Theory`, `Quiz`) now load through lazy imports with suspense fallback to reduce initial bundle pressure.
+- Time-check readiness update: challenge evaluation now supports optional checkpoint-targeted evaluation fields (`requiredCheckpoint`, `checkpointRanges`) and lesson wiring provides checkpoint simulation context for Chapter 6 flows.
+- Planning docs cleanup update: superseded readiness review snapshots from 2026-04-14 were removed after consolidation into canonical implementation/readiness/spec docs.
+- Data loading update: lesson and quiz registries are now loaded through dynamic loader boundaries (`src/data/loaders.ts`) and consumed lazily by Home/Lesson/Quiz views to reduce eager main-bundle coupling.
+- Bundle hardening update (round 2): lesson config loading is now split by chapter (`src/lessons/registry/chapter-1.ts`, `src/lessons/registry/chapter-2.ts`, `src/lessons/registry/chapter-3.ts`) and loaded on demand via `loadLessonsForChapter`, reducing the previous monolithic lesson-registry chunk.
+- Bundle hardening update (round 3): quiz config loading is now also split by chapter (`src/quizzes/registry/chapter-1.ts`, `src/quizzes/registry/chapter-2.ts`, `src/quizzes/registry/chapter-3.ts`) and loaded via `loadQuizzesForChapter`, removing eager monolithic quiz-registry loading.
 
 ## Tech Stack
 

@@ -206,7 +206,7 @@ Legend:
 
 ## 6) Full-Curriculum Content Scale Note
 
-- Planned full scale is approximately 145 lessons and 141 standalone quizzes (implemented Chapters 1-3 plus planned Chapters 4-10).
+- Planned full scale is approximately 145 lessons and 142 standalone quizzes (implemented Chapters 1-3 plus planned Chapters 4-10).
 - Navigation and organization requirements at this scale:
   - chapter and unit filters are required in lesson/quiz navigation surfaces,
   - progression map must support collapsed chapter views by default,

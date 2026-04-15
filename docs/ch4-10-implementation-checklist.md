@@ -237,9 +237,9 @@ Implementation checklist for foundational work needed before and during Chapters
 ## Phase 6 - Time Visualization Foundation (Gate B before Chapter 6)
 
 ### `src/engine/time/simulator.ts` (new)
-- [x] Implement time-step simulation contract for educational RC/RL behavior
+- [~] Implement time-step simulation contract for educational RC/RL behavior
 - Acceptance criteria:
-  - [x] Time-state snapshots are deterministic for checkpoints (`t0`, `t_mid`, `t_final`)
+  - [~] Time-state snapshots are deterministic for checkpoints (`t0`, `t_mid`, `t_final`)
 
 ### `src/types/circuit.ts`
 - [x] Add time-state types for snapshots and timeline points
@@ -259,9 +259,9 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ### `src/components/lessons/LessonView.tsx`
 - [x] Integrate time controls/panel into time-enabled lesson flows
-- [x] Ensure challenge evaluation can target required checkpoint windows
+- [~] Ensure challenge evaluation can target required checkpoint windows
 - Acceptance criteria:
-  - [x] Lesson checks evaluate against configured checkpoints, not arbitrary slider positions
+  - [~] Lesson checks evaluate against configured checkpoints, not arbitrary slider positions
 
 ### `src/state/persistence.ts`
 - [x] Persist time-visualization preferences as needed
@@ -311,11 +311,6 @@ Implementation checklist for foundational work needed before and during Chapters
 - [x] Keep current app status synchronized with phase completion and key architectural milestones
 - Acceptance criteria:
   - [x] Status section reflects actual delivered state, not planned state
-
-### `docs/review-ch4-10-readiness-2026-04-14.md`
-- [x] Update phase statuses/milestones as implementation progresses
-- Acceptance criteria:
-  - [x] Review doc and this checklist remain aligned
 
 ### `docs/specs/time-visualization-ux-spec.md`
 - [x] Mark implemented versus pending spec behaviors during Phase 6+

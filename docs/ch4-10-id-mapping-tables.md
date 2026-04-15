@@ -139,4 +139,4 @@ Mapping rules used:
 | `lesson-ch10-4-1` | Choose the Right Domain, Then Solve | `quiz-ch10-cross-domain-analysis-basics` |
 | `lesson-ch10-4-2` | Multi-Stage System Challenge | `quiz-ch10-multi-stage-system-basics` |
 | `lesson-ch10-5-1` | Final Mastery Challenge | `quiz-ch10-final-mastery-review-quiz` |
-| `lesson-ch10-5-2` | Optional Mastery Review Quiz | `quiz-ch10-this-lesson-effectively-is-the-broad-final-review` |
+| `lesson-ch10-5-2` | Optional Mastery Review Quiz | `quiz-ch10-optional-mastery-review-quiz` |
