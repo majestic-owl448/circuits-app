@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
-import { loadQuizzesForChapter } from '../../data/loaders.ts';
+import { loadQuizRegistry } from '../../data/loaders.ts';
 import type { QuizConfig, QuizQuestion } from '../../types/quiz.ts';
 import styles from './QuizView.module.css';
 
@@ -11,8 +11,8 @@ export function QuizView() {
 
   useEffect(() => {
     let mounted = true;
-    Promise.all([loadQuizzesForChapter(1), loadQuizzesForChapter(2), loadQuizzesForChapter(3)]).then(chapters => {
-      if (mounted) setQuizRegistry(chapters.flat());
+    loadQuizRegistry().then(quizzes => {
+      if (mounted) setQuizRegistry(quizzes);
     });
     return () => {
       mounted = false;

@@ -24,6 +24,7 @@ export function LessonView() {
 
   useEffect(() => {
     let mounted = true;
+    // Chapter 1 uses legacy lesson-N-N IDs; all other chapters use lesson-chN-U-L.
     const chapterMatch = activeLessonId?.match(/^lesson-ch(\d+)-/);
     const chapter = chapterMatch ? Number(chapterMatch[1]) : 1;
 

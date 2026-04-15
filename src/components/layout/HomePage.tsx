@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useAppState, useAppDispatch } from '../../state/app-hooks.ts';
 import { unitRegistry } from '../../lessons/units.ts';
-import { loadLessonsForChapter, loadQuizzesForChapter } from '../../data/loaders.ts';
+import { loadLessonRegistry, loadQuizRegistry } from '../../data/loaders.ts';
 import type { LessonConfig } from '../../types/lesson.ts';
+import type { QuizConfig } from '../../types/quiz.ts';
 import styles from './HomePage.module.css';
 
+// Chapter 1 uses legacy lesson-N-N IDs; all other chapters use lesson-chN-U-L.
 function chapterFromLessonId(lessonId: string): number {
   const match = lessonId.match(/^lesson-ch(\d+)-/);
   return match ? Number(match[1]) : 1;
@@ -22,7 +24,7 @@ export function HomePage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [collapsedChapters, setCollapsedChapters] = useState<Record<number, boolean>>({});
   const [lessonRegistry, setLessonRegistry] = useState<LessonConfig[] | null>(null);
-  const [quizRegistry, setQuizRegistry] = useState<import('../../types/quiz.ts').QuizConfig[] | null>(null);
+  const [quizRegistry, setQuizRegistry] = useState<QuizConfig[] | null>(null);
   const resolvedLessonRegistry = useMemo(() => lessonRegistry ?? [], [lessonRegistry]);
   const resolvedQuizRegistry = useMemo(() => quizRegistry ?? [], [quizRegistry]);
 
@@ -30,11 +32,11 @@ export function HomePage() {
 
   useEffect(() => {
     let mounted = true;
-    Promise.all([loadLessonsForChapter(1), loadLessonsForChapter(2), loadLessonsForChapter(3)]).then(chapters => {
-      if (mounted) setLessonRegistry(chapters.flat());
+    loadLessonRegistry().then(lessons => {
+      if (mounted) setLessonRegistry(lessons);
     });
-    Promise.all([loadQuizzesForChapter(1), loadQuizzesForChapter(2), loadQuizzesForChapter(3)]).then(chapters => {
-      if (mounted) setQuizRegistry(chapters.flat());
+    loadQuizRegistry().then(quizzes => {
+      if (mounted) setQuizRegistry(quizzes);
     });
     return () => {
       mounted = false;
