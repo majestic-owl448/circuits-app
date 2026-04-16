@@ -1,7 +1,9 @@
-import { solveMna } from '../mna/solver.ts';
+import { solve } from '../solver.ts';
 import { phaseOneMnaFixtures, type MnaFixture } from './phase1-mna.ts';
 
 const EPSILON = 1e-3;
+
+(globalThis as { process?: { env?: Record<string, string | undefined> } }).process!.env!['CIRCUITS_SOLVER_BACKEND'] = 'mna';
 
 interface FixtureFailure {
   fixtureId: string;
@@ -22,7 +24,7 @@ function approxEqual(actual: number, expected: number, epsilon = EPSILON): boole
 
 function evaluateFixture(fixture: MnaFixture): FixtureFailure | null {
   const reasons: string[] = [];
-  const result = solveMna(fixture.nodes, fixture.components);
+  const result = solve(fixture.nodes, fixture.components);
   const { expected } = fixture;
 
   if (result.isComplete !== expected.isComplete) {
@@ -58,6 +60,14 @@ function evaluateFixture(fixture: MnaFixture): FixtureFailure | null {
 
     if (expectation.power !== undefined && !approxEqual(compResult.power, expectation.power)) {
       reasons.push(`component ${expectation.componentId} power expected ${expectation.power} but got ${compResult.power}`);
+    }
+
+    if (expectation.isFailed !== undefined) {
+      const updatedComp = result.updatedComponents?.find(c => c.id === expectation.componentId);
+      const actualFailed = updatedComp?.properties.isFailed ?? false;
+      if (actualFailed !== expectation.isFailed) {
+        reasons.push(`component ${expectation.componentId} isFailed expected ${expectation.isFailed} but got ${actualFailed}`);
+      }
     }
   }
 

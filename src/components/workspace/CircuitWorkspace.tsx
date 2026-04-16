@@ -7,6 +7,7 @@ import { CurrentOverlay } from './CurrentOverlay.tsx';
 import type { WireSegment } from './CurrentOverlay.tsx';
 import { NodeRenderer } from './NodeRenderer.tsx';
 import { MeterOverlay } from './MeterOverlay.tsx';
+import { PropertyInspector } from './PropertyInspector.tsx';
 import styles from './CircuitWorkspace.module.css';
 
 /**
@@ -93,8 +94,9 @@ export function CircuitWorkspace({
   const svgRef = useRef<SVGSVGElement>(null);
   const [selectedNode, setSelectedNode] = useState<string | null>(null);
   const [focusedComponent, setFocusedComponent] = useState<string | null>(null);
+  const [inspectedComponentId, setInspectedComponentId] = useState<string | null>(null);
 
-  const { nodes, components, simulation, toggleSwitch, addWire, renameComponent, nodeLabels } = circuit;
+  const { nodes, components, simulation, toggleSwitch, addWire, renameComponent, nodeLabels, updateComponentProperties } = circuit;
 
   const wires = components.filter(c => c.type === 'wire');
   const nonWires = components.filter(c => c.type !== 'wire');
@@ -160,6 +162,10 @@ export function CircuitWorkspace({
     }
   }, [wiringMode, selectedNode, addWire]);
 
+  const handleInspect = useCallback((componentId: string) => {
+    setInspectedComponentId(prev => prev === componentId ? null : componentId);
+  }, []);
+
   const handleComponentClick = useCallback((componentId: string) => {
     if (!interactive) return;
     if (deletionMode && onDeleteComponent) {
@@ -176,8 +182,10 @@ export function CircuitWorkspace({
     }
     if (comp?.type === 'switch') {
       toggleSwitch(componentId);
+    } else {
+      handleInspect(componentId);
     }
-  }, [interactive, components, toggleSwitch, deletionMode, onDeleteComponent, circuit]);
+  }, [interactive, components, toggleSwitch, deletionMode, onDeleteComponent, circuit, handleInspect]);
 
   const handleSvgClick = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     if (!placementMode || !placementType || !onPlace) return;
@@ -375,6 +383,13 @@ export function CircuitWorkspace({
           </g>
         )}
       </svg>
+      {inspectedComponentId && components.find(c => c.id === inspectedComponentId) && (
+        <PropertyInspector
+          component={components.find(c => c.id === inspectedComponentId)!}
+          onUpdate={updateComponentProperties}
+          onClose={() => setInspectedComponentId(null)}
+        />
+      )}
       <MeterOverlay
         meterState={circuit.meterState}
         componentLabel={meterTargetComponent?.name}
