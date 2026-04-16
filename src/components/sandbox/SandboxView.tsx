@@ -13,6 +13,7 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   bulb: { type: 'bulb', properties: { resistance: 45 }, rotation: 0 },
   switch: { type: 'switch', properties: { isClosed: false }, rotation: 0 },
   resistor: { type: 'resistor', properties: { resistance: 100 }, rotation: 0 },
+  'source-resistance': { type: 'battery', properties: { voltage: 9, internalResistance: 0 }, rotation: 0 },
 };
 
 let nodeCounter = 0;
@@ -23,7 +24,7 @@ function nextNodeId() {
 }
 
 export function SandboxView() {
-  const { unlockedComponents, unlockedActions, preferences } = useAppState();
+  const { unlockedComponents, unlockedActions, preferences, unlockedFeatures } = useAppState();
   const dispatch = useAppDispatch();
   const circuit = useCircuit();
   const [showOverlay, setShowOverlay] = useState(false);
@@ -93,7 +94,7 @@ export function SandboxView() {
     {
       id: 'non-ideal',
       title: 'Non-Ideal',
-      items: showAllTools ? ['source resistance', 'wire resistance'] : [],
+      items: (showAllTools || unlockedFeatures.includes('non-ideal')) ? ['source resistance', 'wire resistance'] : [],
     },
     {
       id: 'time',
@@ -170,6 +171,11 @@ export function SandboxView() {
             setSelectedMeter(item);
             circuit.startMeasurement(item);
             circuit.measureSelected(item);
+            return;
+          }
+
+          if (item === 'source resistance') {
+            handleAddComponent('source-resistance');
             return;
           }
 

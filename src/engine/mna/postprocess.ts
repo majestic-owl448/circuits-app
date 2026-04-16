@@ -61,7 +61,7 @@ export function buildComponentResults(
     }
 
     if (component.type === 'battery') {
-      let current = Math.abs(sourceIdToCurrent.get(component.id) ?? 0);
+      const current = Math.abs(sourceIdToCurrent.get(component.id) ?? 0);
 
       results.set(component.id, {
         componentId: component.id,
