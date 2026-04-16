@@ -181,13 +181,23 @@ Implementation checklist for foundational work needed before and during Chapters
 
 ### `src/hooks/useCircuit.ts`
 - [x] Expose measurement operations and state to UI layers
+- [x] Add `updateComponentProperties` for value adjustments
 - Acceptance criteria:
   - [x] Lesson and sandbox can consume the same measurement API
+  - [x] Component values can be updated via hook
+
+### `src/components/workspace/PropertyInspector.tsx` (new)
+- [x] Implement UI for editing component values (Resistance, Voltage, Internal Resistance)
+- Acceptance criteria:
+  - [x] Learners can modify values in Sandbox and specific challenge types
+  - [x] Changes reflect immediately in simulation results
 
 ### `src/components/workspace/CircuitWorkspace.tsx`
 - [x] Add measurement interaction mode and probe placement affordances
+- [x] Integrate PropertyInspector for component inspection
 - Acceptance criteria:
   - [x] Keyboard-only flow can place/select probes and trigger reads
+  - [x] Components can be inspected via click or context menu
 
 ### `src/components/workspace/MeterOverlay.tsx` (new)
 - [x] Render meter probes/readouts and active measurement annotations
@@ -235,6 +245,22 @@ Implementation checklist for foundational work needed before and during Chapters
 - [x] Enforce operating-limit evaluation checks for challenge grading
 - Acceptance criteria:
   - [x] Constraint failures produce learner-readable remediation messaging
+
+### `src/engine/tolerance.ts` (new)
+- [x] Add `computeToleranceBounds` and `applyToleranceOffset` utility functions for Chapter 5 tolerance-based challenges
+- Acceptance criteria:
+  - [x] Lesson authors can compute worst-case bounds without engine changes; main solver unaffected
+
+### `src/components/workspace/PropertyInspector.tsx` + `CircuitWorkspace.tsx`
+- [x] PropertyInspector wired into CircuitWorkspace (import, state, `updateComponentProperties` destructure)
+- Acceptance criteria:
+  - [x] Clicking a non-switch component in lesson workspace opens the property inspector
+
+### `src/components/sandbox/SandboxView.tsx` — Non-Ideal domain
+- [x] Non-Ideal group visibility gated on `unlockedFeatures.includes('non-ideal')` (in addition to showAllTools)
+- [x] "source resistance" item adds a battery with `internalResistance: 0` pre-defined so PropertyInspector shows the field
+- [ ] **Deferred (pre-Chapter 5 content complete):** Wire resistance sandbox editing — wires are implicit connection components not rendered via ComponentRenderer; making them clickable/inspectable requires workspace-level changes. Not a Chapter 6 gate; needed before Chapter 5 Unit 2 wire-resistance lessons can offer sandbox exploration. Track here before starting Chapter 5 Unit 2.
+- [ ] **Deferred (post-Chapter 5):** Dynamic evidence for `diagnose` challenges — currently uses static `observedEvidenceSignals`; richer experience would link evidence to learner-performed measurements. Not a gate for any chapter through 6. Revisit when Chapter 7+ interactive diagnosis is scoped.
 
 ## Phase 6 - Time Visualization Foundation (Gate B before Chapter 6)
 
@@ -355,9 +381,18 @@ Foundation scaffolding is complete (Gate B green). Full transient physics (Gate 
 
 Use this quick template before implementation starts on a chapter:
 
-- [ ] IDs mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes
-- [ ] Loader wiring prep complete in `src/data/loaders.ts` (registry/map entries ready)
-- [ ] Unit metadata drafted in `src/lessons/units.ts` with target lesson ordering
+- [x] IDs mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes
+- [x] Loader wiring prep complete in `src/data/loaders.ts` (registry/map entries ready)
+- [x] Unit metadata drafted in `src/lessons/units.ts` with target lesson ordering
 - [ ] Quiz unlock linkage validated (`quiz.unlockedBy` aligns with lesson `quizzesUnlocked`)
-- [ ] Representative chapter fixture plan added for any new engine/evaluator behavior
-- [ ] Chapter gate snapshot recorded (A/B/C/D status and explicit blockers)
+- [x] Representative chapter fixture plan added for any new engine/evaluator behavior
+- [x] Chapter gate snapshot recorded (A/B/C/D status and explicit blockers)
+
+### Chapter 5 Gate Snapshot (Pre-implementation)
+
+| Gate | Status | Notes |
+|---|---|---|
+| Gate A (Engine) | [x] Green | MNA solver supports internal/wire resistance; failure models ready. |
+| Gate B (UI) | [x] Green | PropertyInspector implemented; warning/failure visuals ready. |
+| Gate C (Content Schema) | [x] Green | `classify` and `diagnose` challenge types ready. |
+| Gate D (Validation) | [~] In Progress | Lesson 1.1 config exists; further validation needed as content grows. |
