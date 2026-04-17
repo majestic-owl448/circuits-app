@@ -177,6 +177,111 @@ const quizzes: QuizConfig[] = [
     ],
   },
   {
+    id: 'quiz-ch5-wire-resistance-basics',
+    title: 'Wire-Resistance Basics',
+    unlockedBy: 'lesson-ch5-3-1',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5wr1',
+        prompt: 'What does wire resistance model in a circuit simulation?',
+        choices: [
+          { id: 'ch5wr1-a', label: 'A series resistance in the wire segment that consumes some of the supply voltage when current flows', isCorrect: true, explanation: 'Correct. Wire resistance is modeled as a series resistor in the wire path. It causes a voltage drop and reduces current available to the load.' },
+          { id: 'ch5wr1-b', label: 'The maximum current a wire can carry before overheating', isCorrect: false, explanation: 'That describes a current rating or operating limit. Wire resistance models the resistive drop in the wire, not its current capacity.' },
+          { id: 'ch5wr1-c', label: 'The insulation resistance around the outside of the wire', isCorrect: false, explanation: 'Insulation resistance is a separate property. Wire resistance here refers to the conductor resistance that opposes current flow along the wire.' },
+        ],
+      },
+      {
+        id: 'ch5wr2',
+        prompt: 'A circuit has a 9V battery, a 6\u03a9 bulb, and a wire with 3\u03a9 resistance. What is the current?',
+        choices: [
+          { id: 'ch5wr2-a', label: '1A, because I\u00a0=\u00a09\u00a0/\u00a0(6\u00a0+\u00a03)', isCorrect: true, explanation: 'Correct! R_total\u00a0=\u00a09\u03a9, I\u00a0=\u00a09\u00a0/\u00a09\u00a0=\u00a01A.' },
+          { id: 'ch5wr2-b', label: '1.5A, because I\u00a0=\u00a09\u00a0/\u00a06', isCorrect: false, explanation: 'This ignores the wire resistance. Total resistance is 9\u03a9, not 6\u03a9.' },
+          { id: 'ch5wr2-c', label: '3A, because I\u00a0=\u00a09\u00a0/\u00a03', isCorrect: false, explanation: 'Dividing by only the wire resistance ignores the load. Total resistance includes both.' },
+        ],
+      },
+      {
+        id: 'ch5wr3',
+        prompt: 'When does wire resistance have a significant impact on circuit performance?',
+        choices: [
+          { id: 'ch5wr3-a', label: 'When the wire resistance is large relative to the load resistance', isCorrect: true, explanation: 'Correct. If R_wire is comparable to R_load, it claims a large share of the voltage budget. If R_wire is much smaller than R_load, its effect is negligible.' },
+          { id: 'ch5wr3-b', label: 'Always, because any resistance reduces current', isCorrect: false, explanation: 'Wire resistance only causes noticeable effects when it is significant compared to the load. A 0.01\u03a9 wire with a 1000\u03a9 load has no measurable effect.' },
+          { id: 'ch5wr3-c', label: 'Only in parallel circuits, not series circuits', isCorrect: false, explanation: 'Wire resistance appears in series with the load. It affects both series and parallel circuits by increasing total series resistance.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-wire-voltage-drop',
+    title: 'Voltage Drop Along Wires',
+    unlockedBy: 'lesson-ch5-3-2',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5wv1',
+        prompt: 'A wire has 2\u03a9 resistance and carries 1.5A. What voltage is dropped across the wire?',
+        choices: [
+          { id: 'ch5wv1-a', label: '3V, because V\u00a0=\u00a01.5A\u00a0\u00d7\u00a02\u03a9', isCorrect: true, explanation: 'Correct. V_wire\u00a0=\u00a0I\u00a0\u00d7\u00a0R_wire\u00a0=\u00a01.5\u00a0\u00d7\u00a02\u00a0=\u00a03V.' },
+          { id: 'ch5wv1-b', label: '0.75V, because V\u00a0=\u00a01.5\u00a0/\u00a02', isCorrect: false, explanation: 'Dividing current by resistance does not give voltage. Use V\u00a0=\u00a0I\u00a0\u00d7\u00a0R.' },
+          { id: 'ch5wv1-c', label: '0V, because wires do not drop voltage', isCorrect: false, explanation: 'Any resistance carrying current drops voltage. A 2\u03a9 wire carrying 1.5A drops 3V.' },
+        ],
+      },
+      {
+        id: 'ch5wv2',
+        prompt: 'A 12V source drives a series circuit: 1\u03a9 wire and 3\u03a9 bulb. How much voltage reaches the bulb?',
+        choices: [
+          { id: 'ch5wv2-a', label: '9V, because V_bulb\u00a0=\u00a012\u00a0\u00d7\u00a03\u00a0/\u00a04', isCorrect: true, explanation: 'Correct! I\u00a0=\u00a012/4\u00a0=\u00a03A, V_bulb\u00a0=\u00a03\u00a0\u00d7\u00a03\u00a0=\u00a09V. Alternatively, V_wire\u00a0=\u00a03V, leaving 9V for the bulb.' },
+          { id: 'ch5wv2-b', label: '12V, because the source maintains its voltage', isCorrect: false, explanation: 'The source is ideal here, but the wire still consumes its share. The 12V is split between the wire and the bulb according to their resistances.' },
+          { id: 'ch5wv2-c', label: '4V, because the wire gets 1V and the bulb gets 3V out of 4V', isCorrect: false, explanation: 'This would only be correct if the total voltage were 4V. Here the source is 12V, so the bulb gets 12\u00a0\u00d7\u00a0(3/4)\u00a0=\u00a09V.' },
+        ],
+      },
+      {
+        id: 'ch5wv3',
+        prompt: 'You expect a bulb to receive 10V but your measurement reads 7V. A separate measurement across the connecting wire reads 3V. What does this tell you?',
+        choices: [
+          { id: 'ch5wv3-a', label: 'The wire is consuming 3V that should have reached the bulb, explaining the shortfall', isCorrect: true, explanation: 'Correct. V_wire\u00a0=\u00a03V is direct evidence that the wire is the source of the voltage shortfall. KVL: V_source\u00a0=\u00a0V_wire\u00a0+\u00a0V_bulb\u00a0=\u00a03\u00a0+\u00a07\u00a0=\u00a010V.' },
+          { id: 'ch5wv3-b', label: 'The source voltage has dropped to 7V', isCorrect: false, explanation: 'If the wire reads 3V and the bulb reads 7V, the source is 10V (KVL). The source is performing correctly; the wire is the issue.' },
+          { id: 'ch5wv3-c', label: 'The bulb has failed and is no longer conducting properly', isCorrect: false, explanation: 'If the bulb had failed open, no current would flow and no voltage would appear across the wire. The wire reading confirms current is flowing and the wire is the cause of the shortfall.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-wire-loss-design',
+    title: 'Wire-Loss Design Reasoning',
+    unlockedBy: 'lesson-ch5-3-3',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5wl1',
+        prompt: 'A 12V circuit has a 1\u03a9 wire and a 1\u03a9 bulb. The bulb only receives 6V. What is the simplest fix to deliver more voltage to the bulb?',
+        choices: [
+          { id: 'ch5wl1-a', label: 'Replace the bulb with a higher-resistance one so it draws less current and loses less in the wire', isCorrect: true, explanation: 'Correct. A higher R_load reduces current, which reduces V_wire\u00a0=\u00a0I\u00a0\u00d7\u00a0R_wire, leaving more voltage for the load.' },
+          { id: 'ch5wl1-b', label: 'Replace the bulb with a lower-resistance one to increase current', isCorrect: false, explanation: 'Lower load resistance increases current, which increases the wire drop. More current through R_wire means more voltage lost in the wire.' },
+          { id: 'ch5wl1-c', label: 'Add another wire in parallel with the existing wire', isCorrect: false, explanation: 'Adding a parallel wire would reduce wire resistance, which helps but is less straightforward. The simpler answer is to change the load-to-wire resistance ratio.' },
+        ],
+      },
+      {
+        id: 'ch5wl2',
+        prompt: 'In a circuit where wire resistance consumes 40% of the supply voltage, which describes the main limiting factor?',
+        choices: [
+          { id: 'ch5wl2-a', label: 'The wire path is the main limiting factor because it dominates the voltage budget', isCorrect: true, explanation: 'Correct. If the wire consumes 40% of supply voltage, it is the primary constraint on load performance.' },
+          { id: 'ch5wl2-b', label: 'The source is the main limiting factor because it sets the total voltage', isCorrect: false, explanation: 'The source sets the voltage budget, but if it is adequate for the load alone, the wire is the constraint that prevents the load from being met.' },
+          { id: 'ch5wl2-c', label: 'The load is the main limiting factor because it determines how much current flows', isCorrect: false, explanation: 'Load resistance does affect current, but when the wire consumes 40% of supply voltage, the wire itself is the dominant factor limiting load performance.' },
+        ],
+      },
+      {
+        id: 'ch5wl3',
+        prompt: 'What happens to the voltage delivered to a load if the wire resistance is reduced while everything else stays the same?',
+        choices: [
+          { id: 'ch5wl3-a', label: 'The load voltage increases because less voltage is lost in the wire', isCorrect: true, explanation: 'Correct. Lower R_wire reduces V_wire\u00a0=\u00a0I\u00a0\u00d7\u00a0R_wire, leaving more of the supply for the load.' },
+          { id: 'ch5wl3-b', label: 'The load voltage decreases because total resistance drops and more current flows', isCorrect: false, explanation: 'More current does flow, but the voltage divider ratio shifts in favor of the load when R_wire drops. The load voltage increases.' },
+          { id: 'ch5wl3-c', label: 'The load voltage stays the same because the source voltage is unchanged', isCorrect: false, explanation: 'Load voltage depends on how the supply is divided between wire and load. Reducing wire resistance shifts more of the supply voltage to the load.' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'quiz-ch5-ideal-non-ideal-basics',
     title: 'Ideal vs Non-Ideal Behavior',
     unlockedBy: 'lesson-ch5-1-1',
