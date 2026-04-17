@@ -6,9 +6,9 @@ Interactive educational app for learning electrical circuits. Structured as prog
 
 ## Current Status
 
-- Chapters 1-4 are implemented and wired into registries.
-- Lesson count: 62 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15).
-- Quiz count: 59 total (Chapter 1-4 coverage).
+- Chapters 1-4 are fully implemented and wired into registries. Chapter 5 infrastructure is in place with 1 prototype lesson; content authoring (remaining 14 lessons, 15 quizzes) not yet started.
+- Lesson count: 63 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15, Chapter 5: 1 prototype).
+- Quiz count: 59 total (Chapter 1-4 coverage; Chapter 5 quizzes not yet authored).
 - Build and lint pass.
 - Chapters 4-10 planning docs now include clarified challenge-type cardinality, normalized feature-gating wording standards (including Chapters 4-10 phrasing cleanup), deterministic Chapter 10 Dimension 4 capture rules, Unit 5 lesson differentiation guidance, and explicit documentation-boundary rules for defaults/thread dedupe/spec-pointer usage.
 - Added implementation execution checklist for Chapters 4-10 at `docs/ch4-10-implementation-checklist.md` with phase-by-phase file-level tasks and acceptance criteria.

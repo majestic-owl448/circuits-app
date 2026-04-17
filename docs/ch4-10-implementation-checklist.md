@@ -13,7 +13,7 @@ Implementation checklist for foundational work needed before and during Chapters
 - [x] `npm run lint` passes
 - [x] `npm run build` passes
 - [x] Existing Chapters 1-3 learner flow remains functional
-- [~] Accessibility checks completed for newly added interactive UI (evidence: `docs/ch4-10-accessibility-evidence.md`)
+- [x] Accessibility checks completed for newly added interactive UI (evidence: `docs/ch4-10-accessibility-evidence.md`)
 - [x] `CLAUDE.md` status is updated to reflect actual implementation progress
 
 ## Phase 0 - Baseline Fixtures for Existing Behavior
