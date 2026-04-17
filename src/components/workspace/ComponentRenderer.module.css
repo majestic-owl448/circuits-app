@@ -33,6 +33,12 @@
   filter: drop-shadow(0 0 5px var(--color-primary));
 }
 
+.overLimit circle,
+.overLimit line,
+.overLimit polyline {
+  filter: drop-shadow(0 0 5px var(--color-warning));
+}
+
 .label {
   pointer-events: none;
   user-select: none;

@@ -35,14 +35,17 @@ export function buildMnaTopology(nodes: CircuitNode[], components: CircuitCompon
   }
 
   const elements: MnaElement[] = [];
+  const internalNodes: string[] = [];
+
   for (const component of activeComponents) {
     if (component.type === 'wire') {
+      const resistance = component.properties.wireResistance ?? IDEAL_LINK_RESISTANCE;
       elements.push({
         id: component.id,
         type: 'resistor',
         nodeA: component.nodeA,
         nodeB: component.nodeB,
-        value: IDEAL_LINK_RESISTANCE,
+        value: Math.max(resistance, IDEAL_LINK_RESISTANCE),
       });
       continue;
     }
@@ -70,14 +73,39 @@ export function buildMnaTopology(nodes: CircuitNode[], components: CircuitCompon
     }
 
     if (component.type === 'battery') {
-      elements.push({
-        id: `src-${component.id}`,
-        type: 'voltage-source',
-        nodeA: component.nodeA,
-        nodeB: component.nodeB,
-        value: component.properties.voltage ?? 0,
-        sourceComponentId: component.id,
-      });
+      const internalR = component.properties.internalResistance ?? 0;
+      if (internalR > 0) {
+        const internalNodeId = `_int_${component.id}`;
+        internalNodes.push(internalNodeId);
+        
+        // Voltage source from A to internal node
+        elements.push({
+          id: `src-${component.id}`,
+          type: 'voltage-source',
+          nodeA: component.nodeA,
+          nodeB: internalNodeId,
+          value: component.properties.voltage ?? 0,
+          sourceComponentId: component.id,
+        });
+
+        // Internal resistor from internal node to B
+        elements.push({
+          id: `r-int-${component.id}`,
+          type: 'resistor',
+          nodeA: internalNodeId,
+          nodeB: component.nodeB,
+          value: internalR,
+        });
+      } else {
+        elements.push({
+          id: `src-${component.id}`,
+          type: 'voltage-source',
+          nodeA: component.nodeA,
+          nodeB: component.nodeB,
+          value: component.properties.voltage ?? 0,
+          sourceComponentId: component.id,
+        });
+      }
     }
   }
 
@@ -91,7 +119,10 @@ export function buildMnaTopology(nodes: CircuitNode[], components: CircuitCompon
 
   const candidates = nodes.map(node => node.id).filter(nodeId => batteryNodes.has(nodeId));
   const groundNodeId = (candidates[0] ?? nodes[0].id);
-  const nodeIds = nodes.map(node => node.id).filter(nodeId => nodeId !== groundNodeId);
+  
+  // Include both original nodes and generated internal nodes
+  const allNodeIds = [...nodes.map(n => n.id), ...internalNodes];
+  const nodeIds = allNodeIds.filter(nodeId => nodeId !== groundNodeId);
   const nodeIndex = new Map(nodeIds.map((nodeId, index) => [nodeId, index]));
 
   return {

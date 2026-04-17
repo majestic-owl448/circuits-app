@@ -179,6 +179,16 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     );
   }, []);
 
+  const updateComponentProperties = useCallback((componentId: string, properties: Partial<import('../types/circuit.ts').ComponentProperties>) => {
+    setComponents(prev =>
+      prev.map(c =>
+        c.id === componentId
+          ? { ...c, properties: { ...c.properties, ...properties } }
+          : c,
+      ),
+    );
+  }, []);
+
   const reset = useCallback((newNodes: CircuitNode[], newComponents: CircuitComponent[]) => {
     setNodes(newNodes);
     setComponents(newComponents);
@@ -279,6 +289,7 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
     placeComponent,
     deleteComponent,
     renameComponent,
+    updateComponentProperties,
     reset,
     setNodes,
     meterState,

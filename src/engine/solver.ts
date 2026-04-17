@@ -2,6 +2,7 @@ import type { CircuitComponent, CircuitNode, SimulationResult } from '../types/c
 import { solveLegacy } from './legacy-solver.ts';
 import { solveMna } from './mna/solver.ts';
 import { applyNonIdealProperties } from './nonideal.ts';
+import { applyFailureStates } from './failure.ts';
 
 type SolverBackend = 'legacy' | 'mna' | 'compare';
 
@@ -40,19 +41,23 @@ export function solve(
   const preparedComponents = applyNonIdealProperties(components);
   const backend = getConfiguredBackend();
 
+  let result: SimulationResult;
   if (backend === 'mna') {
-    return withDiagnostic(solveMna(nodes, preparedComponents), 'solver-backend:mna');
-  }
-
-  if (backend === 'compare') {
+    result = withDiagnostic(solveMna(nodes, preparedComponents), 'solver-backend:mna');
+  } else if (backend === 'compare') {
     const legacyResult = solveLegacy(nodes, preparedComponents);
     const mnaResult = solveMna(nodes, preparedComponents);
     if (differs(legacyResult, mnaResult)) {
-      return withDiagnostic(legacyResult, 'solver-compare:mismatch');
+      result = withDiagnostic(legacyResult, 'solver-compare:mismatch');
+    } else {
+      result = withDiagnostic(legacyResult, 'solver-compare:match');
     }
-
-    return withDiagnostic(legacyResult, 'solver-compare:match');
+  } else {
+    result = withDiagnostic(solveLegacy(nodes, preparedComponents), 'solver-backend:legacy');
   }
 
-  return withDiagnostic(solveLegacy(nodes, preparedComponents), 'solver-backend:legacy');
+  // Apply failure states based on simulation results
+  result.updatedComponents = applyFailureStates(preparedComponents, result);
+
+  return result;
 }

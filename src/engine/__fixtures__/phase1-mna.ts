@@ -15,6 +15,7 @@ export interface MnaFixture {
       voltage?: number;
       current?: number;
       power?: number;
+      isFailed?: boolean;
     }>;
   };
 }
@@ -82,7 +83,84 @@ const PARALLEL_MULTI_BRANCH: CircuitComponent[] = [
   { id: 'wire-bottom-return', type: 'wire', nodeA: 'p3', nodeB: 'p4', properties: {}, name: 'Wire bottom', position: { x: 250, y: 320 }, rotation: 0 },
 ];
 
+const NON_IDEAL_NODES: CircuitNode[] = [
+  { id: 'ni0', position: { x: 100, y: 100 } },
+  { id: 'ni1', position: { x: 300, y: 100 } },
+];
+
+const INTERNAL_RESISTANCE_CIRCUIT: CircuitComponent[] = [
+  { id: 'battery-ni', type: 'battery', nodeA: 'ni0', nodeB: 'ni1', properties: { voltage: 10, internalResistance: 10 }, name: 'Real Battery', position: { x: 100, y: 100 }, rotation: 0 },
+  { id: 'resistor-ni', type: 'resistor', nodeA: 'ni0', nodeB: 'ni1', properties: { resistance: 10 }, name: 'Load', position: { x: 300, y: 100 }, rotation: 0 },
+];
+
+// Current should be 10V / (10 + 10) = 0.5A
+// Terminal voltage should be 10V - 0.5A * 10 = 5V
+
+const WIRE_RESISTANCE_CIRCUIT: CircuitComponent[] = [
+  { id: 'battery-wire', type: 'battery', nodeA: 'ni0', nodeB: 'ni1', properties: { voltage: 12 }, name: 'Battery', position: { x: 100, y: 100 }, rotation: 0 },
+  { id: 'wire-res', type: 'wire', nodeA: 'ni0', nodeB: 'ni1', properties: { wireResistance: 2 }, name: 'Lossy Wire', position: { x: 300, y: 100 }, rotation: 0 },
+  { id: 'load-wire', type: 'resistor', nodeA: 'ni0', nodeB: 'ni1', properties: { resistance: 4 }, name: 'Load', position: { x: 300, y: 100 }, rotation: 0 },
+];
+// Parallel: Wire (2 ohm) and Load (4 ohm)
+// Req = (2 * 4) / (2 + 4) = 8 / 6 = 1.333 ohm
+// Total Current = 12 / 1.333 = 9 A
+// Current in wire = 12 / 2 = 6 A
+// Current in load = 12 / 4 = 3 A
+
+const BURNOUT_CIRCUIT: CircuitComponent[] = [
+  { id: 'battery-burn', type: 'battery', nodeA: 'ni0', nodeB: 'ni1', properties: { voltage: 12 }, name: 'Battery', position: { x: 100, y: 100 }, rotation: 0 },
+  { id: 'resistor-burn', type: 'resistor', nodeA: 'ni0', nodeB: 'ni1', properties: { resistance: 4, operatingLimit: { type: 'current', max: 2 } }, name: 'Overloaded Resistor', position: { x: 300, y: 100 }, rotation: 0 },
+];
+// Current = 12 / 4 = 3 A. Limit is 2 A. Should fail.
+
 export const phaseOneMnaFixtures: MnaFixture[] = [
+  {
+    id: 'mna-burnout',
+    description: '12V source with 4 ohm resistor (2A limit). Current is 3A, so it should fail.',
+    nodes: cloneNodes(NON_IDEAL_NODES),
+    components: cloneComponents(BURNOUT_CIRCUIT),
+    expected: {
+      isComplete: true,
+      isShortCircuit: false,
+      totalResistance: 4,
+      totalCurrent: 3,
+      componentExpectations: [
+        { componentId: 'resistor-burn', voltage: 12, current: 3, power: 36, isFailed: true },
+      ],
+    },
+  },
+  {
+    id: 'mna-internal-resistance',
+    description: '10V source with 10 ohm internal resistance and 10 ohm load',
+    nodes: cloneNodes(NON_IDEAL_NODES),
+    components: cloneComponents(INTERNAL_RESISTANCE_CIRCUIT),
+    expected: {
+      isComplete: true,
+      isShortCircuit: false,
+      totalResistance: 20,
+      totalCurrent: 0.5,
+      componentExpectations: [
+        { componentId: 'battery-ni', voltage: 5, current: 0.5, power: 2.5 },
+        { componentId: 'resistor-ni', voltage: 5, current: 0.5, power: 2.5 },
+      ],
+    },
+  },
+  {
+    id: 'mna-wire-resistance',
+    description: '12V source with parallel wire resistance (2 ohm) and load (4 ohm)',
+    nodes: cloneNodes(NON_IDEAL_NODES),
+    components: cloneComponents(WIRE_RESISTANCE_CIRCUIT),
+    expected: {
+      isComplete: true,
+      isShortCircuit: false,
+      totalResistance: 1.3333,
+      totalCurrent: 9,
+      componentExpectations: [
+        { componentId: 'wire-res', voltage: 12, current: 6, power: 72 },
+        { componentId: 'load-wire', voltage: 12, current: 3, power: 36 },
+      ],
+    },
+  },
   {
     id: 'mna-mixed-series-parallel',
     description: '12V source with series resistor plus two equal parallel branches',

@@ -51,6 +51,8 @@ export interface SimulationResult {
   diagnostics?: string[];
   /** Ordered node IDs forming the current loop (first node repeated at end). */
   loopNodes: string[];
+  /** Optional updated components (e.g. with failure states). */
+  updatedComponents?: CircuitComponent[];
 }
 
 export interface ComponentResult {

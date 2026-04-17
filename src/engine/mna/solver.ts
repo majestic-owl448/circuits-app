@@ -166,9 +166,9 @@ export function solveMna(nodes: CircuitNode[], components: CircuitComponent[]): 
     nodeVoltages.set(nodeId, solution[idx]);
   });
 
-  const componentResults = buildComponentResults(components, nodeVoltages);
-  const branchCurrents = buildBranchCurrents(components, componentResults);
   const sourceCurrents = solution.slice(nodeVarCount);
+  const componentResults = buildComponentResults(components, nodeVoltages, sourceCurrents, topology);
+  const branchCurrents = buildBranchCurrents(components, componentResults);
   const totalCurrent = sourceCurrents.length > 0 ? Math.abs(sourceCurrents.reduce((sum, current) => sum + current, 0)) : 0;
   const totalVoltage = activeComponents
     .filter(component => component.type === 'battery')

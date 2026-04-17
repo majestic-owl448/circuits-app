@@ -12,6 +12,7 @@ interface Props {
   isMeterTarget?: boolean;
   showValues?: boolean;
   onClick: () => void;
+  onInspect?: () => void;
   onFocus: () => void;
   onRename?: (componentId: string, newName: string) => void;
 }
@@ -27,22 +28,41 @@ export function ComponentRenderer({
   isMeterTarget = false,
   showValues = true,
   onClick,
+  onInspect,
   onFocus,
   onRename,
 }: Props) {
   const { position, type, name, properties } = component;
 
   const isInteractive = type === 'switch';
-  const bulbBrightness = type === 'bulb' && isCircuitComplete && result
+  const bulbBrightness = type === 'bulb' && isCircuitComplete && result && !properties.isFailed
     ? Math.min(1, result.power / 1.8)
     : 0;
   const isFailed = properties.isFailed ?? false;
 
+  // Warning state: 90% of operating limit
+  let isOverLimit = false;
+  if (result && properties.operatingLimit && !isFailed) {
+    const metric = result[properties.operatingLimit.type];
+    if (metric > properties.operatingLimit.max * 0.9) {
+      isOverLimit = true;
+    }
+  }
+
   return (
     <g
-      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''} ${isMeterTarget ? styles.meterTarget : ''}`}
+      className={`${styles.component} ${isHighlighted ? styles.highlighted : ''} ${isFocused ? styles.focused : ''} ${isDeletable ? styles.deletable : ''} ${isMeterTarget ? styles.meterTarget : ''} ${isOverLimit ? styles.overLimit : ''}`}
       transform={`translate(${position.x}, ${position.y}) rotate(${rotation})`}
-      onClick={onClick}
+      onClick={(e) => {
+        e.stopPropagation();
+        onClick();
+      }}
+      onContextMenu={(e) => {
+        if (onInspect) {
+          e.preventDefault();
+          onInspect();
+        }
+      }}
       onDoubleClick={() => {
         if (onRename) {
           const newName = window.prompt('Rename component:', name);
@@ -103,6 +123,18 @@ export function ComponentRenderer({
           transform={`rotate(${-rotation})`}
         >
           {properties.resistance}Ω
+        </text>
+      )}
+      {isOverLimit && !isFailed && (
+        <text
+          y={-30}
+          textAnchor="middle"
+          fontSize="10"
+          fontWeight="bold"
+          fill="var(--color-warning)"
+          transform={`rotate(${-rotation})`}
+        >
+          WARNING
         </text>
       )}
       {isFailed && (

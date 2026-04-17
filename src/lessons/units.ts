@@ -144,4 +144,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Apply KCL and KVL naming in guided contexts and integrated review tasks.',
     lessons: ['lesson-ch4-5-1', 'lesson-ch4-5-2', 'lesson-ch4-5-3'],
   },
+  // Chapter 5: Non-Ideal Behavior and Operating Limits
+  {
+    id: 'ch5-unit-1',
+    title: 'Ideal Models Are Useful, But Not Complete',
+    stageLabel: 'Intermediate',
+    description: 'Understand why the simulation now begins introducing non-ideal behavior.',
+    lessons: ['lesson-ch5-1-1', 'lesson-ch5-1-2'],
+  },
+  {
+    id: 'ch5-unit-2',
+    title: 'Internal Resistance of the Source',
+    stageLabel: 'Intermediate',
+    description: 'Understand that a source may not behave like a perfect ideal voltage source under load.',
+    lessons: ['lesson-ch5-2-1', 'lesson-ch5-2-2', 'lesson-ch5-2-3', 'lesson-ch5-2-4'],
+  },
+  {
+    id: 'ch5-unit-3',
+    title: 'Wire Resistance',
+    stageLabel: 'Intermediate',
+    description: 'Understand that wires themselves can affect circuit behavior when they are not treated as ideal.',
+    lessons: ['lesson-ch5-3-1', 'lesson-ch5-3-2', 'lesson-ch5-3-3'],
+  },
+  {
+    id: 'ch5-unit-4',
+    title: 'Heating and Failure',
+    stageLabel: 'Intermediate',
+    description: 'Understand that excessive operating conditions can create heat and can damage or destroy components in the simulation.',
+    lessons: ['lesson-ch5-4-1', 'lesson-ch5-4-2', 'lesson-ch5-4-3'],
+  },
+  {
+    id: 'ch5-unit-5',
+    title: 'Tolerances and Variability',
+    stageLabel: 'Intermediate',
+    description: 'Understand that not all component values must be treated as perfectly exact in a more realistic simulation.',
+    lessons: ['lesson-ch5-5-1', 'lesson-ch5-5-2', 'lesson-ch5-5-3'],
+  },
 ];
