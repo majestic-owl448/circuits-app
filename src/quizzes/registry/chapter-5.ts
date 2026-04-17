@@ -387,6 +387,111 @@ const quizzes: QuizConfig[] = [
     ],
   },
   {
+    id: 'quiz-ch5-tolerance-basics',
+    title: 'Tolerance Basics',
+    unlockedBy: 'lesson-ch5-5-1',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5tb1',
+        prompt: 'A resistor is labeled 100\u03a9 \u00b110%. What is the full range of acceptable values?',
+        choices: [
+          { id: 'ch5tb1-a', label: '[90\u03a9, 110\u03a9], because \u00b110% of 100\u03a9 is \u00b110\u03a9', isCorrect: true, explanation: 'Correct! Tolerance band: 100\u00a0\u00d7\u00a00.9\u00a0=\u00a090\u03a9 to 100\u00a0\u00d7\u00a01.1\u00a0=\u00a0110\u03a9.' },
+          { id: 'ch5tb1-b', label: '[95\u03a9, 105\u03a9], because \u00b15% is the standard band', isCorrect: false, explanation: 'A \u00b110% tolerance gives a wider band: [90\u03a9, 110\u03a9]. Only a \u00b15% tolerance would give [95\u03a9, 105\u03a9].' },
+          { id: 'ch5tb1-c', label: 'Exactly 100\u03a9, because that is the labeled value', isCorrect: false, explanation: 'The nominal value is 100\u03a9, but the actual manufactured value may vary within the tolerance band. Exactly 100\u03a9 is just the center of the range.' },
+        ],
+      },
+      {
+        id: 'ch5tb2',
+        prompt: 'A 47\u03a9 \u00b15% resistor measures 48.2\u03a9. Is it within tolerance?',
+        choices: [
+          { id: 'ch5tb2-a', label: 'Yes \u2014 48.2\u03a9 is within [44.65\u03a9, 49.35\u03a9]', isCorrect: true, explanation: 'Correct! \u00b15% of 47\u03a9 spans [44.65\u03a9, 49.35\u03a9]. At 48.2\u03a9 the component is within specification.' },
+          { id: 'ch5tb2-b', label: 'No \u2014 48.2\u03a9 is higher than the nominal 47\u03a9', isCorrect: false, explanation: 'Being above nominal is not a failure. Tolerance allows variation in both directions. 48.2\u03a9 is within the \u00b15% band.' },
+          { id: 'ch5tb2-c', label: 'No \u2014 only values below nominal are acceptable', isCorrect: false, explanation: 'Tolerance is symmetric. Values above and below nominal are both acceptable within the band.' },
+        ],
+      },
+      {
+        id: 'ch5tb3',
+        prompt: 'What does a component\u2019s nominal value represent?',
+        choices: [
+          { id: 'ch5tb3-a', label: 'The intended center of the tolerance band; actual values may vary within the tolerance', isCorrect: true, explanation: 'Correct. The nominal value is the design target. Real components vary around it within the tolerance range.' },
+          { id: 'ch5tb3-b', label: 'The minimum guaranteed value for the component', isCorrect: false, explanation: 'The minimum value is the low edge of the tolerance band (nominal\u00a0\u00d7\u00a0(1\u00a0\u2212\u00a0tolerance)). Nominal is the center.' },
+          { id: 'ch5tb3-c', label: 'The exact value every unit of that component will have', isCorrect: false, explanation: 'No manufactured component is exactly at nominal. Tolerance exists precisely to describe the expected spread around nominal.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-tolerance-design-basics',
+    title: 'Tolerance-Aware Design Basics',
+    unlockedBy: 'lesson-ch5-5-2',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5td1',
+        prompt: 'Why is verifying a design only at its nominal component values insufficient?',
+        choices: [
+          { id: 'ch5td1-a', label: 'Because real components span a tolerance range and some may push the design outside safe limits', isCorrect: true, explanation: 'Correct. A design that passes at nominal but fails at a tolerance edge will fail for some manufactured parts. All points in the tolerance band must be checked.' },
+          { id: 'ch5td1-b', label: 'Because nominal values are never accurate', isCorrect: false, explanation: 'Nominal values are accurate as the center of the tolerance band. The issue is that not all units will be exactly at nominal.' },
+          { id: 'ch5td1-c', label: 'Because nominal verification is only valid for resistors, not other components', isCorrect: false, explanation: 'The issue applies to all components with tolerance specifications, not just resistors.' },
+        ],
+      },
+      {
+        id: 'ch5td2',
+        prompt: 'For a fixed supply voltage and an operating limit on power dissipation, which tolerance edge produces the worst-case (highest) power in a resistor?',
+        choices: [
+          { id: 'ch5td2-a', label: 'The low-tolerance edge (minimum resistance), because lower R means higher I and higher P', isCorrect: true, explanation: 'Correct. P\u00a0=\u00a0V\u00b2/R. With fixed V, lower R means higher P. The worst case for power is always the minimum resistance (low tolerance edge).' },
+          { id: 'ch5td2-b', label: 'The high-tolerance edge (maximum resistance), because more resistance stores more energy', isCorrect: false, explanation: 'Higher resistance draws less current and dissipates less power (P\u00a0=\u00a0V\u00b2/R decreases as R increases). The high edge is the best case for staying under a power limit.' },
+          { id: 'ch5td2-c', label: 'The nominal value, because it is the most common case', isCorrect: false, explanation: 'For a power operating limit, the worst case is the lowest resistance, not the nominal. Designing for nominal only is not sufficient.' },
+        ],
+      },
+      {
+        id: 'ch5td3',
+        prompt: 'A design uses a 20\u03a9 \u00b15% resistor. It passes at nominal (20\u03a9) and at the high edge (21\u03a9), but the low edge (19\u03a9) exceeds the power limit. What should the designer do?',
+        choices: [
+          { id: 'ch5td3-a', label: 'Choose a higher nominal resistance so the low edge stays within the limit', isCorrect: true, explanation: 'Correct. Increasing nominal resistance shifts the entire tolerance band higher, raising the minimum from 19\u03a9 and keeping worst-case power below the limit.' },
+          { id: 'ch5td3-b', label: 'Accept the design because only one edge fails and the nominal is fine', isCorrect: false, explanation: 'One failing edge means the design will fail for some manufactured parts. All edges must pass for a robust design.' },
+          { id: 'ch5td3-c', label: 'Use a tighter tolerance part instead of designing around the current one', isCorrect: false, explanation: 'Tighter tolerance helps, but the correct fix is to choose a nominal value that keeps the worst case (low edge) within the limit.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-review',
+    title: 'Chapter 5 Review Quiz',
+    unlockedBy: 'lesson-ch5-5-3',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5rv1',
+        prompt: 'A circuit has a 9V source with 1.5\u03a9 internal resistance, a 0.5\u03a9 wire, and a 4\u03a9 bulb (limit: 5W). What is the power in the bulb?',
+        choices: [
+          { id: 'ch5rv1-a', label: '9W, because I\u00a0=\u00a09/6\u00a0=\u00a01.5A and P\u00a0=\u00a01.5\u00b2\u00a0\u00d7\u00a04\u00a0=\u00a09W', isCorrect: true, explanation: 'Correct! R_total\u00a0=\u00a01.5\u00a0+\u00a00.5\u00a0+\u00a04\u00a0=\u00a06\u03a9. I\u00a0=\u00a09/6\u00a0=\u00a01.5A. P_bulb\u00a0=\u00a01.5\u00b2\u00a0\u00d7\u00a04\u00a0=\u00a02.25\u00a0\u00d7\u00a04\u00a0=\u00a09W. This exceeds the 5W limit.' },
+          { id: 'ch5rv1-b', label: '20.25W, because P\u00a0=\u00a09\u00b2\u00a0/\u00a04', isCorrect: false, explanation: 'This uses only the load resistance and ignores the source and wire resistances. Total circuit resistance is 6\u03a9 so I\u00a0=\u00a01.5A.' },
+          { id: 'ch5rv1-c', label: '4W, because P\u00a0=\u00a01A\u00b2\u00a0\u00d7\u00a04', isCorrect: false, explanation: 'Current is 1.5A, not 1A. With R_total\u00a0=\u00a06\u03a9 and V\u00a0=\u00a09V: I\u00a0=\u00a01.5A.' },
+        ],
+      },
+      {
+        id: 'ch5rv2',
+        prompt: 'A bulb labeled 10\u03a9 \u00b15% is in a circuit. Its power at the low-edge resistance (9.5\u03a9) is 3.2W and at nominal (10\u03a9) is 3.0W. The operating limit is 3.5W. Is the design robust?',
+        choices: [
+          { id: 'ch5rv2-a', label: 'Yes \u2014 both the nominal and low-edge power are below the 3.5W limit', isCorrect: true, explanation: 'Correct! 3.2W (low edge) and 3.0W (nominal) are both below 3.5W. The design passes at both tolerance cases that matter for power (low edge is worst case).' },
+          { id: 'ch5rv2-b', label: 'No \u2014 any deviation from nominal is unacceptable', isCorrect: false, explanation: 'Tolerance variation is expected and acceptable. The check is whether the worst-case power stays within the operating limit, which it does here.' },
+          { id: 'ch5rv2-c', label: 'No \u2014 the high-edge resistance must also be checked', isCorrect: false, explanation: 'The high-edge resistance gives lower power than nominal (higher R = lower I = lower P). If nominal and low-edge both pass, the high edge will too.' },
+        ],
+      },
+      {
+        id: 'ch5rv3',
+        prompt: 'Which combination of effects can cause a circuit that appears safe under ideal analysis to fail in a non-ideal simulation?',
+        choices: [
+          { id: 'ch5rv3-a', label: 'Source internal resistance and wire resistance increasing total current beyond the load\u2019s operating limit', isCorrect: false, explanation: 'Internal resistance and wire resistance actually reduce current (add series resistance). They would make power dissipation lower, not higher \u2014 unless the concern is voltage drop rather than overcurrent.' },
+          { id: 'ch5rv3-b', label: 'Ignoring the load\u2019s operating limit entirely so the ideal power calculation was never compared to the limit', isCorrect: true, explanation: 'Correct! The most common cause of unexpected failure is that the designer calculated power correctly but never checked it against the component\u2019s rated limit.' },
+          { id: 'ch5rv3-c', label: 'Tolerance variation making the component value exactly equal to nominal', isCorrect: false, explanation: 'A component at exactly nominal is the intended design point. Tolerance edge values, not nominal, are the concern for worst-case analysis.' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'quiz-ch5-ideal-non-ideal-basics',
     title: 'Ideal vs Non-Ideal Behavior',
     unlockedBy: 'lesson-ch5-1-1',
