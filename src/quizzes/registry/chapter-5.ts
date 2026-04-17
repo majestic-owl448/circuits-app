@@ -282,6 +282,111 @@ const quizzes: QuizConfig[] = [
     ],
   },
   {
+    id: 'quiz-ch5-heating-basics',
+    title: 'Heating Basics',
+    unlockedBy: 'lesson-ch5-4-1',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5hb1',
+        prompt: 'What is the power dissipated by a 4\u03a9 resistor carrying 2A?',
+        choices: [
+          { id: 'ch5hb1-a', label: '16W, because P\u00a0=\u00a0I\u00b2\u00a0\u00d7\u00a0R\u00a0=\u00a04\u00a0\u00d7\u00a04', isCorrect: true, explanation: 'Correct! P\u00a0=\u00a02\u00b2\u00a0\u00d7\u00a04\u00a0=\u00a016W.' },
+          { id: 'ch5hb1-b', label: '2W, because P\u00a0=\u00a0I\u00a0\u00d7\u00a0R\u00a0=\u00a02\u00a0\u00d7\u00a04\u00a0/\u00a04', isCorrect: false, explanation: 'Power is I\u00b2R, not I\u00a0\u00d7\u00a0R. With 2A and 4\u03a9, P\u00a0=\u00a04\u00a0\u00d7\u00a04\u00a0=\u00a016W.' },
+          { id: 'ch5hb1-c', label: '0.5W, because P\u00a0=\u00a0R\u00a0/\u00a0I\u00b2', isCorrect: false, explanation: 'Resistance divided by current squared is not a standard formula. P\u00a0=\u00a0I\u00b2\u00a0\u00d7\u00a0R.' },
+        ],
+      },
+      {
+        id: 'ch5hb2',
+        prompt: 'A 12V source drives two separate circuits. Circuit A has a 3\u03a9 load; Circuit B has a 12\u03a9 load. Which load dissipates more power?',
+        choices: [
+          { id: 'ch5hb2-a', label: 'Circuit A (3\u03a9), because P\u00a0=\u00a0V\u00b2/R\u00a0=\u00a0144/3\u00a0=\u00a048W vs 144/12\u00a0=\u00a012W', isCorrect: true, explanation: 'Correct! With fixed source voltage, lower resistance means higher power: P\u00a0=\u00a0V\u00b2/R.' },
+          { id: 'ch5hb2-b', label: 'Circuit B (12\u03a9), because more resistance means more heat', isCorrect: false, explanation: 'With the same source voltage, P\u00a0=\u00a0V\u00b2/R shows that higher resistance gives lower power, not higher.' },
+          { id: 'ch5hb2-c', label: 'Both are the same because both use 12V', isCorrect: false, explanation: 'Same voltage does not mean same power. P depends on both voltage and resistance: P\u00a0=\u00a0V\u00b2/R.' },
+        ],
+      },
+      {
+        id: 'ch5hb3',
+        prompt: 'Why is heat a design constraint in circuit engineering?',
+        choices: [
+          { id: 'ch5hb3-a', label: 'Because excessive heat can damage or destroy components that exceed their power ratings', isCorrect: true, explanation: 'Correct. Components have maximum power ratings. Exceeding them causes overheating and failure. Keeping power within limits is a required design goal.' },
+          { id: 'ch5hb3-b', label: 'Because heat reduces voltage in the circuit', isCorrect: false, explanation: 'Heat is a consequence of power dissipation, not a cause of voltage reduction. Internal resistance causes voltage drops; heat is a byproduct.' },
+          { id: 'ch5hb3-c', label: 'Because higher temperature always improves component performance', isCorrect: false, explanation: 'Higher temperatures generally degrade performance and can lead to permanent damage. Heat must be managed within safe limits.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-burnout-limits-basics',
+    title: 'Burnout and Limits Basics',
+    unlockedBy: 'lesson-ch5-4-2',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5bl1',
+        prompt: 'A component is rated for a maximum of 3W. The circuit delivers 12W to it. What happens?',
+        choices: [
+          { id: 'ch5bl1-a', label: 'The component fails (burns out) because 12W exceeds its 3W limit', isCorrect: true, explanation: 'Correct. Operating limits are hard boundaries. Exceeding them causes the component to fail in the simulation.' },
+          { id: 'ch5bl1-b', label: 'The component heats up but continues to function', isCorrect: false, explanation: 'In this model, exceeding the operating limit causes a failure state, not gradual degradation.' },
+          { id: 'ch5bl1-c', label: 'The source automatically limits power to 3W', isCorrect: false, explanation: 'The source does not self-limit. Operating safety must be designed into the circuit, not assumed from the source.' },
+        ],
+      },
+      {
+        id: 'ch5bl2',
+        prompt: 'A 5\u03a9 bulb has a 5W operating limit. It is connected to a 5V source. Is it within its safe operating range?',
+        choices: [
+          { id: 'ch5bl2-a', label: 'Yes \u2014 P\u00a0=\u00a05\u00b2/5\u00a0=\u00a05W, exactly at the limit', isCorrect: true, explanation: 'Correct! P\u00a0=\u00a025/5\u00a0=\u00a05W. Exactly at the limit means it is at the boundary but not exceeding it.' },
+          { id: 'ch5bl2-b', label: 'No \u2014 5W is too close to the limit and will cause failure', isCorrect: false, explanation: 'The operating limit is 5W. Operating at exactly 5W is at the boundary. In practice you\u2019d want some margin, but in this model 5W\u00a0=\u00a0limit is not a failure.' },
+          { id: 'ch5bl2-c', label: 'No \u2014 P\u00a0=\u00a05\u00a0\u00d7\u00a05\u00a0=\u00a025W', isCorrect: false, explanation: 'V\u00a0\u00d7\u00a0R is not power. P\u00a0=\u00a0V\u00b2/R\u00a0=\u00a025/5\u00a0=\u00a05W.' },
+        ],
+      },
+      {
+        id: 'ch5bl3',
+        prompt: 'How can you determine if a component will exceed its operating limit before running a circuit?',
+        choices: [
+          { id: 'ch5bl3-a', label: 'Calculate expected power dissipation (P\u00a0=\u00a0I\u00b2R) and compare it to the component\u2019s rated limit', isCorrect: true, explanation: 'Correct. Pre-calculating power dissipation is the standard way to verify safety before connecting a circuit.' },
+          { id: 'ch5bl3-b', label: 'Run the circuit and check if the component fails', isCorrect: false, explanation: 'You can check this in simulation, but good design practice is to verify safety analytically before running, not only after failure.' },
+          { id: 'ch5bl3-c', label: 'Check if the source voltage exceeds the component\u2019s resistance', isCorrect: false, explanation: 'Comparing voltage to resistance in ohms is not meaningful without also considering current. Use the power formulas: P\u00a0=\u00a0V\u00b2/R or P\u00a0=\u00a0I\u00b2R.' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'quiz-ch5-operating-limit-design',
+    title: 'Operating-Limit Design Reasoning',
+    unlockedBy: 'lesson-ch5-4-3',
+    passingScore: 60,
+    questions: [
+      {
+        id: 'ch5ol1',
+        prompt: 'A 2\u03a9 bulb with a 2W operating limit is driven by a 6V source. What series resistance keeps P_bulb at exactly 2W?',
+        choices: [
+          { id: 'ch5ol1-a', label: '4\u03a9, because I\u00a0=\u00a01A satisfies P\u00a0=\u00a01\u00b2\u00a0\u00d7\u00a02\u00a0=\u00a02W', isCorrect: true, explanation: 'Correct! With 4\u03a9 in series: I\u00a0=\u00a06/6\u00a0=\u00a01A, P_bulb\u00a0=\u00a01\u00b2\u00a0\u00d7\u00a02\u00a0=\u00a02W.' },
+          { id: 'ch5ol1-b', label: '2\u03a9, because it matches the bulb resistance', isCorrect: false, explanation: 'With 2\u03a9 in series: I\u00a0=\u00a06/4\u00a0=\u00a01.5A, P_bulb\u00a0=\u00a01.5\u00b2\u00a0\u00d7\u00a02\u00a0=\u00a04.5W \u2014 over the 2W limit.' },
+          { id: 'ch5ol1-c', label: '1\u03a9, because small series resistance gives maximum brightness', isCorrect: false, explanation: 'With 1\u03a9 in series: I\u00a0=\u00a06/3\u00a0=\u00a02A, P_bulb\u00a0=\u00a04\u00a0\u00d7\u00a02\u00a0=\u00a08W \u2014 far over the 2W limit.' },
+        ],
+      },
+      {
+        id: 'ch5ol2',
+        prompt: 'A design must keep load power between 1W (minimum useful) and 4W (operating limit). With a 12V source and 4\u03a9 load, what total resistance achieves this?',
+        choices: [
+          { id: 'ch5ol2-a', label: 'Between 6\u03a9 and 24\u03a9 total resistance', isCorrect: true, explanation: 'For P\u00a0=\u00a04W (limit): I\u00a0=\u00a0\u221a(4/4)\u00a0=\u00a01A, R_total\u00a0=\u00a012/1\u00a0=\u00a012\u03a9. For P\u00a0=\u00a01W (min): I\u00a0=\u00a0\u221a(1/4)\u00a0=\u00a00.5A, R_total\u00a0=\u00a024\u03a9. Valid range: [12\u03a9, 24\u03a9].' },
+          { id: 'ch5ol2-b', label: 'Exactly 4\u03a9 total (load only)', isCorrect: false, explanation: 'With only the 4\u03a9 load: I\u00a0=\u00a03A, P_load\u00a0=\u00a036W \u2014 far over the 4W limit.' },
+          { id: 'ch5ol2-c', label: 'Any resistance above 24\u03a9', isCorrect: false, explanation: 'Above 24\u03a9 total, load power drops below 1W minimum. The upper bound on total resistance is 24\u03a9.' },
+        ],
+      },
+      {
+        id: 'ch5ol3',
+        prompt: 'Why must a design satisfy both a minimum power threshold AND a maximum operating limit?',
+        choices: [
+          { id: 'ch5ol3-a', label: 'Because too little power fails the functional goal (too dim, too cold) while too much causes component damage', isCorrect: true, explanation: 'Correct. A circuit must do its job (minimum) without destroying the component (maximum). Both constraints must be satisfied simultaneously.' },
+          { id: 'ch5ol3-b', label: 'Because components always work best at exactly the operating limit', isCorrect: false, explanation: 'Components work across their safe range. Operating near the limit offers no advantage and reduces safety margin.' },
+          { id: 'ch5ol3-c', label: 'Only the maximum limit matters; the minimum is optional', isCorrect: false, explanation: 'If power drops below the functional minimum, the circuit fails to perform its purpose even though the component is safe. Both constraints matter.' },
+        ],
+      },
+    ],
+  },
+  {
     id: 'quiz-ch5-ideal-non-ideal-basics',
     title: 'Ideal vs Non-Ideal Behavior',
     unlockedBy: 'lesson-ch5-1-1',
