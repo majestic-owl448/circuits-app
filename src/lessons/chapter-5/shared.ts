@@ -12,4 +12,6 @@ export const CHAPTER_5_METADATA = {
   ] as LessonAction[],
 };
 
-export const NON_IDEAL_TOLERANCE = 0.05; // 5% default for non-ideal lessons
+// Reserved for Chapter 5+ lesson authors: default tolerance fraction for
+// evaluate-within-range challenges involving non-ideal component values.
+export const NON_IDEAL_TOLERANCE = 0.05;

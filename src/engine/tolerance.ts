@@ -1,5 +1,7 @@
 import type { CircuitComponent } from '../types/circuit.ts';
 
+// Reserved for Chapter 5+ lesson authors: use these helpers in challenge
+// evaluationCriteria to check whether a measured value is within tolerance.
 export function computeToleranceBounds(
   nominal: number,
   tolerance: number,
