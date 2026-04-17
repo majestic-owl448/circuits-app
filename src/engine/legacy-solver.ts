@@ -38,6 +38,10 @@ export function solveLegacy(
   for (const comp of loopComponents) {
     if (comp.type === 'bulb' || comp.type === 'resistor') {
       totalResistance += comp.properties.resistance ?? 0;
+    } else if (comp.type === 'battery') {
+      totalResistance += comp.properties.internalResistance ?? 0;
+    } else if (comp.type === 'wire') {
+      totalResistance += comp.properties.wireResistance ?? 0;
     }
   }
 
@@ -61,9 +65,14 @@ export function solveLegacy(
 
   const componentResults = new Map<string, ComponentResult>();
   for (const comp of loopComponents) {
-    const resistance = (comp.type === 'bulb' || comp.type === 'resistor')
-      ? (comp.properties.resistance ?? 0)
-      : 0;
+    let resistance = 0;
+    if (comp.type === 'bulb' || comp.type === 'resistor') {
+      resistance = comp.properties.resistance ?? 0;
+    } else if (comp.type === 'battery') {
+      resistance = comp.properties.internalResistance ?? 0;
+    } else if (comp.type === 'wire') {
+      resistance = comp.properties.wireResistance ?? 0;
+    }
     const voltage = totalCurrent * resistance;
     const power = voltage * totalCurrent;
 
