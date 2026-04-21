@@ -18,7 +18,8 @@ export function solveLegacy(
   if (components.length === 0) return emptyResult;
 
   // Capacitors are open circuits in DC steady state — remove them so they break the loop.
-  // Inductors are short circuits (wire) in DC steady state — keep them in the graph.
+  // Inductors are short circuits in DC steady state — keep them.
+  // AC sources and converters remain in the graph; ac-source provides amplitude as voltage.
   const dcComponents = components.filter(c => c.type !== 'capacitor');
 
   const graph = buildGraph(nodes, dcComponents);
@@ -35,6 +36,8 @@ export function solveLegacy(
   for (const comp of loopComponents) {
     if (comp.type === 'battery') {
       totalVoltage += comp.properties.voltage ?? 0;
+    } else if (comp.type === 'ac-source') {
+      totalVoltage += comp.properties.amplitude ?? 0;
     }
   }
 
@@ -47,7 +50,7 @@ export function solveLegacy(
     } else if (comp.type === 'wire') {
       totalResistance += comp.properties.wireResistance ?? 0;
     }
-    // inductors: zero resistance in DC steady state (short circuit)
+    // inductors, ac-source, dc-ac-converter, ac-dc-converter: zero resistance in this model
   }
 
   if (totalResistance === 0 && totalVoltage > 0) {
@@ -78,7 +81,7 @@ export function solveLegacy(
     } else if (comp.type === 'wire') {
       resistance = comp.properties.wireResistance ?? 0;
     }
-    // inductors: resistance = 0, voltage = 0 in DC steady state
+    // inductors, ac-source, converters: resistance = 0, voltage = 0 in this model
     const voltage = totalCurrent * resistance;
     const power = voltage * totalCurrent;
 

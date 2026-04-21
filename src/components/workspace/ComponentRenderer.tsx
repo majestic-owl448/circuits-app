@@ -89,6 +89,9 @@ export function ComponentRenderer({
       {type === 'resistor' && <ResistorSVG />}
       {type === 'capacitor' && <CapacitorSVG />}
       {type === 'inductor' && <InductorSVG />}
+      {type === 'ac-source' && <ACSourceSVG rotation={rotation} />}
+      {type === 'dc-ac-converter' && <ConverterSVG label="DC→AC" />}
+      {type === 'ac-dc-converter' && <ConverterSVG label="AC→DC" />}
 
       {/* Label — counter-rotate to stay upright */}
       <text
@@ -103,6 +106,18 @@ export function ComponentRenderer({
       </text>
 
       {/* Numeric value display */}
+      {showValues && type === 'ac-source' && properties.amplitude !== undefined && (
+        <text
+          y={58}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill="var(--color-emphasis)"
+          transform={`rotate(${-rotation})`}
+        >
+          {properties.amplitude}V {properties.frequency ?? 60}Hz
+        </text>
+      )}
       {showValues && type === 'capacitor' && properties.capacitance !== undefined && (
         <text
           y={58}
@@ -200,6 +215,15 @@ function getAriaLabel(comp: CircuitComponent, isActive: boolean, result?: Compon
   if (comp.type === 'inductor' && comp.properties.inductance) {
     label += `, ${(comp.properties.inductance * 1000).toFixed(0)} millihenries`;
   }
+  if (comp.type === 'ac-source') {
+    label += `, ${comp.properties.amplitude ?? 9} volts peak, ${comp.properties.frequency ?? 60} hertz`;
+  }
+  if (comp.type === 'dc-ac-converter') {
+    label += ', DC to AC conversion block';
+  }
+  if (comp.type === 'ac-dc-converter') {
+    label += ', AC to DC conversion block';
+  }
   if (isActive && result) {
     label += `, ${result.voltage.toFixed(1)}V, ${result.current.toFixed(3)}A`;
   }
@@ -287,5 +311,40 @@ function InductorSVG() {
       stroke="var(--color-text)"
       strokeWidth="1.5"
     />
+  );
+}
+
+function ACSourceSVG({ rotation }: { rotation: number }) {
+  return (
+    <g>
+      <circle r="18" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      {/* Sine wave symbol inside circle */}
+      <path
+        d="M-10,0 Q-7,-8 -4,0 Q-1,8 2,0 Q5,-8 8,0"
+        fill="none"
+        stroke="var(--color-text)"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+      />
+      <text x="-18" y="-22" fontSize="11" textAnchor="middle" dominantBaseline="middle" fill="var(--color-text-secondary)" transform={`rotate(${-rotation}, -18, -22)`}>~</text>
+    </g>
+  );
+}
+
+function ConverterSVG({ label }: { label: string }) {
+  return (
+    <g>
+      <rect x="-24" y="-14" width="48" height="28" rx="3" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <text
+        y="1"
+        textAnchor="middle"
+        dominantBaseline="middle"
+        fontSize="7"
+        fontFamily="var(--font-mono)"
+        fill="var(--color-text)"
+      >
+        {label}
+      </text>
+    </g>
   );
 }

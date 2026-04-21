@@ -216,4 +216,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Apply time-dependent reasoning in guided and semi-open-ended challenges involving both initial and steady-state behavior.',
     lessons: ['lesson-ch6-5-1', 'lesson-ch6-5-2', 'lesson-ch6-5-3'],
   },
+  // Chapter 7: AC Fundamentals and DC/AC Conversion
+  {
+    id: 'ch7-unit-1',
+    title: 'What AC Is',
+    stageLabel: 'Late Intermediate',
+    description: 'Understand alternating current as a distinct source and behavior model, and see how it differs from the DC circuits studied so far.',
+    lessons: ['lesson-ch7-1-1', 'lesson-ch7-1-2', 'lesson-ch7-1-3'],
+  },
+  {
+    id: 'ch7-unit-2',
+    title: 'AC Loads and Comparison With DC',
+    stageLabel: 'Late Intermediate',
+    description: 'Compare how loads behave under AC and DC in the simplified simulation model.',
+    lessons: ['lesson-ch7-2-1', 'lesson-ch7-2-2', 'lesson-ch7-2-3'],
+  },
+  {
+    id: 'ch7-unit-3',
+    title: 'Conversion Between DC and AC',
+    stageLabel: 'Late Intermediate',
+    description: 'Understand that some systems use conversion stages to move between DC and AC.',
+    lessons: ['lesson-ch7-3-1', 'lesson-ch7-3-2', 'lesson-ch7-3-3'],
+  },
+  {
+    id: 'ch7-unit-4',
+    title: 'Modern Mixed-System Example',
+    stageLabel: 'Late Intermediate',
+    description: 'Analyze a practical conceptual example involving both DC and AC stages.',
+    lessons: ['lesson-ch7-4-1', 'lesson-ch7-4-2'],
+  },
+  {
+    id: 'ch7-unit-5',
+    title: 'AC and Conversion Review',
+    stageLabel: 'Late Intermediate',
+    description: 'Integrate AC basics, AC/DC comparison, and conversion-stage reasoning in review challenges.',
+    lessons: ['lesson-ch7-5-1', 'lesson-ch7-5-2'],
+  },
 ];

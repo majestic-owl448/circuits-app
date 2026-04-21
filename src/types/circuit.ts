@@ -1,4 +1,4 @@
-export type ComponentType = 'battery' | 'resistor' | 'switch' | 'wire' | 'bulb' | 'capacitor' | 'inductor';
+export type ComponentType = 'battery' | 'resistor' | 'switch' | 'wire' | 'bulb' | 'capacitor' | 'inductor' | 'ac-source' | 'dc-ac-converter' | 'ac-dc-converter';
 
 export interface OperatingLimit {
   type: 'current' | 'voltage' | 'power';
@@ -26,6 +26,8 @@ export interface ComponentProperties {
   tolerance?: number;
   capacitance?: number;
   inductance?: number;
+  amplitude?: number;
+  frequency?: number;
 }
 
 export interface CircuitComponent {

@@ -16,6 +16,9 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   'source-resistance': { type: 'battery', properties: { voltage: 9, internalResistance: 0 }, rotation: 0 },
   capacitor: { type: 'capacitor', properties: { capacitance: 0.001 }, rotation: 0 },
   inductor: { type: 'inductor', properties: { inductance: 0.1 }, rotation: 0 },
+  'ac-source': { type: 'ac-source', properties: { amplitude: 9, frequency: 60 }, rotation: 0 },
+  'dc-ac-converter': { type: 'dc-ac-converter', properties: {}, rotation: 0 },
+  'ac-dc-converter': { type: 'ac-dc-converter', properties: {}, rotation: 0 },
 };
 
 let nodeCounter = 0;
@@ -106,7 +109,7 @@ export function SandboxView() {
     {
       id: 'ac',
       title: 'AC/Conversion',
-      items: showAllTools ? ['ac source', 'rectifier'] : [],
+      items: (showAllTools || unlockedFeatures.includes('ac')) ? ['ac-source', 'dc-ac-converter', 'ac-dc-converter'] : [],
     },
     {
       id: 'active',
@@ -178,6 +181,11 @@ export function SandboxView() {
 
           if (item === 'source resistance') {
             handleAddComponent('source-resistance');
+            return;
+          }
+
+          if (item === 'ac-source' || item === 'dc-ac-converter' || item === 'ac-dc-converter') {
+            handleAddComponent(item);
             return;
           }
 

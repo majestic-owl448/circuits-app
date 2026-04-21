@@ -22,6 +22,12 @@ interface TransientConfig {
   reactiveComponentId: string;
 }
 
+interface ACConfig {
+  amplitude: number;
+  frequency: number;
+  resistance: number;
+}
+
 // Checkpoint normalized times: t_norm = 0..1 maps to t = 0..5τ
 const TRANSIENT_T_NORM: Record<TimeSnapshot['checkpoint'], number> = {
   t0: 0.1,    // 0.5τ — early transient (~39% of final for RC)
@@ -34,6 +40,74 @@ const CHECKPOINT_FACTORS: Record<TimeSnapshot['checkpoint'], number> = {
   t_mid: 0.6,
   t_final: 1,
 };
+
+// Checkpoint positions as fraction of one AC cycle (0 = start, 1 = end of cycle)
+const AC_T_NORM: Record<TimeSnapshot['checkpoint'], number> = {
+  t0: 0.25,    // quarter cycle — peak positive
+  t_mid: 0.5,  // half cycle — zero crossing (negative direction)
+  t_final: 1.0, // full cycle — back to start phase
+};
+
+function detectACSource(components: CircuitComponent[]): ACConfig | null {
+  const acSource = components.find(c => c.type === 'ac-source');
+  if (!acSource) return null;
+
+  const amplitude = acSource.properties.amplitude ?? 9;
+  const frequency = acSource.properties.frequency ?? 60;
+
+  let resistance = 0;
+  for (const c of components) {
+    if (c.type === 'resistor' || c.type === 'bulb') {
+      resistance += c.properties.resistance ?? 0;
+    } else if (c.type === 'battery') {
+      resistance += c.properties.internalResistance ?? 0;
+    } else if (c.type === 'wire') {
+      resistance += c.properties.wireResistance ?? 0;
+    }
+  }
+  if (resistance === 0) return null;
+
+  return { amplitude, frequency, resistance };
+}
+
+function computeACSnapshot(
+  config: ACConfig,
+  tNorm: number,
+  components: CircuitComponent[],
+  baseLoopNodes: string[],
+): SimulationResult {
+  // Instantaneous voltage: V(t) = amplitude * sin(2π * tNorm)
+  const instantVoltage = config.amplitude * Math.sin(2 * Math.PI * tNorm);
+  const instantCurrent = instantVoltage / config.resistance;
+
+  const componentResults = new Map<string, ComponentResult>();
+  for (const comp of components) {
+    let voltage = 0;
+    if (comp.type === 'ac-source') {
+      voltage = instantVoltage;
+    } else if (comp.type === 'resistor' || comp.type === 'bulb') {
+      voltage = instantCurrent * (comp.properties.resistance ?? 0);
+    } else if (comp.type === 'wire') {
+      voltage = instantCurrent * (comp.properties.wireResistance ?? 0);
+    }
+    componentResults.set(comp.id, {
+      componentId: comp.id,
+      voltage,
+      current: instantCurrent,
+      power: voltage * instantCurrent,
+    });
+  }
+
+  return {
+    isComplete: true,
+    isShortCircuit: false,
+    totalResistance: config.resistance,
+    totalCurrent: instantCurrent,
+    componentResults,
+    diagnostics: ['ac-waveform'],
+    loopNodes: baseLoopNodes,
+  };
+}
 
 function detectTransient(components: CircuitComponent[]): TransientConfig | null {
   const capacitor = components.find(c => c.type === 'capacitor');
@@ -167,6 +241,15 @@ export function createCheckpointSnapshots(
   base: SimulationResult,
   components: CircuitComponent[] = [],
 ): TimeDomainSnapshot[] {
+  const acConfig = detectACSource(components);
+  if (acConfig) {
+    return [
+      { checkpoint: 't0', label: 'Early', simulation: computeACSnapshot(acConfig, AC_T_NORM.t0, components, base.loopNodes) },
+      { checkpoint: 't_mid', label: 'Middle', simulation: computeACSnapshot(acConfig, AC_T_NORM.t_mid, components, base.loopNodes) },
+      { checkpoint: 't_final', label: 'Late', simulation: computeACSnapshot(acConfig, AC_T_NORM.t_final, components, base.loopNodes) },
+    ];
+  }
+
   const transient = detectTransient(components);
 
   if (transient) {
@@ -189,6 +272,22 @@ export function createTimelinePoints(
   components: CircuitComponent[] = [],
 ): TimePointResult[] {
   const points = [0, 0.25, 0.5, 0.75, 1];
+
+  const acConfig = detectACSource(components);
+  if (acConfig) {
+    return points.map(tNorm => {
+      const snapshot = computeACSnapshot(acConfig, tNorm, components, base.loopNodes);
+      const acSource = components.find(c => c.type === 'ac-source');
+      const trackedVoltage = acSource ? snapshot.componentResults.get(acSource.id)?.voltage ?? 0 : 0;
+      return {
+        t: tNorm,
+        totalCurrent: snapshot.totalCurrent,
+        trackedVoltage,
+        trackedCurrent: snapshot.totalCurrent,
+      };
+    });
+  }
+
   const transient = detectTransient(components);
 
   if (transient) {
