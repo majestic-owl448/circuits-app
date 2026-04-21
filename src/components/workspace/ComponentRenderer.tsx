@@ -87,6 +87,8 @@ export function ComponentRenderer({
       {type === 'bulb' && <BulbSVG brightness={bulbBrightness} />}
       {type === 'switch' && <SwitchSVG isClosed={properties.isClosed ?? false} />}
       {type === 'resistor' && <ResistorSVG />}
+      {type === 'capacitor' && <CapacitorSVG />}
+      {type === 'inductor' && <InductorSVG />}
 
       {/* Label — counter-rotate to stay upright */}
       <text
@@ -101,6 +103,30 @@ export function ComponentRenderer({
       </text>
 
       {/* Numeric value display */}
+      {showValues && type === 'capacitor' && properties.capacitance !== undefined && (
+        <text
+          y={58}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill="var(--color-emphasis)"
+          transform={`rotate(${-rotation})`}
+        >
+          {(properties.capacitance * 1000).toFixed(1)}mF
+        </text>
+      )}
+      {showValues && type === 'inductor' && properties.inductance !== undefined && (
+        <text
+          y={58}
+          textAnchor="middle"
+          fontSize="10"
+          fontFamily="var(--font-mono)"
+          fill="var(--color-emphasis)"
+          transform={`rotate(${-rotation})`}
+        >
+          {(properties.inductance * 1000).toFixed(0)}mH
+        </text>
+      )}
       {showValues && type === 'battery' && properties.voltage !== undefined && (
         <text
           y={58}
@@ -168,6 +194,12 @@ function getAriaLabel(comp: CircuitComponent, isActive: boolean, result?: Compon
   if ((comp.type === 'bulb' || comp.type === 'resistor') && comp.properties.resistance) {
     label += `, ${comp.properties.resistance} ohms`;
   }
+  if (comp.type === 'capacitor' && comp.properties.capacitance) {
+    label += `, ${(comp.properties.capacitance * 1000).toFixed(1)} millifarads`;
+  }
+  if (comp.type === 'inductor' && comp.properties.inductance) {
+    label += `, ${(comp.properties.inductance * 1000).toFixed(0)} millihenries`;
+  }
   if (isActive && result) {
     label += `, ${result.voltage.toFixed(1)}V, ${result.current.toFixed(3)}A`;
   }
@@ -231,6 +263,26 @@ function ResistorSVG() {
   return (
     <polyline
       points="-20,0 -14,-8 -6,8 2,-8 10,8 14,-8 20,0"
+      fill="none"
+      stroke="var(--color-text)"
+      strokeWidth="1.5"
+    />
+  );
+}
+
+function CapacitorSVG() {
+  return (
+    <g>
+      <line x1="-8" y1="-14" x2="-8" y2="14" stroke="var(--color-text)" strokeWidth="2.5" strokeLinecap="round" />
+      <line x1="8" y1="-14" x2="8" y2="14" stroke="var(--color-text)" strokeWidth="2.5" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function InductorSVG() {
+  return (
+    <path
+      d="M-20,0 Q-15,-10 -10,0 Q-5,-10 0,0 Q5,-10 10,0 Q15,-10 20,0"
       fill="none"
       stroke="var(--color-text)"
       strokeWidth="1.5"

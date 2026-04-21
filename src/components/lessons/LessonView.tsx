@@ -88,7 +88,7 @@ function LessonViewInner({
     isPlaying: false,
     speed: 'normal',
   });
-  const derivedTimeState = useMemo(() => createInitialTimeState(circuit.simulation), [circuit.simulation]);
+  const derivedTimeState = useMemo(() => createInitialTimeState(circuit.simulation, circuit.components), [circuit.simulation, circuit.components]);
 
   const currentStep = phase === 'steps' ? lesson.steps[stepIndex] : null;
   const currentChallenge = phase === 'challenges' ? lesson.challenges[challengeIndex] : null;

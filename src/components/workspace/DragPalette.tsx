@@ -7,6 +7,8 @@ const COMPONENT_LABELS: Record<ComponentType, string> = {
   switch: 'Switch',
   resistor: 'Resistor',
   wire: 'Wire',
+  capacitor: 'Capacitor',
+  inductor: 'Inductor',
 };
 
 interface Props {

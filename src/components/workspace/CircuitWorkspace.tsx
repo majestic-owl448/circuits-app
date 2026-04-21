@@ -20,6 +20,8 @@ function terminalRadius(type: CircuitComponent['type']): number {
     case 'bulb': return 18;
     case 'switch': return 16;
     case 'resistor': return 20;
+    case 'capacitor': return 8;
+    case 'inductor': return 20;
     default: return 0;
   }
 }
@@ -260,6 +262,8 @@ export function CircuitWorkspace({
               from={nodeA.position}
               to={nodeB.position}
               isActive={simulation.isComplete && !simulation.isShortCircuit}
+              onClick={interactive ? () => handleComponentClick(wire.id) : undefined}
+              isInspected={inspectedComponentId === wire.id}
             />
           );
         })}

@@ -384,7 +384,7 @@ Use this quick template before implementation starts on a chapter:
 - [x] IDs mapped in `docs/ch4-10-id-mapping-tables.md` for all planned lessons and standalone quizzes
 - [x] Loader wiring prep complete in `src/data/loaders.ts` (registry/map entries ready)
 - [x] Unit metadata drafted in `src/lessons/units.ts` with target lesson ordering
-- [ ] Quiz unlock linkage validated (`quiz.unlockedBy` aligns with lesson `quizzesUnlocked`)
+- [x] Quiz unlock linkage validated (`quiz.unlockedBy` aligns with lesson `quizzesUnlocked`)
 - [x] Representative chapter fixture plan added for any new engine/evaluator behavior
 - [x] Chapter gate snapshot recorded (A/B/C/D status and explicit blockers)
 

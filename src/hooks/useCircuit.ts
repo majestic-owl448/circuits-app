@@ -9,6 +9,8 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   bulb: { type: 'bulb', properties: { resistance: 45 }, rotation: 0 },
   switch: { type: 'switch', properties: { isClosed: false }, rotation: 0 },
   resistor: { type: 'resistor', properties: { resistance: 100 }, rotation: 0 },
+  capacitor: { type: 'capacitor', properties: { capacitance: 0.001 }, rotation: 0 },
+  inductor: { type: 'inductor', properties: { inductance: 0.1 }, rotation: 0 },
 };
 
 function nodeOffset(type: ComponentType): number {
@@ -17,6 +19,8 @@ function nodeOffset(type: ComponentType): number {
     case 'bulb': return 50;
     case 'switch': return 50;
     case 'resistor': return 50;
+    case 'capacitor': return 40;
+    case 'inductor': return 50;
     default: return 40;
   }
 }
@@ -109,7 +113,7 @@ export function useCircuit(initial?: { nodes?: CircuitNode[]; components?: Circu
       type: 'wire',
       nodeA: fromNode,
       nodeB: toNode,
-      properties: {},
+      properties: { wireResistance: 0 },
       name: `Wire`,
       position: {
         x: (fromN.position.x + toN.position.x) / 2,

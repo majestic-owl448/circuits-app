@@ -14,6 +14,8 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   switch: { type: 'switch', properties: { isClosed: false }, rotation: 0 },
   resistor: { type: 'resistor', properties: { resistance: 100 }, rotation: 0 },
   'source-resistance': { type: 'battery', properties: { voltage: 9, internalResistance: 0 }, rotation: 0 },
+  capacitor: { type: 'capacitor', properties: { capacitance: 0.001 }, rotation: 0 },
+  inductor: { type: 'inductor', properties: { inductance: 0.1 }, rotation: 0 },
 };
 
 let nodeCounter = 0;

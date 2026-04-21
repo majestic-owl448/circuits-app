@@ -75,6 +75,42 @@ export function PropertyInspector({ component, onUpdate, onClose }: Props) {
           </div>
         )}
 
+        {type === 'capacitor' && (
+          <div className={styles.field}>
+            <label htmlFor="capacitance">Capacitance (mF)</label>
+            <input
+              id="capacitance"
+              type="number"
+              name="capacitance"
+              value={((properties.capacitance ?? 0.001) * 1000).toFixed(1)}
+              onChange={(e) => {
+                const val = parseFloat(e.target.value) / 1000;
+                if (!isNaN(val) && val > 0) onUpdate(id, { capacitance: val });
+              }}
+              step="0.1"
+              min="0.1"
+            />
+          </div>
+        )}
+
+        {type === 'inductor' && (
+          <div className={styles.field}>
+            <label htmlFor="inductance">Inductance (mH)</label>
+            <input
+              id="inductance"
+              type="number"
+              name="inductance"
+              value={((properties.inductance ?? 0.1) * 1000).toFixed(0)}
+              onChange={(e) => {
+                const val = parseFloat(e.target.value) / 1000;
+                if (!isNaN(val) && val > 0) onUpdate(id, { inductance: val });
+              }}
+              step="10"
+              min="1"
+            />
+          </div>
+        )}
+
         {type === 'wire' && properties.wireResistance !== undefined && (
           <div className={styles.field}>
             <label htmlFor="wireResistance">Wire Resistance (Ω)</label>
