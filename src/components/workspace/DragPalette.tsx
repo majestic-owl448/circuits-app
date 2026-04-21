@@ -12,6 +12,8 @@ const COMPONENT_LABELS: Record<ComponentType, string> = {
   'ac-source': 'AC Source',
   'dc-ac-converter': 'DC-to-AC Converter',
   'ac-dc-converter': 'AC-to-DC Converter',
+  diode: 'Diode',
+  transistor: 'Transistor',
 };
 
 interface Props {
