@@ -6,9 +6,10 @@ Interactive educational app for learning electrical circuits. Structured as prog
 
 ## Current Status
 
-- Chapters 1-6 are fully implemented and wired into registries. Chapter 6 content authoring complete: all 15 lessons and 15 quizzes authored across 5 units.
-- Lesson count: 92 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15, Chapter 5: 15, Chapter 6: 15).
-- Quiz count: 89 total (Chapter 1-5: 74, Chapter 6: 15).
+- Chapters 1-7 are fully implemented and wired into registries. Chapter 7 content authoring complete: all 13 lessons and 13 quizzes authored across 5 units.
+- Lesson count: 105 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15, Chapter 5: 15, Chapter 6: 15, Chapter 7: 13).
+- Quiz count: 102 total (Chapter 1-6: 89, Chapter 7: 13).
+- Chapter 7 implementation: added `ac-source`, `dc-ac-converter`, `ac-dc-converter` component types with amplitude/frequency properties; legacy solver handles AC sources (peak voltage) and converter pass-through; time simulator extended with sinusoidal AC waveform mode; ComponentRenderer adds SVG symbols for all three new types; SandboxView wires AC/Conversion domain to `unlockedFeatures.includes('ac')`.
 - Build and lint pass.
 - Chapters 4-10 planning docs now include clarified challenge-type cardinality, normalized feature-gating wording standards (including Chapters 4-10 phrasing cleanup), deterministic Chapter 10 Dimension 4 capture rules, Unit 5 lesson differentiation guidance, and explicit documentation-boundary rules for defaults/thread dedupe/spec-pointer usage.
 - Added implementation execution checklist for Chapters 4-10 at `docs/ch4-10-implementation-checklist.md` with phase-by-phase file-level tasks and acceptance criteria.
