@@ -40,6 +40,9 @@ function detectTransient(components: CircuitComponent[]): TransientConfig | null
   const inductor = components.find(c => c.type === 'inductor');
   if (!capacitor && !inductor) return null;
 
+  // Any open switch means the circuit is not yet driving the reactive component.
+  if (components.some(c => c.type === 'switch' && !(c.properties.isClosed ?? false))) return null;
+
   const sourceVoltage = components
     .filter(c => c.type === 'battery')
     .reduce((sum, c) => sum + (c.properties.voltage ?? 0), 0);

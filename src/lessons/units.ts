@@ -180,4 +180,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Understand that not all component values must be treated as perfectly exact in a more realistic simulation.',
     lessons: ['lesson-ch5-5-1', 'lesson-ch5-5-2', 'lesson-ch5-5-3'],
   },
+  // Chapter 6: Capacitors, Inductors, and Time-Dependent Behavior
+  {
+    id: 'ch6-unit-1',
+    title: 'Circuits Can Change Over Time',
+    stageLabel: 'Intermediate to Late Intermediate',
+    description: 'Understand that some circuits have behavior that unfolds over time rather than appearing instantly in a final state.',
+    lessons: ['lesson-ch6-1-1', 'lesson-ch6-1-2'],
+  },
+  {
+    id: 'ch6-unit-2',
+    title: 'Capacitors',
+    stageLabel: 'Late Intermediate',
+    description: 'Explore the capacitor as a component whose behavior changes over time and can be described in terms of storing electrical energy in the simplified instructional model.',
+    lessons: ['lesson-ch6-2-1', 'lesson-ch6-2-2', 'lesson-ch6-2-3', 'lesson-ch6-2-4'],
+  },
+  {
+    id: 'ch6-unit-3',
+    title: 'Inductors',
+    stageLabel: 'Late Intermediate',
+    description: 'Explore the inductor as another time-dependent component with behavior that differs from the capacitor.',
+    lessons: ['lesson-ch6-3-1', 'lesson-ch6-3-2', 'lesson-ch6-3-3', 'lesson-ch6-3-4'],
+  },
+  {
+    id: 'ch6-unit-4',
+    title: 'Capacitors Versus Inductors',
+    stageLabel: 'Late Intermediate',
+    description: 'Compare capacitor and inductor behaviors directly and understand that they are not interchangeable.',
+    lessons: ['lesson-ch6-4-1', 'lesson-ch6-4-2'],
+  },
+  {
+    id: 'ch6-unit-5',
+    title: 'First Time-Aware Design Challenges',
+    stageLabel: 'Late Intermediate',
+    description: 'Apply time-dependent reasoning in guided and semi-open-ended challenges involving both initial and steady-state behavior.',
+    lessons: ['lesson-ch6-5-1', 'lesson-ch6-5-2', 'lesson-ch6-5-3'],
+  },
 ];
