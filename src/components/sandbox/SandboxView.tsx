@@ -19,6 +19,8 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   'ac-source': { type: 'ac-source', properties: { amplitude: 9, frequency: 60 }, rotation: 0 },
   'dc-ac-converter': { type: 'dc-ac-converter', properties: {}, rotation: 0 },
   'ac-dc-converter': { type: 'ac-dc-converter', properties: {}, rotation: 0 },
+  diode: { type: 'diode', properties: { isForwardBiased: true }, rotation: 0 },
+  transistor: { type: 'transistor', properties: { controlEnabled: true }, rotation: 0 },
 };
 
 let nodeCounter = 0;
@@ -114,7 +116,7 @@ export function SandboxView() {
     {
       id: 'active',
       title: 'Active',
-      items: showAllTools ? ['diode', 'transistor'] : [],
+      items: (showAllTools || unlockedFeatures.includes('active')) ? ['diode', 'transistor'] : [],
     },
     {
       id: 'logic',
@@ -184,7 +186,7 @@ export function SandboxView() {
             return;
           }
 
-          if (item === 'ac-source' || item === 'dc-ac-converter' || item === 'ac-dc-converter') {
+          if (item === 'ac-source' || item === 'dc-ac-converter' || item === 'ac-dc-converter' || item === 'diode' || item === 'transistor') {
             handleAddComponent(item);
             return;
           }

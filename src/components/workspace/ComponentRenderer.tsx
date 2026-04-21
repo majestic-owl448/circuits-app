@@ -92,6 +92,8 @@ export function ComponentRenderer({
       {type === 'ac-source' && <ACSourceSVG rotation={rotation} />}
       {type === 'dc-ac-converter' && <ConverterSVG label="DC→AC" />}
       {type === 'ac-dc-converter' && <ConverterSVG label="AC→DC" />}
+      {type === 'diode' && <DiodeSVG isForwardBiased={properties.isForwardBiased ?? true} />}
+      {type === 'transistor' && <TransistorSVG controlEnabled={properties.controlEnabled ?? true} />}
 
       {/* Label — counter-rotate to stay upright */}
       <text
@@ -224,6 +226,12 @@ function getAriaLabel(comp: CircuitComponent, isActive: boolean, result?: Compon
   if (comp.type === 'ac-dc-converter') {
     label += ', AC to DC conversion block';
   }
+  if (comp.type === 'diode') {
+    label += comp.properties.isForwardBiased !== false ? ', forward biased (conducting)' : ', reverse biased (blocking)';
+  }
+  if (comp.type === 'transistor') {
+    label += comp.properties.controlEnabled !== false ? ', control enabled (conducting)' : ', control disabled (blocking)';
+  }
   if (isActive && result) {
     label += `, ${result.voltage.toFixed(1)}V, ${result.current.toFixed(3)}A`;
   }
@@ -327,6 +335,37 @@ function ACSourceSVG({ rotation }: { rotation: number }) {
         strokeLinecap="round"
       />
       <text x="-18" y="-22" fontSize="11" textAnchor="middle" dominantBaseline="middle" fill="var(--color-text-secondary)" transform={`rotate(${-rotation}, -18, -22)`}>~</text>
+    </g>
+  );
+}
+
+function DiodeSVG({ isForwardBiased }: { isForwardBiased: boolean }) {
+  const stroke = isForwardBiased ? 'var(--color-text)' : 'var(--color-text-secondary)';
+  return (
+    <g opacity={isForwardBiased ? 1 : 0.5}>
+      {/* Triangle pointing right (anode → cathode) */}
+      <polygon points="-12,10 -12,-10 10,0" fill={stroke} stroke={stroke} strokeWidth="1" />
+      {/* Cathode bar */}
+      <line x1="10" y1="-12" x2="10" y2="12" stroke={stroke} strokeWidth="2" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function TransistorSVG({ controlEnabled }: { controlEnabled: boolean }) {
+  const mainColor = 'var(--color-text)';
+  const ctrlColor = controlEnabled ? 'var(--color-primary)' : 'var(--color-text-secondary)';
+  return (
+    <g>
+      <circle r="16" fill="none" stroke={mainColor} strokeWidth="1.5" />
+      {/* Vertical base line */}
+      <line x1="-6" y1="-12" x2="-6" y2="12" stroke={mainColor} strokeWidth="2" />
+      {/* Collector line */}
+      <line x1="-6" y1="-8" x2="12" y2="-14" stroke={mainColor} strokeWidth="1.5" />
+      {/* Emitter line with arrow */}
+      <line x1="-6" y1="8" x2="12" y2="14" stroke={mainColor} strokeWidth="1.5" />
+      <polygon points="8,11 14,16 12,9" fill={mainColor} />
+      {/* Base control indicator */}
+      <circle cx="-16" cy="0" r="4" fill={ctrlColor} />
     </g>
   );
 }

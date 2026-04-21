@@ -17,10 +17,16 @@ export function solveLegacy(
 
   if (components.length === 0) return emptyResult;
 
-  // Capacitors are open circuits in DC steady state — remove them so they break the loop.
-  // Inductors are short circuits in DC steady state — keep them.
-  // AC sources and converters remain in the graph; ac-source provides amplitude as voltage.
-  const dcComponents = components.filter(c => c.type !== 'capacitor');
+  // Capacitors: open circuits in DC steady state — remove.
+  // Reverse-biased diodes: open circuits — remove.
+  // Disabled transistors: open circuits (like open switch) — remove.
+  // Everything else remains; ac-source provides amplitude as voltage.
+  const dcComponents = components.filter(c => {
+    if (c.type === 'capacitor') return false;
+    if (c.type === 'diode' && !(c.properties.isForwardBiased ?? true)) return false;
+    if (c.type === 'transistor' && !(c.properties.controlEnabled ?? true)) return false;
+    return true;
+  });
 
   const graph = buildGraph(nodes, dcComponents);
   const loops = findLoops(graph);

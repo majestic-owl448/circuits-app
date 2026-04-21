@@ -252,4 +252,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Integrate AC basics, AC/DC comparison, and conversion-stage reasoning in review challenges.',
     lessons: ['lesson-ch7-5-1', 'lesson-ch7-5-2'],
   },
+  // Chapter 8: Diodes, Transistors, Rectification, and Switching
+  {
+    id: 'ch8-unit-1',
+    title: 'Diodes',
+    stageLabel: 'Late Intermediate',
+    description: 'Understand the diode as a component with directional behavior and learn to use it in simple DC circuits.',
+    lessons: ['lesson-ch8-1-1', 'lesson-ch8-1-2', 'lesson-ch8-1-3'],
+  },
+  {
+    id: 'ch8-unit-2',
+    title: 'Rectification',
+    stageLabel: 'Late Intermediate - Active Components',
+    description: 'See how diode directionality connects to AC/DC conversion through introductory rectification.',
+    lessons: ['lesson-ch8-2-1', 'lesson-ch8-2-2', 'lesson-ch8-2-3'],
+  },
+  {
+    id: 'ch8-unit-3',
+    title: 'Transistors',
+    stageLabel: 'Late Intermediate - Active Components',
+    description: 'Understand the transistor as a component used for switching and controlling circuit behavior.',
+    lessons: ['lesson-ch8-3-1', 'lesson-ch8-3-2', 'lesson-ch8-3-3'],
+  },
+  {
+    id: 'ch8-unit-4',
+    title: 'Switching and Control Systems',
+    stageLabel: 'Late Intermediate - Active Components',
+    description: 'Apply diode and transistor concepts in simple switching and control design problems.',
+    lessons: ['lesson-ch8-4-1', 'lesson-ch8-4-2'],
+  },
+  {
+    id: 'ch8-unit-5',
+    title: 'Diodes, Rectification, and Switching Review',
+    stageLabel: 'Late Intermediate - Active Components',
+    description: 'Integrate diode behavior, rectification, transistor switching, and component-choice reasoning.',
+    lessons: ['lesson-ch8-5-1', 'lesson-ch8-5-2'],
+  },
 ];
