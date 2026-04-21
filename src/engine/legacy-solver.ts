@@ -20,11 +20,13 @@ export function solveLegacy(
   // Capacitors: open circuits in DC steady state — remove.
   // Reverse-biased diodes: open circuits — remove.
   // Disabled transistors: open circuits (like open switch) — remove.
+  // Logic gates: not circuit elements — remove from analog solver.
   // Everything else remains; ac-source provides amplitude as voltage.
   const dcComponents = components.filter(c => {
     if (c.type === 'capacitor') return false;
     if (c.type === 'diode' && !(c.properties.isForwardBiased ?? true)) return false;
     if (c.type === 'transistor' && !(c.properties.controlEnabled ?? true)) return false;
+    if (['not-gate', 'and-gate', 'or-gate', 'nand-gate', 'nor-gate', 'xor-gate'].includes(c.type)) return false;
     return true;
   });
 

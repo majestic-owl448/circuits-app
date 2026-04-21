@@ -1,4 +1,4 @@
-export type ComponentType = 'battery' | 'resistor' | 'switch' | 'wire' | 'bulb' | 'capacitor' | 'inductor' | 'ac-source' | 'dc-ac-converter' | 'ac-dc-converter' | 'diode' | 'transistor';
+export type ComponentType = 'battery' | 'resistor' | 'switch' | 'wire' | 'bulb' | 'capacitor' | 'inductor' | 'ac-source' | 'dc-ac-converter' | 'ac-dc-converter' | 'diode' | 'transistor' | 'not-gate' | 'and-gate' | 'or-gate' | 'nand-gate' | 'nor-gate' | 'xor-gate';
 
 export interface OperatingLimit {
   type: 'current' | 'voltage' | 'power';
@@ -30,6 +30,8 @@ export interface ComponentProperties {
   frequency?: number;
   isForwardBiased?: boolean;
   controlEnabled?: boolean;
+  inputA?: boolean;
+  inputB?: boolean;
 }
 
 export interface CircuitComponent {

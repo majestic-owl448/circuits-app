@@ -288,4 +288,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Integrate diode behavior, rectification, transistor switching, and component-choice reasoning.',
     lessons: ['lesson-ch8-5-1', 'lesson-ch8-5-2'],
   },
+  // Chapter 9: Logic Gates and Digital-Style Behavior
+  {
+    id: 'ch9-unit-1',
+    title: 'From Switching to Logic',
+    stageLabel: 'Advanced Beginner Electronics to Early Digital Logic',
+    description: 'Understand how transistor-style switching can be reframed as digital-style input and output state behavior.',
+    lessons: ['lesson-ch9-1-1', 'lesson-ch9-1-2'],
+  },
+  {
+    id: 'ch9-unit-2',
+    title: 'Basic Logic Gates',
+    stageLabel: 'Early Digital Logic',
+    description: 'Learn the behavior of NOT, AND, OR gates and how truth tables systematically describe them.',
+    lessons: ['lesson-ch9-2-1', 'lesson-ch9-2-2', 'lesson-ch9-2-3', 'lesson-ch9-2-4', 'lesson-ch9-2-5'],
+  },
+  {
+    id: 'ch9-unit-3',
+    title: 'More Gate Variants',
+    stageLabel: 'Early Digital Logic',
+    description: 'Extend your gate vocabulary with NAND, NOR, and XOR, and understand what makes each useful.',
+    lessons: ['lesson-ch9-3-1', 'lesson-ch9-3-2'],
+  },
+  {
+    id: 'ch9-unit-4',
+    title: 'Small Logic Designs',
+    stageLabel: 'Early Digital Logic to Introductory System Design',
+    description: 'Apply gate behavior to small design problems by choosing and combining gates to meet specific output rules.',
+    lessons: ['lesson-ch9-4-1', 'lesson-ch9-4-2', 'lesson-ch9-4-3'],
+  },
+  {
+    id: 'ch9-unit-5',
+    title: 'Logic and Digital-Style Review',
+    stageLabel: 'Introductory System Design',
+    description: 'Integrate the chapter\'s gate and logic-design ideas in guided and open-ended review challenges.',
+    lessons: ['lesson-ch9-5-1', 'lesson-ch9-5-2'],
+  },
 ];

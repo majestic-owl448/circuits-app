@@ -10,6 +10,7 @@ const LESSON_LOADERS = new Map<number, () => Promise<{ default: LessonConfig[] }
   [6, () => import('../lessons/registry/chapter-6.ts')],
   [7, () => import('../lessons/registry/chapter-7.ts')],
   [8, () => import('../lessons/registry/chapter-8.ts')],
+  [9, () => import('../lessons/registry/chapter-9.ts')],
 ]);
 
 const QUIZ_LOADERS = new Map<number, () => Promise<{ default: QuizConfig[] }>>([
@@ -21,6 +22,7 @@ const QUIZ_LOADERS = new Map<number, () => Promise<{ default: QuizConfig[] }>>([
   [6, () => import('../quizzes/registry/chapter-6.ts')],
   [7, () => import('../quizzes/registry/chapter-7.ts')],
   [8, () => import('../quizzes/registry/chapter-8.ts')],
+  [9, () => import('../quizzes/registry/chapter-9.ts')],
 ]);
 
 let lessonRegistryPromise: Promise<LessonConfig[]> | null = null;

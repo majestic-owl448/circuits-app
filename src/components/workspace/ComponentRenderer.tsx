@@ -1,4 +1,5 @@
 import type { CircuitComponent, ComponentResult } from '../../types/circuit.ts';
+import { computeGateOutput } from '../../engine/gates.ts';
 import styles from './ComponentRenderer.module.css';
 
 interface Props {
@@ -94,6 +95,12 @@ export function ComponentRenderer({
       {type === 'ac-dc-converter' && <ConverterSVG label="AC→DC" />}
       {type === 'diode' && <DiodeSVG isForwardBiased={properties.isForwardBiased ?? true} />}
       {type === 'transistor' && <TransistorSVG controlEnabled={properties.controlEnabled ?? true} />}
+      {type === 'not-gate' && <NotGateSVG inputA={properties.inputA ?? false} />}
+      {type === 'and-gate' && <AndGateSVG inputA={properties.inputA ?? false} inputB={properties.inputB ?? false} />}
+      {type === 'or-gate' && <OrGateSVG inputA={properties.inputA ?? false} inputB={properties.inputB ?? false} />}
+      {type === 'nand-gate' && <NandGateSVG inputA={properties.inputA ?? false} inputB={properties.inputB ?? false} />}
+      {type === 'nor-gate' && <NorGateSVG inputA={properties.inputA ?? false} inputB={properties.inputB ?? false} />}
+      {type === 'xor-gate' && <XorGateSVG inputA={properties.inputA ?? false} inputB={properties.inputB ?? false} />}
 
       {/* Label — counter-rotate to stay upright */}
       <text
@@ -231,6 +238,11 @@ function getAriaLabel(comp: CircuitComponent, isActive: boolean, result?: Compon
   }
   if (comp.type === 'transistor') {
     label += comp.properties.controlEnabled !== false ? ', control enabled (conducting)' : ', control disabled (blocking)';
+  }
+  if (['not-gate', 'and-gate', 'or-gate', 'nand-gate', 'nor-gate', 'xor-gate'].includes(comp.type)) {
+    const a = comp.properties.inputA ? 'high' : 'low';
+    const b = comp.properties.inputB ? 'high' : 'low';
+    label += comp.type === 'not-gate' ? `, input ${a}` : `, input A ${a}, input B ${b}`;
   }
   if (isActive && result) {
     label += `, ${result.voltage.toFixed(1)}V, ${result.current.toFixed(3)}A`;
@@ -384,6 +396,85 @@ function ConverterSVG({ label }: { label: string }) {
       >
         {label}
       </text>
+    </g>
+  );
+}
+
+function gateStateColor(state: boolean): string {
+  return state ? 'var(--color-primary)' : 'var(--color-text-secondary)';
+}
+
+function NotGateSVG({ inputA }: { inputA: boolean }) {
+  const out = computeGateOutput('not-gate', inputA, false);
+  return (
+    <g>
+      <polygon points="-18,-12 -18,12 14,0" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="18" cy="0" r="4" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-22" cy="0" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="24" cy="0" r="4" fill={gateStateColor(out)} />
+    </g>
+  );
+}
+
+function AndGateSVG({ inputA, inputB }: { inputA: boolean; inputB: boolean }) {
+  const out = computeGateOutput('and-gate', inputA, inputB);
+  return (
+    <g>
+      <path d="M-16,-14 L-16,14 Q18,14 18,0 Q18,-14 -16,-14 Z" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-20" cy="-7" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="-20" cy="7" r="4" fill={gateStateColor(inputB)} />
+      <circle cx="22" cy="0" r="4" fill={gateStateColor(out)} />
+    </g>
+  );
+}
+
+function OrGateSVG({ inputA, inputB }: { inputA: boolean; inputB: boolean }) {
+  const out = computeGateOutput('or-gate', inputA, inputB);
+  return (
+    <g>
+      <path d="M-16,-14 Q-4,-14 18,0 Q-4,14 -16,14 Q-4,0 -16,-14 Z" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-20" cy="-7" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="-20" cy="7" r="4" fill={gateStateColor(inputB)} />
+      <circle cx="22" cy="0" r="4" fill={gateStateColor(out)} />
+    </g>
+  );
+}
+
+function NandGateSVG({ inputA, inputB }: { inputA: boolean; inputB: boolean }) {
+  const out = computeGateOutput('nand-gate', inputA, inputB);
+  return (
+    <g>
+      <path d="M-16,-14 L-16,14 Q14,14 14,0 Q14,-14 -16,-14 Z" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="18" cy="0" r="4" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-20" cy="-7" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="-20" cy="7" r="4" fill={gateStateColor(inputB)} />
+      <circle cx="24" cy="0" r="4" fill={gateStateColor(out)} />
+    </g>
+  );
+}
+
+function NorGateSVG({ inputA, inputB }: { inputA: boolean; inputB: boolean }) {
+  const out = computeGateOutput('nor-gate', inputA, inputB);
+  return (
+    <g>
+      <path d="M-16,-14 Q-4,-14 14,0 Q-4,14 -16,14 Q-4,0 -16,-14 Z" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="18" cy="0" r="4" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-20" cy="-7" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="-20" cy="7" r="4" fill={gateStateColor(inputB)} />
+      <circle cx="24" cy="0" r="4" fill={gateStateColor(out)} />
+    </g>
+  );
+}
+
+function XorGateSVG({ inputA, inputB }: { inputA: boolean; inputB: boolean }) {
+  const out = computeGateOutput('xor-gate', inputA, inputB);
+  return (
+    <g>
+      <path d="M-12,-14 Q0,-14 18,0 Q0,14 -12,14 Q0,0 -12,-14 Z" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <path d="M-18,-14 Q-6,0 -18,14" fill="none" stroke="var(--color-text)" strokeWidth="1.5" />
+      <circle cx="-22" cy="-7" r="4" fill={gateStateColor(inputA)} />
+      <circle cx="-22" cy="7" r="4" fill={gateStateColor(inputB)} />
+      <circle cx="22" cy="0" r="4" fill={gateStateColor(out)} />
     </g>
   );
 }

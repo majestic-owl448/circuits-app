@@ -21,6 +21,12 @@ const COMPONENT_DEFAULTS: Record<string, Omit<CircuitComponent, 'id' | 'name' | 
   'ac-dc-converter': { type: 'ac-dc-converter', properties: {}, rotation: 0 },
   diode: { type: 'diode', properties: { isForwardBiased: true }, rotation: 0 },
   transistor: { type: 'transistor', properties: { controlEnabled: true }, rotation: 0 },
+  'not-gate': { type: 'not-gate', properties: { inputA: false }, rotation: 0 },
+  'and-gate': { type: 'and-gate', properties: { inputA: false, inputB: false }, rotation: 0 },
+  'or-gate': { type: 'or-gate', properties: { inputA: false, inputB: false }, rotation: 0 },
+  'nand-gate': { type: 'nand-gate', properties: { inputA: false, inputB: false }, rotation: 0 },
+  'nor-gate': { type: 'nor-gate', properties: { inputA: false, inputB: false }, rotation: 0 },
+  'xor-gate': { type: 'xor-gate', properties: { inputA: false, inputB: false }, rotation: 0 },
 };
 
 let nodeCounter = 0;
@@ -121,7 +127,9 @@ export function SandboxView() {
     {
       id: 'logic',
       title: 'Logic',
-      items: showAllTools ? ['input toggle', 'truth table'] : [],
+      items: (showAllTools || unlockedFeatures.includes('logic'))
+        ? ['not-gate', 'and-gate', 'or-gate', 'nand-gate', 'nor-gate', 'xor-gate']
+        : [],
     },
   ];
 
@@ -186,7 +194,7 @@ export function SandboxView() {
             return;
           }
 
-          if (item === 'ac-source' || item === 'dc-ac-converter' || item === 'ac-dc-converter' || item === 'diode' || item === 'transistor') {
+          if (['ac-source', 'dc-ac-converter', 'ac-dc-converter', 'diode', 'transistor', 'not-gate', 'and-gate', 'or-gate', 'nand-gate', 'nor-gate', 'xor-gate'].includes(item)) {
             handleAddComponent(item);
             return;
           }
