@@ -9,6 +9,9 @@ const COMPONENT_LABELS: Record<ComponentType, string> = {
   wire: 'Wire',
   capacitor: 'Capacitor',
   inductor: 'Inductor',
+  'ac-source': 'AC Source',
+  'dc-ac-converter': 'DC-to-AC Converter',
+  'ac-dc-converter': 'AC-to-DC Converter',
 };
 
 interface Props {

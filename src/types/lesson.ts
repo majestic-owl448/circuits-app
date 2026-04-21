@@ -31,7 +31,7 @@ export interface LessonConfig {
   quizzesUnlocked: string[];
 }
 
-export type LessonAction = 'toggle-switch' | 'drag-to-place' | 'connect-wire' | 'delete-component' | 'rename-component';
+export type LessonAction = 'toggle-switch' | 'drag-to-place' | 'connect-wire' | 'delete-component' | 'rename-component' | 'inspect';
 
 export interface FormulaRef {
   formula: string;
@@ -138,6 +138,7 @@ export interface EvaluationCriteria {
   requiredEvidenceSignals?: string[];
   observedEvidenceSignals?: string[];
   minEvidenceMatches?: number;
+  topologyCheck?: string;
 }
 
 export interface EvaluationCriterionOutcome {
