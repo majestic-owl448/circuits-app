@@ -1,7 +1,9 @@
 import { useState, useCallback } from 'react';
 import type { Challenge } from '../../types/lesson.ts';
+import type { MultiCriteriaEvaluationResult } from '../../types/lesson.ts';
 import type { SimulationResult } from '../../types/circuit.ts';
-import { evaluate } from '../../engine/evaluator.ts';
+import { evaluate, evaluateMultiCriteria } from '../../engine/evaluator.ts';
+import { RubricPanel } from './RubricPanel.tsx';
 import styles from './ChallengeView.module.css';
 
 interface Props {
@@ -16,6 +18,7 @@ interface Props {
 export function ChallengeView({ challenge, simulation, checkpointSimulations, currentCheckpoint, components, onComplete }: Props) {
   const [hintIndex, setHintIndex] = useState(-1);
   const [feedback, setFeedback] = useState<{ passed: boolean; message: string } | null>(null);
+  const [rubricResult, setRubricResult] = useState<MultiCriteriaEvaluationResult | null>(null);
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
   const [selectedClassifyCategory, setSelectedClassifyCategory] = useState<string | null>(null);
   const [selectedDiagnoseCause, setSelectedDiagnoseCause] = useState<string | null>(null);
@@ -115,6 +118,16 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
       ? checkpointSimulations[activeCheckpoint]
       : simulation;
 
+    if (challenge.showRubricPanel) {
+      const multiResult = evaluateMultiCriteria(challenge.evaluationCriteria, selectedSimulation, components);
+      setRubricResult(multiResult);
+      setFeedback({ passed: multiResult.passed, message: multiResult.passed ? 'All required criteria met.' : 'Some criteria were not met. Review the rubric below.' });
+      if (!multiResult.passed && hintIndex < challenge.hints.length - 1) {
+        setHintIndex(prev => prev + 1);
+      }
+      return;
+    }
+
     const baseResult = evaluate(challenge.evaluationCriteria, selectedSimulation, components);
 
     if (baseResult.passed && challenge.evaluationCriteria.checkpointRanges && challenge.evaluationCriteria.checkpointRanges.length > 0) {
@@ -155,6 +168,7 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
     selectedDiagnoseCause,
     calcInput,
     hintIndex,
+    rubricResult,
   ]);
 
   return (
@@ -254,6 +268,11 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
         >
           {feedback.message}
         </div>
+      )}
+
+      {/* Rubric panel for multi-criteria challenges */}
+      {challenge.showRubricPanel && rubricResult && (
+        <RubricPanel result={rubricResult} />
       )}
 
       {/* Detailed breakdown */}

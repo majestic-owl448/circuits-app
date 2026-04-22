@@ -99,6 +99,7 @@ export interface Challenge {
     evidenceItems: string[];
     minEvidenceMatches?: number;
   };
+  showRubricPanel?: boolean;
 }
 
 export interface ChallengeChoice {

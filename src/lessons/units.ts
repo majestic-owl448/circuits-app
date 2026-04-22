@@ -324,4 +324,40 @@ export const unitRegistry: UnitConfig[] = [
     description: 'Integrate the chapter\'s gate and logic-design ideas in guided and open-ended review challenges.',
     lessons: ['lesson-ch9-5-1', 'lesson-ch9-5-2'],
   },
+  // Chapter 10: Mastery, Review, and Capstone Challenges
+  {
+    id: 'ch10-unit-1',
+    title: 'Whole-Curriculum Review',
+    stageLabel: 'Capstone / Mastery',
+    description: 'Learner refreshes the major conceptual map of the course before entering larger capstone challenges.',
+    lessons: ['lesson-ch10-1-1', 'lesson-ch10-1-2', 'lesson-ch10-1-3'],
+  },
+  {
+    id: 'ch10-unit-2',
+    title: 'Mixed-Domain Troubleshooting',
+    stageLabel: 'Capstone / Mastery',
+    description: 'Learner diagnoses and fixes larger circuits that may fail for structural, numerical, non-ideal, time-dependent, AC/DC, or logic reasons.',
+    lessons: ['lesson-ch10-2-1', 'lesson-ch10-2-2'],
+  },
+  {
+    id: 'ch10-unit-3',
+    title: 'Domain-Specific Capstones',
+    stageLabel: 'Capstone / Mastery',
+    description: 'Learner completes capstone-style challenges in each major branch of the curriculum.',
+    lessons: ['lesson-ch10-3-1', 'lesson-ch10-3-2', 'lesson-ch10-3-3', 'lesson-ch10-3-4'],
+  },
+  {
+    id: 'ch10-unit-4',
+    title: 'Cross-Domain Integration Challenges',
+    stageLabel: 'Capstone / Mastery',
+    description: 'Learner works on larger scenarios that blend more than one major curriculum branch together.',
+    lessons: ['lesson-ch10-4-1', 'lesson-ch10-4-2'],
+  },
+  {
+    id: 'ch10-unit-5',
+    title: 'Final Mastery Challenge',
+    stageLabel: 'Capstone / Mastery',
+    description: 'Learner demonstrates integrated understanding of the curriculum at the intended product endpoint.',
+    lessons: ['lesson-ch10-5-1', 'lesson-ch10-5-2'],
+  },
 ];
