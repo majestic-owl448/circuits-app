@@ -2,6 +2,7 @@ import { Suspense, lazy } from 'react';
 import { useAppState } from '../../state/app-hooks.ts';
 import { TopNav } from '../nav/TopNav.tsx';
 import { HomePage } from './HomePage.tsx';
+import { ErrorBoundary } from './ErrorBoundary.tsx';
 import styles from './AppShell.module.css';
 
 const LessonView = lazy(() => import('../lessons/LessonView.tsx').then(module => ({ default: module.LessonView })));
@@ -18,12 +19,14 @@ export function AppShell() {
       <main className={styles.main}>
         {view === 'home' && <HomePage />}
         {view !== 'home' && (
-          <Suspense fallback={<div className={styles.loading}>Loading view...</div>}>
-            {view === 'lesson' && <LessonView />}
-            {view === 'sandbox' && <SandboxView />}
-            {view === 'theory' && <TheoryPageView />}
-            {view === 'quiz' && <QuizView />}
-          </Suspense>
+          <ErrorBoundary>
+            <Suspense fallback={<div className={styles.loading}>Loading view...</div>}>
+              {view === 'lesson' && <LessonView />}
+              {view === 'sandbox' && <SandboxView />}
+              {view === 'theory' && <TheoryPageView />}
+              {view === 'quiz' && <QuizView />}
+            </Suspense>
+          </ErrorBoundary>
         )}
       </main>
     </div>

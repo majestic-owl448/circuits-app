@@ -4,10 +4,10 @@ An interactive educational web app that teaches electrical circuits through hand
 
 ## Features
 
-- **47 structured lessons** across 3 chapters, progressing from basic circuit concepts to numerical DC analysis and series/parallel reasoning
-- **Interactive circuit editor** — drag-and-drop components (batteries, bulbs, resistors, switches, wires), draw connections, and simulate in real time
-- **Circuit simulation engine** — calculates current, voltage, resistance, and power with visual current-flow overlay
-- **Sandbox mode** — free-form circuit building unlocked as you progress through lessons
+- **145 structured lessons** across 10 chapters, progressing from basic circuit concepts through numerical DC analysis, series/parallel circuits, measurement, non-ideal components, transient behavior, AC circuits, semiconductors, logic gates, and a capstone review
+- **Interactive circuit editor** — drag-and-drop components (batteries, bulbs, resistors, switches, wires, capacitors, inductors, diodes, transistors, logic gates), draw connections, and simulate in real time
+- **Circuit simulation engine** — calculates current, voltage, resistance, and power with visual current-flow overlay; supports RC/RL transient physics and AC waveforms
+- **Sandbox mode** — free-form circuit building with progressively unlocked component domains
 - **Quizzes** — multiple-choice assessments with scoring, feedback, and retry
 - **Theory reference** — accumulated reference entries from completed lessons
 - **Progress tracking** — lessons, unlocks, quiz scores, and preferences persisted to localStorage
@@ -37,9 +37,3 @@ npm run dev
 | `npm run verify:engine:mna` | Run mixed-topology MNA fixtures |
 | `npm run verify:engine:compare` | Run backend parity fixture checks |
 | `npm run verify:evaluator` | Run evaluator behavior fixtures |
-
-## Docs
-
-- Core planning and product documents live in `docs/`.
-- Future implementation gates and risk rubric: `docs/future-chapters-implementation-readiness.md`.
-- Curriculum progression QA checklist for Chapters 4-10: `docs/curriculum-progression-qa-checklist.md`.
