@@ -172,7 +172,6 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
     selectedEvidenceItems,
     calcInput,
     hintIndex,
-    rubricResult,
   ]);
 
   return (
