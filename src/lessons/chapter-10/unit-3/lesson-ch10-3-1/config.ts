@@ -131,6 +131,8 @@ export const lessonCh10_3_1: LessonConfig = {
         minEvidenceMatches: 2,
       },
       evaluationCriteria: {
+        hardPassChecks: ['diagnose-cause-selection'],
+        advisoryChecks: ['diagnose-alternative-causes'],
         acceptedCauses: ['internal-resistance-increased', 'source-degraded'],
         requiredEvidenceSignals: [
           'terminal voltage lower than expected (7.5V vs 8.78V)',

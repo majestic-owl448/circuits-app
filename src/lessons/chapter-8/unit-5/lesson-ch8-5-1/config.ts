@@ -161,7 +161,7 @@ export const lessonCh8_5_1: LessonConfig = {
     {
       id: 'challenge-2',
       prompt: 'A circuit uses a diode where a transistor was needed (control goal), and the control path does nothing. What is the root cause?',
-      type: 'diagnose',
+      type: 'choose',
       evaluationCriteria: { correctChoiceId: 'ch2-a' },
       hints: [
         'Consider what a diode can and cannot respond to.',

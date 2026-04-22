@@ -51,7 +51,7 @@ export const lessonCh9_5_2: LessonConfig = {
     {
       id: 'challenge-2',
       prompt: 'A logic system almost works but fails when A=LOW, B=LOW, C=HIGH — it produces HIGH instead of LOW. What is the root cause?',
-      type: 'diagnose',
+      type: 'choose',
       evaluationCriteria: { correctChoiceId: 'ch2-b' },
       hints: [
         'Trace Stage 1 for inputs A=LOW, B=LOW. What does each gate type produce?',

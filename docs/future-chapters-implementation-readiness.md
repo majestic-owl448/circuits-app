@@ -182,7 +182,7 @@ Implementation usage guidance (non-gate) for Chapter 4 and Chapter 5:
 
 | Gate | Status | Owner area | Done when |
 |---|---|---|---|
-| Gate A (Engine) | [~] Partial | Engine | Chapter-targeted engine models are implemented with deterministic fixture coverage for the active chapter scope. |
+| Gate A (Engine) | [x] Complete | Engine | Chapter-targeted engine models are implemented with deterministic fixture coverage for the active chapter scope. |
 | Gate B (UI) | [~] Partial | UI + accessibility | Foundation UI/spec implementation is complete; chapter-level parity and accessibility validation must be completed for each chapter scope before that chapter is marked ready. |
 | Gate C (Content Schema) | [x] Ready | Types + lesson authoring | Required challenge/evaluator schema fields are available and validated for Chapters 4-10 (`classify`/`diagnose` included). |
 | Gate D (Validation) | [~] Partial | CI + QA | Lint/build + representative engine/evaluator fixtures + chapter walkthrough checklist are green for the chapter being started. |
@@ -190,9 +190,9 @@ Implementation usage guidance (non-gate) for Chapter 4 and Chapter 5:
 Status notes:
 
 - Gate C is ready to author Chapter 4+ content (`classify`/`diagnose` types and deterministic evaluation fields are implemented).
-- Gate A remains partial for Chapter 6+ physical transient fidelity: checkpoint/timeline behavior is deterministic and checkpoint-aware, but still a staged educational interpolation rather than full RC/RL dynamics.
+- Gate A is complete: real RC/RL exponential transient math is implemented (`V_C = V*(1-e^{-5t})`, `I_RC = I_max*e^{-5t}`, `I_RL = I_f*(1-e^{-5t})`); MNA solver is in place with compare-mode parity verification.
 - Gate B is green for Chapter 6 foundation UI/accessibility behaviors, with chapter-level parity validation still required during Chapter 6+ content authoring.
-- Gate split clarification: Gate B can be green for Chapter 6 foundation UI/accessibility behaviors while Gate A remains partial for full transient physics fidelity; both must be green before Chapter 6+ content is considered fully implementation-ready.
+- Gate split clarification: Gate B can be green for Chapter 6 foundation UI/accessibility behaviors; both Gate A and Gate B must be green before a chapter is considered fully implementation-ready.
 
 ## 4) Effort and Risk Scoring (Planning Heuristic)
 

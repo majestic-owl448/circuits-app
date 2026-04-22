@@ -143,6 +143,8 @@ export const lessonCh5_5_3: LessonConfig = {
         minEvidenceMatches: 2,
       },
       evaluationCriteria: {
+        hardPassChecks: ['diagnose-cause-selection'],
+        advisoryChecks: ['diagnose-alternative-causes'],
         acceptedCauses: ['operating-limit'],
         requiredEvidenceSignals: [
           'bulb shows isFailed state',

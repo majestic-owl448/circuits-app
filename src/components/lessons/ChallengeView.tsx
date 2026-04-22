@@ -22,6 +22,7 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
   const [selectedChoice, setSelectedChoice] = useState<string | null>(null);
   const [selectedClassifyCategory, setSelectedClassifyCategory] = useState<string | null>(null);
   const [selectedDiagnoseCause, setSelectedDiagnoseCause] = useState<string | null>(null);
+  const [selectedEvidenceItems, setSelectedEvidenceItems] = useState<string[]>([]);
   const [calcInput, setCalcInput] = useState('');
   const [showBreakdown, setShowBreakdown] = useState(false);
 
@@ -70,14 +71,16 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
         setFeedback({ passed: false, message: 'Please select a likely cause.' });
         return;
       }
+      if (challenge.diagnoseConfig.evidenceItems.length > 0 && selectedEvidenceItems.length === 0) {
+        setFeedback({ passed: false, message: 'Please select at least one piece of supporting evidence.' });
+        return;
+      }
 
       const diagnoseCriteria = {
         ...challenge.evaluationCriteria,
         customCheck: 'diagnose',
         learnerCause: selectedDiagnoseCause,
-        acceptedCauses: challenge.diagnoseConfig.acceptedCauses,
-        requiredEvidenceSignals: challenge.evaluationCriteria.requiredEvidenceSignals,
-        observedEvidenceSignals: challenge.evaluationCriteria.observedEvidenceSignals,
+        observedEvidenceSignals: selectedEvidenceItems,
         minEvidenceMatches: challenge.diagnoseConfig.minEvidenceMatches,
       };
 
@@ -166,6 +169,7 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
     selectedChoice,
     selectedClassifyCategory,
     selectedDiagnoseCause,
+    selectedEvidenceItems,
     calcInput,
     hintIndex,
     rubricResult,
@@ -226,24 +230,39 @@ export function ChallengeView({ challenge, simulation, checkpointSimulations, cu
       )}
 
       {challenge.type === 'diagnose' && challenge.diagnoseConfig && (
-        <div className={styles.choices} role="radiogroup" aria-label="Diagnosis causes">
-          {challenge.diagnoseConfig.acceptedCauses.map(cause => (
-            <label key={cause} className={styles.choice}>
-              <input
-                type="radio"
-                name={`diagnose-${challenge.id}`}
-                value={cause}
-                checked={selectedDiagnoseCause === cause}
-                onChange={() => setSelectedDiagnoseCause(cause)}
-              />
-              <span>{cause}</span>
-            </label>
-          ))}
+        <div className={styles.diagnoseGroup}>
+          <div className={styles.choices} role="radiogroup" aria-label="Likely cause">
+            {challenge.diagnoseConfig.acceptedCauses.map(cause => (
+              <label key={cause} className={styles.choice}>
+                <input
+                  type="radio"
+                  name={`diagnose-${challenge.id}`}
+                  value={cause}
+                  checked={selectedDiagnoseCause === cause}
+                  onChange={() => setSelectedDiagnoseCause(cause)}
+                />
+                <span>{cause}</span>
+              </label>
+            ))}
+          </div>
           {challenge.diagnoseConfig.evidenceItems.length > 0 && (
-            <div className={styles.hints} aria-label="Evidence items">
-              {challenge.diagnoseConfig.evidenceItems.map((item, i) => (
-                <p key={i} className={styles.hint}>{item}</p>
-              ))}
+            <div className={styles.evidenceSection}>
+              <p className={styles.evidenceLabel}>Select supporting evidence:</p>
+              <div className={styles.choices} role="group" aria-label="Supporting evidence">
+                {challenge.diagnoseConfig.evidenceItems.map(item => (
+                  <label key={item} className={styles.choice}>
+                    <input
+                      type="checkbox"
+                      value={item}
+                      checked={selectedEvidenceItems.includes(item)}
+                      onChange={() => setSelectedEvidenceItems(prev =>
+                        prev.includes(item) ? prev.filter(i => i !== item) : [...prev, item]
+                      )}
+                    />
+                    <span>{item}</span>
+                  </label>
+                ))}
+              </div>
             </div>
           )}
         </div>

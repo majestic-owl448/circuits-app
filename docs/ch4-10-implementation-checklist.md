@@ -259,8 +259,8 @@ Implementation checklist for foundational work needed before and during Chapters
 ### `src/components/sandbox/SandboxView.tsx` — Non-Ideal domain
 - [x] Non-Ideal group visibility gated on `unlockedFeatures.includes('non-ideal')` (in addition to showAllTools)
 - [x] "source resistance" item adds a battery with `internalResistance: 0` pre-defined so PropertyInspector shows the field
-- [ ] **Deferred (pre-Chapter 5 content complete):** Wire resistance sandbox editing — wires are implicit connection components not rendered via ComponentRenderer; making them clickable/inspectable requires workspace-level changes. Not a Chapter 6 gate; needed before Chapter 5 Unit 2 wire-resistance lessons can offer sandbox exploration. Track here before starting Chapter 5 Unit 2.
-- [ ] **Deferred (post-Chapter 5):** Dynamic evidence for `diagnose` challenges — currently uses static `observedEvidenceSignals`; richer experience would link evidence to learner-performed measurements. Not a gate for any chapter through 6. Revisit when Chapter 7+ interactive diagnosis is scoped.
+- [x] Wire resistance sandbox editing — wires are clickable via 12px transparent hit area in `WireRenderer`, `CircuitWorkspace` opens `PropertyInspector` on wire click, newly added wires initialize with `wireResistance: 0`.
+- [x] Dynamic evidence for `diagnose` challenges — `ChallengeView` now renders interactive checkboxes for `diagnoseConfig.evidenceItems`; learner-selected items are passed as `observedEvidenceSignals` to the evaluator. `acceptedCauses` in `evaluationCriteria` (correct-cause subset) is distinct from `diagnoseConfig.acceptedCauses` (UI options). Fixed broken configs in ch5-5-3, ch10-3-1, ch10-5-1; corrected wrong-type challenges in ch8-5-1 and ch9-5-2 (`type: 'diagnose'` → `'choose'`).
 
 ## Phase 6 - Time Visualization Foundation (Gate B before Chapter 6)
 

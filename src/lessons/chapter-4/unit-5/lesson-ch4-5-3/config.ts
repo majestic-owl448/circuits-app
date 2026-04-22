@@ -35,8 +35,9 @@ export const lessonCh4_5_3: LessonConfig = {
       evaluationCriteria: {
         hardPassChecks: ['diagnose-cause-selection'],
         advisoryChecks: ['diagnose-alternative-causes'],
-        requiredEvidenceSignals: ['high-total-resistance', 'under-current-target'],
-        observedEvidenceSignals: ['high-total-resistance', 'under-current-target'],
+        acceptedCauses: ['Source-to-load path has too much series resistance'],
+        requiredEvidenceSignals: ['Measured total current is below target', 'Equivalent resistance exceeds expected range'],
+        minEvidenceMatches: 2,
       },
       hints: ['Use the evidence signals explicitly.'],
       diagnoseConfig: {

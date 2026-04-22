@@ -60,8 +60,9 @@ export const lessonCh4_4_2: LessonConfig = {
       evaluationCriteria: {
         hardPassChecks: ['diagnose-cause-selection'],
         advisoryChecks: ['diagnose-alternative-causes'],
-        requiredEvidenceSignals: ['high-total-resistance'],
-        observedEvidenceSignals: ['high-total-resistance'],
+        acceptedCauses: ['Series resistance is too high for the target range'],
+        requiredEvidenceSignals: ['Measured current is below target range', 'Equivalent resistance is higher than expected'],
+        minEvidenceMatches: 1,
       },
       hints: ['High resistance tends to reduce current for fixed source voltage.'],
       diagnoseConfig: {

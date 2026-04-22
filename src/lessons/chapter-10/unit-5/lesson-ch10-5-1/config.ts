@@ -78,7 +78,13 @@ export const lessonCh10_5_1: LessonConfig = {
       id: 'challenge-1',
       prompt: 'The circuit has a 9V battery, a 100Ω resistor, a closed switch, and a diode in series. No current flows. Using evidence from each component and your knowledge from across all chapters, diagnose the root cause of the failure.',
       type: 'diagnose',
-      evaluationCriteria: { topologyCheck: 'complete' },
+      evaluationCriteria: {
+        hardPassChecks: ['diagnose-cause-selection'],
+        advisoryChecks: ['diagnose-alternative-causes'],
+        acceptedCauses: ['diode-reverse-biased', 'diode-orientation-wrong', 'diode-blocking-current'],
+        requiredEvidenceSignals: ['diode-reverse-biased', 'no-current-path-through-diode'],
+        minEvidenceMatches: 2,
+      },
       diagnoseConfig: {
         acceptedCauses: [
           'diode-reverse-biased',
