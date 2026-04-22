@@ -6,12 +6,13 @@ Interactive educational app for learning electrical circuits. Structured as prog
 
 ## Current Status
 
-- Chapters 1-9 are fully implemented and wired into registries. Chapter 9 content authoring complete: all 14 lessons and 14 quizzes authored across 5 units.
-- Lesson count: 132 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15, Chapter 5: 15, Chapter 6: 15, Chapter 7: 13, Chapter 8: 13, Chapter 9: 14).
-- Quiz count: 129 total (Chapter 1-8: 115, Chapter 9: 14).
+- All 10 chapters are fully implemented and wired into registries. Chapter 10 content authoring complete: all 13 lessons and 12 quizzes authored across 5 units. Full curriculum complete.
+- Lesson count: 145 total (Chapter 1: 15, Chapter 2: 14, Chapter 3: 18, Chapter 4: 15, Chapter 5: 15, Chapter 6: 15, Chapter 7: 13, Chapter 8: 13, Chapter 9: 14, Chapter 10: 13).
+- Quiz count: 141 total (Chapter 1-9: 129, Chapter 10: 12).
 - Chapter 7 implementation: added `ac-source`, `dc-ac-converter`, `ac-dc-converter` component types with amplitude/frequency properties; legacy solver handles AC sources (peak voltage) and converter pass-through; time simulator extended with sinusoidal AC waveform mode; ComponentRenderer adds SVG symbols for all three new types; SandboxView wires AC/Conversion domain to `unlockedFeatures.includes('ac')`.
 - Chapter 8 implementation: added `diode` (with `isForwardBiased` property) and `transistor` (with `controlEnabled` property) component types; reverse-biased diodes and disabled transistors act as open circuits in legacy solver; DiodeSVG (triangle + cathode bar) and TransistorSVG renderers added; SandboxView wires Active domain to `unlockedFeatures.includes('active')`.
 - Chapter 9 implementation: added `not-gate`, `and-gate`, `or-gate`, `nand-gate`, `nor-gate`, `xor-gate` component types with `inputA`/`inputB` boolean properties; gates are excluded from analog solver; `src/engine/gates.ts` provides `computeGateOutput()` for all 6 gate types; gate SVG renderers show live input/output state via colored dots; SandboxView wires Logic domain to `unlockedFeatures.includes('logic')`.
+- Chapter 10 implementation: added `RubricPanel` component (`src/components/lessons/RubricPanel.tsx`) for multi-criteria challenge evaluation display; `showRubricPanel?: boolean` added to `Challenge` type; `ChallengeView` calls `evaluateMultiCriteria` and renders `RubricPanel` when enabled; capstone lessons cover whole-curriculum review, mixed-domain troubleshooting, 4 domain-specific capstones, cross-domain integration, and a final mastery challenge with rubric-panel feedback.
 - Build and lint pass.
 - Chapters 4-10 planning docs now include clarified challenge-type cardinality, normalized feature-gating wording standards (including Chapters 4-10 phrasing cleanup), deterministic Chapter 10 Dimension 4 capture rules, Unit 5 lesson differentiation guidance, and explicit documentation-boundary rules for defaults/thread dedupe/spec-pointer usage.
 - Added implementation execution checklist for Chapters 4-10 at `docs/ch4-10-implementation-checklist.md` with phase-by-phase file-level tasks and acceptance criteria.
