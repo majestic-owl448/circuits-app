@@ -2,6 +2,8 @@
   "name": "circuits-app",
   "private": true,
   "version": "1.0.0",
+  "description": "Interactive educational app for learning electrical circuits — 145 lessons, quizzes, real-time simulation, and a sandbox.",
+  "homepage": "https://majestic-owl448.github.io/circuits-app/",
   "type": "module",
   "scripts": {
     "dev": "vite",

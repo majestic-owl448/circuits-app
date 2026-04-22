@@ -1,5 +1,7 @@
 # Circuit Lab
 
+**Live app:** https://majestic-owl448.github.io/circuits-app/
+
 An interactive educational web app that teaches electrical circuits through hands-on building, experimentation, and guided lessons.
 
 ## Features
